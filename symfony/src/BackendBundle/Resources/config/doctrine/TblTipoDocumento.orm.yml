@@ -1,0 +1,32 @@
+BackendBundle\Entity\TblTipoDocumento:
+    type: entity
+    table: tbl_tipo_documento
+    id:
+        idTipoDocumento:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_tipo_documento
+            generator:
+                strategy: IDENTITY
+    fields:
+        codTipoDocumento:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+            column: cod_tipo_documento
+        descripcionTipoDocumento:
+            type: string
+            nullable: false
+            length: 60
+            options:
+                fixed: false
+            column: descripcion_tipo_documento
+        activo:
+            type: boolean
+            nullable: true
+    lifecycleCallbacks: {  }

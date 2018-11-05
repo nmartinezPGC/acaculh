@@ -1,0 +1,56 @@
+BackendBundle\Entity\TblVoucher:
+    type: entity
+    table: tbl_voucher
+    indexes:
+        fk_tbl_voucher_1_idx:
+            columns:
+                - id_tipo_documento
+    id:
+        idVoucher:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_voucher
+            generator:
+                strategy: IDENTITY
+    fields:
+        codDocumento:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: cod_documento
+        montoVoucher:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            column: monto_voucher
+        urlDocumento:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: url_documento
+        idAlumno:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: id_alumno
+    manyToOne:
+        idTipoDocumento:
+            targetEntity: TblTipoDocumento
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_documento:
+                    referencedColumnName: id_tipo_documento
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -18,4 +18,15 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
     }
+    
+    /**
+     * @Route("/pruebas", name="pruebas")
+     */
+    public function pruebasAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('BackendBundle:TblEstado')->findAll();
+        var_dump($user);
+        die();
+    }
 }

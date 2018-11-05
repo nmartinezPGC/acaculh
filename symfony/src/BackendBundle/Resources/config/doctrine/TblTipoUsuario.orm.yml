@@ -1,0 +1,32 @@
+BackendBundle\Entity\TblTipoUsuario:
+    type: entity
+    table: tbl_tipo_usuario
+    id:
+        idTipoUsuario:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_tipo_usuario
+            generator:
+                strategy: IDENTITY
+    fields:
+        codTipoUsuario:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+            column: cod_tipo_usuario
+        descripcionTipoUsuario:
+            type: string
+            nullable: false
+            length: 60
+            options:
+                fixed: false
+            column: descripcion_tipo_usuario
+        activo:
+            type: boolean
+            nullable: true
+    lifecycleCallbacks: {  }

@@ -1,0 +1,257 @@
+BackendBundle\Entity\TblAlumno:
+    type: entity
+    table: tbl_alumno
+    indexes:
+        cod_alumno:
+            columns:
+                - cod_alumno
+        fk_tbl_alumnos_1_idx:
+            columns:
+                - id_estado
+        fk_tbl_alumnos_2_idx:
+            columns:
+                - id_genero
+        fk_tbl_alumnos_3_idx:
+            columns:
+                - id_profesion
+        fk_tbl_alumnos_4_idx:
+            columns:
+                - id_profesion_padre
+        fk_tbl_alumnos_5_idx:
+            columns:
+                - id_profesion_madre
+        fk_tbl_alumnos_6_idx:
+            columns:
+                - id_usuario_ficha
+        fk_tbl_alumno_1_idx:
+            columns:
+                - id_tipo_beca
+    id:
+        idAlumno:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_alumno
+            generator:
+                strategy: IDENTITY
+    fields:
+        codAlumno:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            column: cod_alumno
+        nombre1:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+        nombre2:
+            type: string
+            nullable: true
+            length: 25
+            options:
+                fixed: false
+        apellido1:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+        apellido2:
+            type: string
+            nullable: true
+            length: 25
+            options:
+                fixed: false
+        email:
+            type: string
+            nullable: false
+            length: 150
+            options:
+                fixed: false
+        telefono:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        celular:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        direccion:
+            type: string
+            nullable: false
+            length: 250
+            options:
+                fixed: false
+        fechaNacimiento:
+            type: date
+            nullable: false
+            column: fecha_nacimiento
+        hondureno:
+            type: boolean
+            nullable: true
+        nombrePadre:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: nombre_padre
+        nombreMadre:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: nombre_madre
+        trabajoPadre:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: trabajo_padre
+        telefonoTrabajoPadre:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: telefono_trabajo_padre
+        trabajoMadre:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: trabajo_madre
+        telefonoTrabajoMadre:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: telefono_trabajo_madre
+        nombreEncargado:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: nombre_encargado
+        telefonoEncargado:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: telefono_encargado
+        nombreEmergencia:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: nombre_emergencia
+        telefonoEmergencia:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: telefono_emergencia
+        medioConoceAch:
+            type: string
+            nullable: true
+            length: 150
+            options:
+                fixed: false
+            column: medio_conoce_ach
+        problemasSalud:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+            column: problemas_salud
+        referencia:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+    manyToOne:
+        idTipoBeca:
+            targetEntity: TblTipoBeca
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_beca:
+                    referencedColumnName: id_tipo_beca
+            orphanRemoval: false
+        idEstado:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado:
+                    referencedColumnName: id_estados
+            orphanRemoval: false
+        idGenero:
+            targetEntity: TblGenero
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_genero:
+                    referencedColumnName: id_genero
+            orphanRemoval: false
+        idProfesion:
+            targetEntity: TblProfesion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_profesion:
+                    referencedColumnName: id_profesion
+            orphanRemoval: false
+        idProfesionPadre:
+            targetEntity: TblProfesion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_profesion_padre:
+                    referencedColumnName: id_profesion
+            orphanRemoval: false
+        idProfesionMadre:
+            targetEntity: TblProfesion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_profesion_madre:
+                    referencedColumnName: id_profesion
+            orphanRemoval: false
+        idUsuarioFicha:
+            targetEntity: TblUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_usuario_ficha:
+                    referencedColumnName: id_usuario
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

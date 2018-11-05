@@ -1,0 +1,71 @@
+BackendBundle\Entity\TblPago:
+    type: entity
+    table: tbl_pago
+    indexes:
+        fk_tbl_pago_1_idx:
+            columns:
+                - id_estado_pago
+        fk_tbl_pago_2_idx:
+            columns:
+                - id_alumno
+    id:
+        idPago:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_pago
+            generator:
+                strategy: IDENTITY
+    fields:
+        codDocumento:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: cod_documento
+        fechaPago:
+            type: date
+            nullable: true
+            column: fecha_pago
+        horaPago:
+            type: datetime
+            nullable: true
+            column: hora_pago
+        conceptoPago:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: concepto_pago
+        montoPago:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: monto_pago
+    manyToOne:
+        idEstadoPago:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado_pago:
+                    referencedColumnName: id_estados
+            orphanRemoval: false
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
