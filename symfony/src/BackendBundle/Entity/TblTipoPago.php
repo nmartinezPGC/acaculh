@@ -81,4 +81,3 @@ class TblTipoPago
         return $this->descTipoPago;
     }
 }
-

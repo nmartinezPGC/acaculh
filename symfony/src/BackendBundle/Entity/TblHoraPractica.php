@@ -226,4 +226,3 @@ class TblHoraPractica
         return $this->idLugarPractica;
     }
 }
-

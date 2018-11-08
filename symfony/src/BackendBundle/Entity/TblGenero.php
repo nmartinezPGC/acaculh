@@ -81,4 +81,3 @@ class TblGenero
         return $this->descripcionGenero;
     }
 }
-

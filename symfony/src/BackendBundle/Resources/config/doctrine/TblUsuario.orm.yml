@@ -86,6 +86,12 @@ BackendBundle\Entity\TblUsuario:
         activo:
             type: boolean
             nullable: true
+        iniciales:
+            type: string
+            nullable: true
+            length: 45
+            options:
+                fixed: false
     manyToOne:
         idTipoUsuario:
             targetEntity: TblTipoUsuario

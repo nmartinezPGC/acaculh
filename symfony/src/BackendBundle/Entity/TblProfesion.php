@@ -110,4 +110,3 @@ class TblProfesion
         return $this->activo;
     }
 }
-

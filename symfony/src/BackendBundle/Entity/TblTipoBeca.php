@@ -81,4 +81,3 @@ class TblTipoBeca
         return $this->descTipoBeca;
     }
 }
-

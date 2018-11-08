@@ -81,4 +81,3 @@ class TblGrupo
         return $this->descGrupo;
     }
 }
-

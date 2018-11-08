@@ -226,4 +226,3 @@ class TblPago
         return $this->idAlumno;
     }
 }
-

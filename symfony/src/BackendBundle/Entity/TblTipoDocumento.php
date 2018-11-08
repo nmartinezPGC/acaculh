@@ -110,4 +110,3 @@ class TblTipoDocumento
         return $this->activo;
     }
 }
-

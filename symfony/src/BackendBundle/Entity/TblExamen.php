@@ -168,4 +168,3 @@ class TblExamen
         return $this->idClase;
     }
 }
-

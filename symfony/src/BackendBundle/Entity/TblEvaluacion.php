@@ -197,4 +197,3 @@ class TblEvaluacion
         return $this->idInstructor;
     }
 }
-

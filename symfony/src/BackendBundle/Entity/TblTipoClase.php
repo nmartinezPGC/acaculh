@@ -81,4 +81,3 @@ class TblTipoClase
         return $this->descripcionTipoClase;
     }
 }
-

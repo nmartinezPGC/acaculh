@@ -1,0 +1,5 @@
+## Carga de las Rutas.
+## Ruta default
+app_default:
+    resource: "@AppBundle/Resources/config/routing/default.yml"
+    prefix: /

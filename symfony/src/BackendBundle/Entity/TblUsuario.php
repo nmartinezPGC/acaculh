@@ -428,5 +428,33 @@ class TblUsuario
     {
         return $this->idEstado;
     }
-}
+    /**
+     * @var string
+     */
+    private $iniciales;
 
+
+    /**
+     * Set iniciales
+     *
+     * @param string $iniciales
+     *
+     * @return TblUsuario
+     */
+    public function setIniciales($iniciales)
+    {
+        $this->iniciales = $iniciales;
+
+        return $this;
+    }
+
+    /**
+     * Get iniciales
+     *
+     * @return string
+     */
+    public function getIniciales()
+    {
+        return $this->iniciales;
+    }
+}

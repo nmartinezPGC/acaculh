@@ -81,4 +81,3 @@ class TblClaseAlumno
         return $this->idAlumno;
     }
 }
-

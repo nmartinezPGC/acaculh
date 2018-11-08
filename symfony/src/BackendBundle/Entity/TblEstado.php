@@ -110,4 +110,3 @@ class TblEstado
         return $this->idGrupo;
     }
 }
-

@@ -748,4 +748,3 @@ class TblEvaluacionCocinaPractica
         return $this->idAlumno;
     }
 }
-

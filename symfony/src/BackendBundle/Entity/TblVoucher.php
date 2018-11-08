@@ -168,4 +168,3 @@ class TblVoucher
         return $this->idTipoDocumento;
     }
 }
-
