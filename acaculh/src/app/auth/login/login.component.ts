@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSubmit(){
+    alert('Hola Mundo');
+  }
+
   login(): void {
     if (this.username == 'admin' && this.password == 'admin') {
       this.router.navigate(["user"]);
