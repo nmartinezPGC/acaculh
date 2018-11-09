@@ -14,7 +14,8 @@ export const appRoutes: Routes = [{
         { path: 'pages', loadChildren: '../pages/pages.module#PagesModule' },
         { path: 'forms', loadChildren: '../forms/forms.module#FormModule' }, //fix this
         { path: 'guarded-routes', loadChildren: '../guarded-routes/guarded-routes.module#GuardedRoutesModule' },
-        // { path: 'editor', loadChildren: '../editor/editor.module#EditorModule' }, 
+        // { path: 'editor', loadChildren: '../editor/editor.module#EditorModule' },
         { path: 'scrumboard', loadChildren: '../scrumboard/scrumboard.module#ScrumboardModule' },
+        // { path: 'register', loadChildren: '../register/register.module#RegisterModule' }, // Llamado desde Contenedor
     ]
 }];

@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { DndModule } from 'ng2-dnd';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { 
-        MatToolbarModule,
-        MatListModule,
-        MatCardModule
-    } from '@angular/material';
+import {
+  MatToolbarModule,
+  MatListModule,
+  MatCardModule
+} from '@angular/material';
 export const ROUTES: Routes = [
-   { path: '', component: ScrumboardComponent }, 
+  { path: '', component: ScrumboardComponent },
 ];
 @NgModule({
   imports: [

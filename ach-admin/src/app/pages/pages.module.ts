@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { 
-        MatCardModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatInputModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatCheckboxModule,
-        MatListModule,
-       } from '@angular/material';
+import {
+    MatCardModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatListModule,
+} from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -32,8 +32,8 @@ import { CoreModule } from '../core/core.module';
         MatListModule,
         MatChipsModule,
         CoreModule,
-        PagesRouterModule ],
-    declarations: [   
+        PagesRouterModule],
+    declarations: [
         ContactComponent,
         AboutComponent,
         ServicesComponent

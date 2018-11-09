@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
+import { LayoutDirective } from '@angular/flex-layout';
+import { AlertPromise } from 'selenium-webdriver';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'cdk-user-menu',
@@ -26,10 +29,20 @@ export class UserMenuComponent implements OnInit {
 	}
 
 
-	constructor(private elementRef: ElementRef) { }
+	constructor(private router: Router,
+		private elementRef: ElementRef) { }
 
 
 	ngOnInit() {
+	}
+
+	logoutUser() {
+		var bar = confirm('Estas seguro de Cerrar session ?');
+
+		if( bar == true ){
+			alert('Fuera se redirige a Login');
+			this.router.navigate(['/login']);
+		}
 	}
 
 }
