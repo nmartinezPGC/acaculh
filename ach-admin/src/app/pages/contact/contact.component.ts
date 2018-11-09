@@ -13,7 +13,7 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
   }
   employees = [
-				{select: 'Hari', position: 'Full stack developer',image:'assets/profile.jpg'},
+				{select: 'Nahum', position: 'Full stack developer',image:'assets/profile.jpg'},
 				{select: 'Sujith', position: 'Full stack developer',image:'assets/man.jpeg'},
 				{select: 'Ramya', position: 'Full stack developer',image:'assets/noavatar.png'},
 				{select: 'Sree', position: 'Full stack developer',image:'assets/profile.jpg'},

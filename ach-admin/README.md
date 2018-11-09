@@ -5,7 +5,7 @@ DEMO:https://newproject-5d731.firebaseapp.com
 
 to hire me, email me harikrishna266@gmail.com
 
-for bugs use github issue tracker 
+for bugs use github issue tracker
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 

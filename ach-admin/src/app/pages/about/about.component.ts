@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 public navigations=[
-{name:"Hari",job:"Full Stack Developer",experience:"10 Yrs",link:"fdsg"},
+{name:"Nahum",job:"Full Stack Developer",experience:"10 Yrs",link:"fdsg"},
 {name:"Sujith",job:"Full Stack Developer",experience:"6 Yrs",link:"fdsg"},
 {name:"Ramya",job:"Full Stack Developer",experience:"4 Yrs",link:"fdsg"},
 {name:"Sree",job:"Full Stack Developer",experience:"2 Yrs",link:"fdsg"},
