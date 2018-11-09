@@ -21,7 +21,7 @@ export const ToolbarHelpers = {
 	],
 
 	currentUser: {
-		photoURL: 'assets/images/avatars/hari.jpg',
+		photoURL: 'assets/images/avatars/chef-antonio-600.png',
 		currentUserName: 'Nahum Martinez'
 	}
 };
