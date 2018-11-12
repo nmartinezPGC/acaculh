@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ServicesComponent } from './services.component';
-import { 
+import {
         MatCardModule,
         MatButtonModule,
         MatButtonToggleModule,
@@ -24,7 +24,7 @@ const routes: Routes = [
         MatListModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [   
+    declarations: [
        // ServicesComponent,
     ],
     exports: [
