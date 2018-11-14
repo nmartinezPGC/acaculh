@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Usuario;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,12 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\JsonResponse;
 //Importamos las Tablas a Relacionar
-use BackendBundle\Entity\TblUsuarios;
-use BackendBundle\Entity\TblEstados;
+use BackendBundle\Entity\TblUsuario;
+use BackendBundle\Entity\TblEstado;
 use BackendBundle\Entity\TblTipoUsuario;
-use BackendBundle\Entity\TblTiposFuncionarios;
-use BackendBundle\Entity\TblFuncionarios;
-use BackendBundle\Entity\TblDepartamentosFuncionales;
 
 /**
  * Description of UsuarioController
@@ -29,7 +26,7 @@ class UsuarioController extends Controller {
      * @since 1.0
      * Funcion: FND00001
      */
-    public function newAction(Request $request) {
+    public function newUserAction(Request $request) {
         date_default_timezone_set('America/Tegucigalpa');
         //Instanciamos el Servicio Helpers
         $helpers = $this->get("app.helpers");
@@ -57,8 +54,8 @@ class UsuarioController extends Controller {
             $apellido2 = (isset($params->segundoApellido) && ctype_alpha($params->segundoApellido) ) ? $params->segundoApellido : null;
             $email = (isset($params->emailUsuario)) ? $params->emailUsuario : null;
             //Seccion de Relaciones entre Tablas ********************************************************************
-            $cod_estado = (isset($params->idEstado)) ? $params->idEstado : null;            
-            $cod_tipo_usuario = (isset($params->idTipoUsuario)) ? $params->idTipoUsuario : null;
+            $cod_estado = (isset($params->idEstado)) ? $params->idEstado : 0;
+            $cod_tipo_usuario = (isset($params->idTipoUsuario)) ? $params->idTipoUsuario : 0;
             //Datos de Bitacora *************************************************************************************
             $createdAt = new \DateTime("now");
             $image = "";
@@ -89,13 +86,19 @@ class UsuarioController extends Controller {
                 $usuario->setApellido2($apellido2);
                 $usuario->setEmail($email);
                 
-                //Seteamos los valores de Relaciones de Tablas *******************************
+                $usuario->setCelular($celular);
+                $usuario->setTelefono($telefono);
+                
+                $usuario->setActivo(true);
+
+                //Seteamos los valores de Relaciones de Tablas *****************
                 //Instancia a la Tabla: TblEstados *****************************                
                 $estados = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
                         array(
                             "idEstado" => $cod_estado
                 ));
                 $usuario->setIdEstado($estados);
+
 
                 //Instancia a la Tabla: TblTipoUsuario *************************                
                 $tipoUsuario = $em->getRepository("BackendBundle:TblTipoUsuario")->findOneBy(
@@ -104,24 +107,24 @@ class UsuarioController extends Controller {
                 ));
                 $usuario->setIdTipoUsuario($tipoUsuario);
 
-                //Seteamos el Resto de campos de la Tabla: TblUsuarios *********
+                //Seteamos el Resto de campos de la Tabla: TblUsuario *********
                 $usuario->setIniciales($iniciales);
 
                 //Cifrar la Contraseña *****************************************
                 $pwd = hash('sha256', $password);
-                $usuario->setPasswordUsuario($pwd);
+                $usuario->setPassword($pwd);
 
                 // Imagen del usuario
-                $usuario->setImagenUsuario("sreci.png");
+                $usuario->setUrlImagen("sreci.png");
 
                 //Seteamos los valores de la Bitacora **************************
                 $usuario->setFechaCreacion($createdAt);
                 $usuario->setHoraCreacion($createdAt);
-                
+
                 //Verificacion del Codigo y Email en la Tabla: TblUsuarios *****                
                 $isset_user_mail = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
                         array(
-                            "emailUsuario" => $email
+                            "email" => $email
                 ));
 
                 //Verificacion del Codigo del Usuario **************************
@@ -129,13 +132,13 @@ class UsuarioController extends Controller {
                         array(
                             "codUsuario" => $cod_usuario
                 ));
-
+                
                 //Verificamos que el retorno de la Funcion sea = 0 *************                
-                if (count($isset_user_cod) == 0 && count($isset_user_mail) == 0) {
+                if ($isset_user_cod == null && $isset_user_mail == null) {
                     $em->persist($usuario);
                     $em->flush();
 
-                    // Termina Tblusuarios *************************************                   
+                    // Termina Tblusuario **************************************                   
                     // Envio de Correo despues de la Grabacion de Datos
                     // *************************************************
                     // los Datos de envio de Mail **********************
@@ -152,8 +155,8 @@ class UsuarioController extends Controller {
                                 )
                                     )
                             )
-                            ->setUsername("correspondenciascpi@sreci.gob.hn")
-                            ->setPassword('Despachomcns')
+                            ->setUsername("nahum.sreci@gmail.com")
+                            ->setPassword('1897Juve')
                             ->setTimeout(180);
                     //echo "Paso 1";
                     //Creamos la instancia del envío
@@ -162,25 +165,26 @@ class UsuarioController extends Controller {
                     //Creamos el mensaje
                     $mail = \Swift_Message::newInstance()
                             ->setSubject('Creacion de Usuario | SICDOC')
-                            ->setFrom(array("correspondenciascpi@sreci.gob.hn" => "Administrador SICDOC"))
-                            ->addCc('correspondenciascpi@sreci.gob.hn')
+                            ->setFrom(array("nahum.sreci@gmail.com" => "Administrador ACACULH"))
+                            //->addCc('correspondenciascpi@sreci.gob.hn')
                             ->setTo($email)
-                            ->setBody(
+                            /* ->setBody(
                             $this->renderView(
                                     'Emails/newUser.html.twig', array('name' => $nombre1, 'apellidoOficio' => $apellido1,
                                 'fechaCreated' => date_format($createdAt, "Y-m-d"), 'userActual' => $email,
                                 'passActual' => $password)
-                            ), 'text/html');
+                            ), 'text/html') */
+                            ;
 
                     // Envia el Correo con todos los Parametros
-                    $resuly = $mailer->send($mail);
+                    // $resuly = $mailer->send($mail);
 
                     // ***** Fin de Envio de Correo ********************
                     //Seteamos el array de Mensajes a enviar *******************
                     $data = array(
                         "status" => "success",
                         "code" => "200",
-                        "msg" => "El Usuario, " . " " . $nombre1 . " " . $apellido1 . " se ha creado satisfactoriamente."
+                        "msg" => "El Usuario, " . $nombre1 . " " . $apellido1 . " se ha creado satisfactoriamente."
                     );
                 } else {
                     $data = array(
