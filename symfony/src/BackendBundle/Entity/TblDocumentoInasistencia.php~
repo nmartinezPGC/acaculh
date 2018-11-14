@@ -81,4 +81,3 @@ class TblDocumentoInasistencia
         return $this->idJustificacionInasistencia;
     }
 }
-

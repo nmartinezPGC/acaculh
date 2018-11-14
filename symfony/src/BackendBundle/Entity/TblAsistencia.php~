@@ -284,4 +284,3 @@ class TblAsistencia
         return $this->idPlato;
     }
 }
-

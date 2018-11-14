@@ -255,4 +255,3 @@ class TblInstructor
         return $this->lugarEgresado;
     }
 }
-

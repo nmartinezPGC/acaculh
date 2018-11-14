@@ -182,4 +182,3 @@ class TblPlato
         return $this->idPlato;
     }
 }
-

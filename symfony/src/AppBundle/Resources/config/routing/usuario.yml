@@ -1,16 +1,16 @@
 ## Rutas de Usuario.
 usuario_new:
-    path: /
-    defaults: { _controller: "AppBundle:Default:index" }
+    path: /usuario-new
+    defaults: { _controller: "AppBundle:Usuario/Usuario:newUser" }
     methods: POST
     
 usuario_update:
-    path: /pruebas
-    defaults: { _controller: "AppBundle:Default:pruebas" }
+    path: /usuario-edit
+    defaults: { _controller: "AppBundle:Usuario/Usuario:pruebas" }
     methods: POST
 
 ## Ruta para el Login
 usuario_delete:
-    path: /login
-    defaults: { _controller: "AppBundle:Default:login" }
+    path: /usuario-delete
+    defaults: { _controller: "AppBundle:Usuario/Usuario:login" }
     methods: GET

@@ -139,4 +139,3 @@ class TblJustificacionInasistencia
         return $this->idAlumno;
     }
 }
-

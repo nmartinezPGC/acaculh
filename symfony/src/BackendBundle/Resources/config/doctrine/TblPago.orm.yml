@@ -56,7 +56,7 @@ BackendBundle\Entity\TblPago:
             inversedBy: null
             joinColumns:
                 id_estado_pago:
-                    referencedColumnName: id_estados
+                    referencedColumnName: id_estado
             orphanRemoval: false
         idAlumno:
             targetEntity: TblAlumno

@@ -81,4 +81,3 @@ class TblFormaPago
         return $this->descFormaPago;
     }
 }
-

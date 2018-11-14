@@ -255,4 +255,3 @@ class TblClase
         return $this->idTipoClase;
     }
 }
-

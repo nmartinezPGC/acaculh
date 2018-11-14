@@ -109,4 +109,19 @@ class TblEstado
     {
         return $this->idGrupo;
     }
+    /**
+     * @var integer
+     */
+    private $idEstado;
+
+
+    /**
+     * Get idEstado
+     *
+     * @return integer
+     */
+    public function getIdEstado()
+    {
+        return $this->idEstado;
+    }
 }

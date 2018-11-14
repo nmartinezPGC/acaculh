@@ -922,4 +922,3 @@ class TblAlumno
         return $this->idUsuarioFicha;
     }
 }
-

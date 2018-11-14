@@ -110,4 +110,3 @@ class TblTipoPlato
         return $this->activo;
     }
 }
-

@@ -6,13 +6,13 @@ BackendBundle\Entity\TblEstado:
             columns:
                 - id_grupo
     id:
-        idEstados:
+        idEstado:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
-            column: id_estados
+            column: id_estado
             generator:
                 strategy: IDENTITY
     fields:

@@ -81,4 +81,3 @@ class TblLugarPractica
         return $this->descLugarPractica;
     }
 }
-

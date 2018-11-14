@@ -574,4 +574,3 @@ class TblEvaluacionCortePrecision
         return $this->idAlumno;
     }
 }
-

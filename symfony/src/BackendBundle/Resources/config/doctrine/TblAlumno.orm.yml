@@ -202,7 +202,7 @@ BackendBundle\Entity\TblAlumno:
             inversedBy: null
             joinColumns:
                 id_estado:
-                    referencedColumnName: id_estados
+                    referencedColumnName: id_estado
             orphanRemoval: false
         idGenero:
             targetEntity: TblGenero

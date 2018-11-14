@@ -81,4 +81,3 @@ class TblMoneda
         return $this->descMoneda;
     }
 }
-

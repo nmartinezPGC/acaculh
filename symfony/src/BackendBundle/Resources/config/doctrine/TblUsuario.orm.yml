@@ -92,6 +92,13 @@ BackendBundle\Entity\TblUsuario:
             length: 45
             options:
                 fixed: false
+        urlImagen:
+            type: string
+            nullable: false
+            length: 300
+            options:
+                fixed: false
+            column: url_imagen
     manyToOne:
         idTipoUsuario:
             targetEntity: TblTipoUsuario
@@ -111,6 +118,6 @@ BackendBundle\Entity\TblUsuario:
             inversedBy: null
             joinColumns:
                 id_estado:
-                    referencedColumnName: id_estados
+                    referencedColumnName: id_estado
             orphanRemoval: false
     lifecycleCallbacks: {  }
