@@ -63,7 +63,7 @@ class DefaultController extends Controller {
             //Cifrar la Contraseña *****************************************
             $pwd = hash('sha256', $password);
             //Valida el Conteo de la Funcion de validacion del Mail
-            if(count($valid_email) == 0 && $password != null){                
+            if(count($valid_email) == 0 && $password != null){    
                 //Validacion del Token
                 if($getHash == null || $getHash == "false"){
                   //Ejecucion del JWT;

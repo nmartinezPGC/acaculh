@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginService } from './services/login.service';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
         RouterModule
     ],
     providers: [
+        LoginService
     ]
 })
 export class LoginModule {

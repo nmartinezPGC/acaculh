@@ -24,7 +24,6 @@ class JwtAuth {
     public function signUp($email, $passwod, $getHash = null) {
         //Instanciamos el Servicio Helpers y Jwt
         //$helpers = $this->get("app.helpers");
-
         $key = $this->key;
 
         //Seteo de los Campos Email y Password de la Tabla TblUsuario
@@ -53,12 +52,12 @@ class JwtAuth {
             $token = array(
                 "sub" => $user->getIdUsuario(),
                 "codUser" => $user->getCodUsuario(),
-                "iniUser" => $user->getInicialesUsuario(),
-                "password" => $user->getPasswordUsuario(),
-                "email" => $user->getEmailUsuario(),
-                "nombre" => $user->getNombre1Usuario(),
-                "apellido" => $user->getApellido1Usuario(),
-                "imagenUsuario" => $user->getImagenUsuario(),
+                "iniUser" => $user->getIniciales(),
+                "password" => $user->getPassword(),
+                "email" => $user->getEmail(),
+                "nombre" => $user->getNombre1(),
+                "apellido" => $user->getApellido1(),
+                "imagenUsuario" => $user->getUrlImagen(),
                 "idTipoUser" => $tipo_user->getIdTipoUsuario(),
                 "iat" => time(),
                 "exp" => time() + (7 * 24 * 60 * 60)
@@ -77,7 +76,7 @@ class JwtAuth {
             }
             //return array("status" => "success", "data" => "Login success!!");
         } else {
-            return array("status" => "error", "data" => "Usuario o Contraseña invalidas, revisa los datos otra ves!!");
+            return array("status" => "error", "data" => "Usuario o Contraseña invalidas, revisa los datos otra ves!" . $user );
         }
     }
 
