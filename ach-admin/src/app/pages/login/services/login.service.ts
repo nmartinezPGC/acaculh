@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 //Clases nesesarias para el envio via Ajax
-import { HttpModule, Http, Response, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './login.component';
+
 import {
     MatCardModule,
     MatButtonModule,
@@ -7,11 +8,13 @@ import {
     MatInputModule,
     MatToolbarModule
 } from '@angular/material';
+
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from './services/login.service';
+import { SystemPropertiesService } from '../../shared/services/systemProperties.service';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -36,7 +39,7 @@ const routes: Routes = [
         RouterModule
     ],
     providers: [
-        LoginService
+        LoginService, SystemPropertiesService
     ]
 })
 export class LoginModule {

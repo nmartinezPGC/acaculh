@@ -41,15 +41,28 @@ export class LoginComponent implements OnInit {
     }
   };
 
+
+  /****************************************************
+  * Funcion: FND-00001
+  * Fecha: 19-11-2018
+  * Descripcion: Metodo constructor().
+  * Objetivo: Metodo constructor de la Clase
+  *****************************************************/
   constructor(private router: Router,
     private fb: FormBuilder,
     private _loginService: LoginService,
     private _router: Router,
-    private _route: ActivatedRoute,
-    private _appComponent: AppComponent) {
+    private _route: ActivatedRoute) {
     //Codigo del Constructor
   }
 
+
+  /****************************************************
+  * Funcion: FND-00001
+  * Fecha: 19-11-2018
+  * Descripcion: Metodo ngOnInit().
+  * Objetivo: Metodo inicial de la Clase
+  *****************************************************/
   ngOnInit() {
     this.buildForm();
 
@@ -85,11 +98,11 @@ export class LoginComponent implements OnInit {
     }
 
     //Local Storage de la API
-    let identity = this._loginService.getIdentity();
-    let token = this._loginService.getToken();
+    const identity = this._loginService.getIdentity();
+    const token = this._loginService.getToken();
 
     // this.idTipoUsuario = identity.idTipoUser;
-    // alert( this.idTipoUsuario );
+    alert( this.idTipoUsuario );
 
     // Evaluamos que no tengamos variables de LocalStorage, asi si existe una
     // se redirige a la Index
@@ -98,6 +111,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
+  /****************************************************
+  * Funcion: FND-00001
+  * Fecha: 19-11-2018
+  * Descripcion: Metodo buildForm().
+  * Objetivo: Metodo constructor del Formulario de la Clase
+  *****************************************************/
   buildForm() {
     this.userForm = this.fb.group({
       'email': ['', [
@@ -137,6 +157,14 @@ export class LoginComponent implements OnInit {
     //   }
     // }
   }
+
+
+  /****************************************************
+  * Funcion: FND-00001
+  * Fecha: 19-11-2018
+  * Descripcion: Metodo login().
+  * Objetivo: Metodo login de la Clase
+  *****************************************************/
   login() {
     // this.router.navigate(['/']);
 
@@ -192,7 +220,7 @@ export class LoginComponent implements OnInit {
                         if(this.errorMessage != null){
                           console.log(this.errorMessage);
                           alert(response);
-                          alert("Error en la Petición !!" + this.errorMessage);
+                          alert("Error en la Petición !! " + this.errorMessage);
                         }
                     }
               );
@@ -213,5 +241,5 @@ export class LoginComponent implements OnInit {
         }
     );
   }
-}
+}// FIN | Clase Componente: LoginComponent
 
