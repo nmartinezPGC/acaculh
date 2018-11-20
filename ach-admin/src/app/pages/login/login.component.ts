@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 // import { AuthService } from '../../core/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './services/login.service';
-import { AppComponent } from '../../app.component';
+
+import { NgForm }    from '@angular/forms';
 
 
 @Component({
