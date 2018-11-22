@@ -15,9 +15,7 @@ export class ListasComunesService {
   //Propiedades de la Clases
   //URL Base de la Clase, Referencia a la API | Symfony
   public url:string;
-  //public url = "http://localhost/sicdoc/symfony/web/app_dev.php";
-  // public url = "http://172.17.0.250/sicdoc/symfony/web/app.php";
-
+  
   //Variables para el localStorage
   public identity;
   public token;

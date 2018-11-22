@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
     const token = this._loginService.getToken();
 
     // this.idTipoUsuario = identity.idTipoUser;
-    alert( this.idTipoUsuario );
+    // alert( this.idTipoUsuario );
 
     // Evaluamos que no tengamos variables de LocalStorage, asi si existe una
     // se redirige a la Index
@@ -177,20 +177,19 @@ export class LoginComponent implements OnInit {
         response => {
           // login successful so redirect to return url
           if(response.status == "error"){
-            //Mensaje de alerta del error en cuestion
-            alert(response.data);
+            //Mensaje de alerta del error en cuestion            
+            alert('Error en el Servidor ' + response.data);
             // this.loading = 'hide';
           }else if (response.status == "success" ){
             //LocalStorage
             let identity = response.data;
             this.identity = identity;
-
+            
             if(this.identity.length <= 1 ){
                 alert('Error en el Servidor');
             }else{
               if(!identity.status){
-                localStorage.setItem('identity', JSON.stringify(identity));
-
+                localStorage.setItem('identity', JSON.stringify(identity));                
                 //Volvemos a llamar el Servicio Ajax, para obtener el Token
                 this.user.gethash = "true";
                 this._loginService.signUp(this.user).subscribe(
@@ -199,11 +198,10 @@ export class LoginComponent implements OnInit {
                         this.token = token;
 
                         if(this.token.length <= 0){
-                            alert("Error en el servidor");
+                            alert("Error en el servidor");                            
                         }else{
                           if(!this.token.status){
-                            localStorage.setItem( 'token', token );
-
+                            localStorage.setItem( 'token', token );                            
                             //Se ejecuta la Funcion de Inicio del Componente de
                             // AppComponent, para actualizar el Menu
                             // this._appComponent.ngOnInit();
@@ -215,8 +213,7 @@ export class LoginComponent implements OnInit {
                     },
                     error => {
                         //Regisra cualquier Error de la Llamada a la API
-                        this.errorMessage = <any>error;
-
+                        this.errorMessage = <any>error;                        
                         //Evaluar el error
                         if(this.errorMessage != null){
                           console.log(this.errorMessage);
@@ -232,12 +229,11 @@ export class LoginComponent implements OnInit {
         },
         error => {
             //Regisra cualquier Error de la Llamada a la API
-            this.errorMessage = <any>error;
-
+            this.errorMessage = <any>error;            
             //Evaluar el error
             if(this.errorMessage != null){
               console.log(this.errorMessage);
-              alert("Error en la Petición !!" + this.errorMessage);
+              alert("Error en la Petición !! " + this.errorMessage);
             }
         }
     );

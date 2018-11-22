@@ -7,3 +7,8 @@ app_default:
 app_usuario:
     resource: "@AppBundle/Resources/config/routing/usuario.yml"
     prefix: /usuario
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de ListasComunes
+app_listas:
+    resource: "@AppBundle/Resources/config/routing/listascomunes.yml"
+    prefix: /listas

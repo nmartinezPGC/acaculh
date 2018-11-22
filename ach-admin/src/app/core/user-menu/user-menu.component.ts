@@ -40,7 +40,11 @@ export class UserMenuComponent implements OnInit {
 		var bar = confirm('Estas seguro de Cerrar session ?');
 
 		if( bar == true ){
-			alert('Fuera se redirige a Login');
+			// Redireccionamos al Login y Borramos las LocalStorage
+			// Quitamos las variables del Storage
+			localStorage.removeItem('identity');
+			localStorage.removeItem('token');
+			
 			this.router.navigate(['/login']);
 		}
 	}

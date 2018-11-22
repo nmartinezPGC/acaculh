@@ -457,4 +457,33 @@ class TblUsuario
     {
         return $this->iniciales;
     }
+    /**
+     * @var string
+     */
+    private $urlImagen;
+
+
+    /**
+     * Set urlImagen
+     *
+     * @param string $urlImagen
+     *
+     * @return TblUsuario
+     */
+    public function setUrlImagen($urlImagen)
+    {
+        $this->urlImagen = $urlImagen;
+
+        return $this;
+    }
+
+    /**
+     * Get urlImagen
+     *
+     * @return string
+     */
+    public function getUrlImagen()
+    {
+        return $this->urlImagen;
+    }
 }
