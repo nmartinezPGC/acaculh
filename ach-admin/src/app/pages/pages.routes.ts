@@ -4,10 +4,14 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 
+// Componentes del Modulo de Alumnos
+import { AlumnoComponent } from './alumno/alumno.component';
+
 const pagesRoutes: Routes = [
   	{ path: 'contact', component: ContactComponent ,data: { animation: 'contact' } },
   	{ path: 'about', component: AboutComponent ,data: { animation: 'about' }},
   	{ path: 'services', component: ServicesComponent ,data: { animation: 'services' }},
+  	{ path: 'nuevo-alumno', component: AlumnoComponent ,data: { animation: 'alumnos' }},
 ];
 
 @NgModule({

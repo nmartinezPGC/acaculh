@@ -11,4 +11,9 @@ app_usuario:
 ## Redireccionamiento de las Ruta por Defecto | Modulo de ListasComunes
 app_listas:
     resource: "@AppBundle/Resources/config/routing/listascomunes.yml"
-    prefix: /listas
+    prefix: /
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de Alumnos
+app_alumno:
+    resource: "@AppBundle/Resources/config/routing/alumno.yml"
+    prefix: /alumno

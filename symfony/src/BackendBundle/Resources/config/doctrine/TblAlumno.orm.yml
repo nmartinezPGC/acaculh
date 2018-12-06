@@ -183,6 +183,14 @@ BackendBundle\Entity\TblAlumno:
             length: 200
             options:
                 fixed: false
+        fechaIngreso:
+            type: date
+            nullable: true
+            column: fecha_ingreso
+        horaIngreso:
+            type: datetime
+            nullable: true
+            column: hora_ingreso
     manyToOne:
         idTipoBeca:
             targetEntity: TblTipoBeca

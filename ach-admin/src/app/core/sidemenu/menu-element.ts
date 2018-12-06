@@ -2,10 +2,10 @@ export const menus = [
     {
         'name': 'Dashboard',
         'icon': 'dashboard',
-        'link': false,
+        'link': '/auth/dashboard',
         'open': false,
         'chip': { 'value': 1, 'color': 'accent' },
-        'sub': [
+        /*'sub': [
             {
                 'name': 'Dashboard',
                 'link': '/auth/dashboard',
@@ -13,6 +13,30 @@ export const menus = [
                 'chip': false,
                 'open': true,
             }
+        ]*/
+    },
+    {
+        'name': 'Alumnos',
+        'icon': 'supervisor_account',
+        'open': false,
+        'link': false,
+        'sub': [
+            {
+                'name': 'Nuevo Alumno',
+                'icon': 'account_box',
+                'open': false,
+                'link': 'pages/nuevo-alumno',
+            }, /*{
+                'name': 'Services',
+                'icon': 'local_laundry_service',
+                'open': false,
+                'link': 'pages/services',
+            }, {
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
         ]
     },
     {
