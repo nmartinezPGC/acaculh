@@ -75,6 +75,7 @@ class AlumnoController extends Controller {
         $hash = $request->get("authorization", null);
         //Se Chekea el Token
         $checkToken = $helpers->authCheck($hash);
+
         //Evalua que el Token sea True
         if ($checkToken == true) {
             $identity = $helpers->authCheck($hash, true);
@@ -92,7 +93,7 @@ class AlumnoController extends Controller {
                 $cod_alumno = ($params->codAlumno != null) ? $params->codAlumno : null;
 
                 // Datos Generales
-                $cod_alumno = ($params->codAlumno != null) ? $params->codAlumno : null;
+                $iniciales_alumno = ($params->inicialesAlumno != null) ? $params->inicialesAlumno : null;
 
                 $nombre_1 = ($params->nombre1 != null) ? $params->nombre1 : null;
                 $nombre_2 = ($params->nombre2 != null) ? $params->nombre2 : null;
@@ -129,7 +130,7 @@ class AlumnoController extends Controller {
                 $problemas_salud = ($params->problemasSalud != null) ? $params->problemasSalud : null;
                 $referencia = ($params->referencia != null) ? $params->referencia : null;
                 $id_usuario_ficha = ($params->idUsuarioFicha != null) ? $params->idUsuarioFicha : 0;
-                $id_estado = ($params->idEestado != null) ? $params->idEstado : 0;
+                $id_estado = ($params->idEstado != null) ? $params->idEstado : 0;
                 $id_tipo_beca = ($params->idTipoBeca != null) ? $params->idTipoBeca : 0;
 
                 $fecha_ingreso = new \DateTime('now');
@@ -137,220 +138,252 @@ class AlumnoController extends Controller {
                 $hora_ingreso = new \DateTime('now');
                 $hora_ingreso->format('H:i');
 
+                //$fecha_nacimiento = date('Y-m-d H:i:s');
+                //var_dump($fecha_ingreso);
                 // Evaluamos que el Codigo del Alumno no se vacio
                 if ($cod_alumno != NULL && $nombre_1 != NULL && $apellido_1 != NULL && $telefono_alumno != 0 && $email_alumno != NULL && $email_alumno != NULL) {
                     // Instanciamos el Objeto Doctrine                    
                     $em = $this->getDoctrine()->getManager();
 
-                    // Seteo de Datos Generales de la tabla: TblCorrespondenciaEnc
-                    $ingresoAlumnoNew = new TblAlumno();
-
-                    // Buscamos el Id de la Secuencia y Generamos el Codigo
-                    $ingresoAlumnoNew->setCodAlumno($cod_alumno);
-
-                    // Datos Generales
-                    $ingresoAlumnoNew->setNombre1($nombre_1);
-                    $ingresoAlumnoNew->setNombre2($nombre_2);
-                    $ingresoAlumnoNew->setApellido1($apellido_1);
-                    $ingresoAlumnoNew->setApellido2($apellido_2);
-                    $ingresoAlumnoNew->setEmail($email_alumno);
-                    $ingresoAlumnoNew->setTelefono($telefono_alumno);
-                    $ingresoAlumnoNew->setCelular($celular_alumno);
-                    $ingresoAlumnoNew->setDireccion($direccion_alumno);
-
-                    // Variables de Otras Tablas, las Buscamos para saber si hay Integridad                
-                    // Instanciamos de la Clase TblGenero
-                    $generoAlumno = $em->getRepository("BackendBundle:TblGenero")->findOneBy(
+                    // Ejecutamos la Consulta, para validar si el Alumno existe
+                    $isset_cod_alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
                             array(
-                                "idGenero" => $id_genero
+                                "codAlumno" => $cod_alumno
                     ));
-                    $ingresoAlumnoNew->setIdGenero($generoAlumno); // Set Entidad de Genero
 
-                    $ingresoAlumnoNew->setFechaNacimiento($fecha_nacimiento);
-                    $ingresoAlumnoNew->setHondureno($hondureno);
+                    //Verificamos que el retorno de la Funcion sea = 0 ********* 
+                    if ($isset_cod_alumno == NULL) {
+                        // Seteo de Datos Generales de la tabla: TblCorrespondenciaEnc
+                        $ingresoAlumnoNew = new TblAlumno();
 
-                    // Instanciamos de la Clase TblProfesion de Alumno
-                    $profesionAlumno = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
-                            array(
-                                "idProfesion" => $id_profesion
-                    ));
-                    $ingresoAlumnoNew->setIdProfesion($profesionAlumno);
+                        // Buscamos el Id de la Secuencia y Generamos el Codigo
+                        $ingresoAlumnoNew->setCodAlumno($cod_alumno);
+                        $ingresoAlumnoNew->setInicialesAlumno($iniciales_alumno);
 
-                    // Datos de Padre y Madre
-                    $ingresoAlumnoNew->setNombrePadre($nombre_padre);
+                        // Datos Generales
+                        $ingresoAlumnoNew->setNombre1($nombre_1);
+                        $ingresoAlumnoNew->setNombre2($nombre_2);
+                        $ingresoAlumnoNew->setApellido1($apellido_1);
+                        $ingresoAlumnoNew->setApellido2($apellido_2);
+                        $ingresoAlumnoNew->setEmail($email_alumno);
+                        $ingresoAlumnoNew->setTelefono($telefono_alumno);
+                        $ingresoAlumnoNew->setCelular($celular_alumno);
+                        $ingresoAlumnoNew->setDireccion($direccion_alumno);
 
-                    // Instanciamos de la Clase TblProfesion de Padre
-                    $profesionPadre = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
-                            array(
-                                "idProfesion" => $id_profesion_padre
-                    ));
-                    $ingresoAlumnoNew->setIdProfesionPadre($profesionPadre);
+                        // Variables de Otras Tablas, las Buscamos para saber si hay Integridad                
+                        // Instanciamos de la Clase TblGenero
+                        $generoAlumno = $em->getRepository("BackendBundle:TblGenero")->findOneBy(
+                                array(
+                                    "idGenero" => $id_genero
+                        ));
+                        $ingresoAlumnoNew->setIdGenero($generoAlumno); // Set Entidad de Genero
 
-                    $ingresoAlumnoNew->setNombreMadre($nombre_madre);
+                        $ingresoAlumnoNew->setFechaNacimiento($fecha_ingreso);
+                        $ingresoAlumnoNew->setHondureno($hondureno);
 
-                    // Instanciamos de la Clase TblProfesion de Madre
-                    $profesionMadre = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
-                            array(
-                                "idProfesion" => $id_profesion_madre
-                    ));
-                    $ingresoAlumnoNew->setIdProfesionMadre($profesionMadre);
+                        // Instanciamos de la Clase TblProfesion de Alumno
+                        $profesionAlumno = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
+                                array(
+                                    "idProfesion" => $id_profesion
+                        ));
+                        $ingresoAlumnoNew->setIdProfesion($profesionAlumno);
 
-                    $ingresoAlumnoNew->setTrabajoPadre($trabajo_padre);
-                    $ingresoAlumnoNew->setTelefonoTrabajoPadre($telefono_trabajo_padre);
-                    $ingresoAlumnoNew->setTrabajoMadre($trabajo_madre);
-                    $ingresoAlumnoNew->setTelefonoTrabajoMadre($telefono_trabajo_madre);
+                        // Datos de Padre y Madre
+                        $ingresoAlumnoNew->setNombrePadre($nombre_padre);
 
-                    // Datos de Encargados
-                    $ingresoAlumnoNew->setNombreEncargado($nombre_encargado);
-                    $ingresoAlumnoNew->setTelefonoEncargado($telefono_encargado);
-                    $ingresoAlumnoNew->setNombreEmergencia($nombre_emergencia);
-                    $ingresoAlumnoNew->setTelefonoEmergencia($telefono_emergencia);
+                        // Instanciamos de la Clase TblProfesion de Padre
+                        $profesionPadre = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
+                                array(
+                                    "idProfesion" => $id_profesion_padre
+                        ));
+                        $ingresoAlumnoNew->setIdProfesionPadre($profesionPadre);
 
-                    // Datos Complementarios
-                    $ingresoAlumnoNew->setMedioConoceAch($medio_conoce_ach);
-                    $ingresoAlumnoNew->setProblemasSalud($problemas_salud);
-                    $ingresoAlumnoNew->setReferencia($referencia);
+                        $ingresoAlumnoNew->setNombreMadre($nombre_madre);
 
-                    // Instanciamos de la Clase TblUsuario
-                    $usuarioFicha = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
-                            array(
-                                "idUsuario" => $id_usuario_ficha
-                    ));
-                    $ingresoAlumnoNew->setIdUsuarioFicha($usuarioFicha);
+                        // Instanciamos de la Clase TblProfesion de Madre
+                        $profesionMadre = $em->getRepository("BackendBundle:TblProfesion")->findOneBy(
+                                array(
+                                    "idProfesion" => $id_profesion_madre
+                        ));
+                        $ingresoAlumnoNew->setIdProfesionMadre($profesionMadre);
 
-                    // Instanciamos de la Clase TblEstado
-                    $estadoAlumno = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
-                            array(
-                                "idEstado" => $id_estado
-                    ));
-                    $ingresoAlumnoNew->setIdEstado($estadoAlumno);
+                        $ingresoAlumnoNew->setTrabajoPadre($trabajo_padre);
+                        $ingresoAlumnoNew->setTelefonoTrabajoPadre($telefono_trabajo_padre);
+                        $ingresoAlumnoNew->setTrabajoMadre($trabajo_madre);
+                        $ingresoAlumnoNew->setTelefonoTrabajoMadre($telefono_trabajo_madre);
 
-                    // Instanciamos de la Clase TblTipoBeca
-                    $tipoBecaAlumno = $em->getRepository("BackendBundle:TblTipoBeca")->findOneBy(
-                            array(
-                                "idTipoBeca" => $id_tipo_beca
-                    ));
-                    $ingresoAlumnoNew->setIdTipoBeca($tipoBecaAlumno);
+                        // Datos de Encargados
+                        $ingresoAlumnoNew->setNombreEncargado($nombre_encargado);
+                        $ingresoAlumnoNew->setTelefonoEncargado($telefono_encargado);
+                        $ingresoAlumnoNew->setNombreEmergencia($nombre_emergencia);
+                        $ingresoAlumnoNew->setTelefonoEmergencia($telefono_emergencia);
 
-                    // Datos de Bitacora
-                    $ingresoAlumnoNew->setFechaIngreso($fecha_ingreso);
-                    $ingresoAlumnoNew->setHoraIngreso($hora_ingreso);
+                        // Datos Complementarios
+                        $ingresoAlumnoNew->setMedioConoceAch($medio_conoce_ach);
+                        $ingresoAlumnoNew->setProblemasSalud($problemas_salud);
+                        $ingresoAlumnoNew->setReferencia($referencia);
 
-                    //Realizar la Persistencia de los Datos y enviar a la BD
-                    $em->persist($ingresoAlumnoNew);
-                    //Realizar la actualizacion en el storage de la BD
-                    $em->flush();
-                    
-                    // Envio de Correo despues de la Grabacion de Datos
+                        // Instanciamos de la Clase TblUsuario
+                        $usuarioFicha = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
+                                array(
+                                    "idUsuario" => $id_usuario_ficha
+                        ));
+                        $ingresoAlumnoNew->setIdUsuarioFicha($usuarioFicha);
+
+                        // Instanciamos de la Clase TblEstado
+                        $estadoAlumno = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
+                                array(
+                                    "idEstado" => $id_estado
+                        ));
+                        $ingresoAlumnoNew->setIdEstado($estadoAlumno);
+
+                        // Instanciamos de la Clase TblTipoBeca
+                        $tipoBecaAlumno = $em->getRepository("BackendBundle:TblTipoBeca")->findOneBy(
+                                array(
+                                    "idTipoBeca" => $id_tipo_beca
+                        ));
+                        $ingresoAlumnoNew->setIdTipoBeca($tipoBecaAlumno);
+
+                        // Datos de Bitacora
+                        $ingresoAlumnoNew->setFechaIngreso($fecha_ingreso);
+                        $ingresoAlumnoNew->setHoraIngreso($hora_ingreso);
+
+                        //Realizar la Persistencia de los Datos y enviar a la BD
+                        $em->persist($ingresoAlumnoNew);
+                        //Realizar la actualizacion en el storage de la BD
+                        $em->flush();
+
+                        // Envio de Correo despues de la Grabacion de Datos
                         // *****************************************************
                         //Instanciamos de la Clase TblUsuario, para Obtener
                         // los Datos de envio de Mail **************************
                         $usuario_asignado_send = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
-                            array(
-                                "idUsuario" => $id_usuario_ficha
-                            ));
+                                array(
+                                    "idUsuario" => $id_usuario_ficha
+                        ));
                         // Parametros de Salida
-                        $mailSend = $usuario_asignado_send->getEmailFuncionario() ; // Get de mail de Funcionario Asignado
-                        $nombreSend = $usuario_asignado_send->getNombre1Funcionario() ; // Get de Nombre de Funcionario Asignado
-                        $apellidoSend = $usuario_asignado_send->getApellido1Funcionario() ; // Get de Apellido de Funcionario Asignado
-                                                
-                            //Creamos la instancia con la configuración 
-                            $transport = \Swift_SmtpTransport::newInstance()
-                               ->setHost('smtp.gmail.com')
-                               ->setPort(587)
-                               ->setEncryption('tls')                               
-                               ->setStreamOptions(array(
-                                            'ssl' => array(
-                                                'allow_self_signed' => true, 
-                                                'verify_peer' => false, 
-                                                'verify_peer_name' => false
-                                                )
-                                            )
-                                         )                              
-                               ->setUsername("nahum.sreci@gmail.com")                               
-                               ->setPassword('1897Juve')                                                              
-                               ->setTimeout(180);
-                           //echo "Paso 1";
-                           //Creamos la instancia del envío
-                           $mailer = \Swift_Mailer::newInstance($transport);
-                           
-                           //Creamos el mensaje
-                           $mail = \Swift_Message::newInstance()
-                               ->setSubject('Notificación de Ingreso de Comunicacion | SICDOC')
-                               //->setFrom(array($mailSend => $identity->nombre . " " .  $identity->apellido ))                                 
-                               ->setFrom(array("correspondenciascpi@sreci.gob.hn" => "Administrador SICDOC" ))                                       
-                               ->setTo($mailSend)                                
-                               //->addCc([ $setTo_array_convertIn ])                              
-                               ->setBody(
-                                    $this->renderView(
-                                    // app/Resources/views/Emails/registration.html.twig
-                                        'Emails/sendMail.html.twig',
-                                        array( 'name' => $nombreSend, 'apellidoOficio' => $apellidoSend,
-                                               'oficioExtNo' => $cod_referenciaSreci, 'oficioInNo' => $cod_correspondencia . "-" . $new_secuencia ,
-                                               'temaOficio' => $tema_correspondencia, 'descOficio' => $desc_correspondencia,
-                                               'fechaIngresoOfi' => strval($fecha_maxima_entrega), 
-                                               'fechaIngresoCom' => date_format($fecha_ingreso, "Y-m-d"), 'obsComunicacion' => $observacion_correspondencia,
-                                               'institucionCom' => $institucion->getPerfilInstitucion())
-                                    ), 'text/html' );  
-                           
-                            // Insercion de los Contactos en Copia
-                            // Array | addCC                            
-                            if ( $setTomail != null && $setTomail != ''  ) {
-                              foreach ($setTo_array_convert as $address) {
-                                $mail->addCc($address);
-                              }
-                            } //FIN Array | addCC
-                            
-                            // validamos que se adjunta pdf
-                            // Array | Attach
-                            if( $pdf_send != null ){
-                              // Realizamos el foreach de los Documentos enviados
-                              // Se convierte el Array en String
-                              $documentos_array_convert      = json_encode($pdf_send);
-                              $documentos_array_convert2      = json_decode($documentos_array_convert);
-                            
-                              foreach ( $documentos_array_convert2 as $attachMail  ) {
-                                // varibles
-                                $nameDoc = $attachMail->nameDoc;
-                                $extDoc = $attachMail->extDoc;
-                                $pesoDoc = $attachMail->pesoDoc;
-                                
-                                // Cambiamos el Tipo de extencion jpg => jpeg
-                                if( $extDoc == "jpg" || $extDoc == "JPG" ){
-                                    $extDoc = "jpeg";
-                                }
-                                
-                                // INC00001 | Cambiamos el Tipo de extencion PDF => pdf
-                                //Fecha: 2017-01-03 | Incidencia con PDF
-                                if( $extDoc == "PDF" ){
-                                    $extDoc = "pdf";
-                                }
-                                //FIN | INC00001
-                                
-                                /* INC00002 | 2018-01-09
-                                * Corregir la Extencion del PNG a png
-                                */
-                                if( $extDoc == "PNG" ){
-                                    $extDoc = "png";
-                                }
-                                //FIN | INC00002
-                                
-                                // $target_path1 = "uploads/correspondencia" . "/" . $nameDoc . "." . $extDoc;                            
-                                  
-                                /*********************************************** 
-                                 * Se Comenta la Opcion de Adjuntar los Documentos
-                                 * Sobrecargan el Correo de los Funcionarios
-                                 * Fecha: 2018-03-12
-                                 ***********************************************/
-                                //$mail->attach(\Swift_Attachment::fromPath($target_path1));
-                              }
-                            } // FIN Array | Attach
-                                 
-                            // Envia el Correo con todos los Parametros
-                            $resuly = $mailer->send($mail);
-                                                  
-                        // ***** Fin de Envio de Correo ************************
-                        //                         
+                        /* $mailSend = $usuario_asignado_send->getEmailFuncionario() ; // Get de mail de Funcionario Asignado
+                          $nombreSend = $usuario_asignado_send->getNombre1Funcionario() ; // Get de Nombre de Funcionario Asignado
+                          $apellidoSend = $usuario_asignado_send->getApellido1Funcionario() ; // Get de Apellido de Funcionario Asignado
+
+                          //Creamos la instancia con la configuración
+                          $transport = \Swift_SmtpTransport::newInstance()
+                          ->setHost('smtp.gmail.com')
+                          ->setPort(587)
+                          ->setEncryption('tls')
+                          ->setStreamOptions(array(
+                          'ssl' => array(
+                          'allow_self_signed' => true,
+                          'verify_peer' => false,
+                          'verify_peer_name' => false
+                          )
+                          )
+                          )
+                          ->setUsername("nahum.sreci@gmail.com")
+                          ->setPassword('1897Juve')
+                          ->setTimeout(180);
+                          //echo "Paso 1";
+                          //Creamos la instancia del envío
+                          $mailer = \Swift_Mailer::newInstance($transport);
+
+                          //Creamos el mensaje
+                          $mail = \Swift_Message::newInstance()
+                          ->setSubject('Notificación de Ingreso de Comunicacion | SICDOC')
+                          //->setFrom(array($mailSend => $identity->nombre . " " .  $identity->apellido ))
+                          ->setFrom(array("correspondenciascpi@sreci.gob.hn" => "Administrador SICDOC" ))
+                          ->setTo($mailSend)
+                          //->addCc([ $setTo_array_convertIn ])
+                          ->setBody(
+                          $this->renderView(
+                          // app/Resources/views/Emails/registration.html.twig
+                          'Emails/sendMail.html.twig',
+                          array( 'name' => $nombreSend, 'apellidoOficio' => $apellidoSend,
+                          'oficioExtNo' => $cod_referenciaSreci, 'oficioInNo' => $cod_correspondencia . "-" . $new_secuencia ,
+                          'temaOficio' => $tema_correspondencia, 'descOficio' => $desc_correspondencia,
+                          'fechaIngresoOfi' => strval($fecha_maxima_entrega),
+                          'fechaIngresoCom' => date_format($fecha_ingreso, "Y-m-d"), 'obsComunicacion' => $observacion_correspondencia,
+                          'institucionCom' => $institucion->getPerfilInstitucion())
+                          ), 'text/html' );
+                         */
+                        // Insercion de los Contactos en Copia
+                        // Array | addCC                            
+                        /* if ( $setTomail != null && $setTomail != ''  ) {
+                          foreach ($setTo_array_convert as $address) {
+                          $mail->addCc($address);
+                          }
+                          } //FIN Array | addCC
+                         */
+                        // validamos que se adjunta pdf
+                        // Array | Attach
+                        /* if( $pdf_send != null ){
+                          // Realizamos el foreach de los Documentos enviados
+                          // Se convierte el Array en String
+                          $documentos_array_convert      = json_encode($pdf_send);
+                          $documentos_array_convert2      = json_decode($documentos_array_convert);
+
+                          foreach ( $documentos_array_convert2 as $attachMail  ) {
+                          // varibles
+                          $nameDoc = $attachMail->nameDoc;
+                          $extDoc = $attachMail->extDoc;
+                          $pesoDoc = $attachMail->pesoDoc;
+
+                          // Cambiamos el Tipo de extencion jpg => jpeg
+                          if( $extDoc == "jpg" || $extDoc == "JPG" ){
+                          $extDoc = "jpeg";
+                          }
+
+                          // INC00001 | Cambiamos el Tipo de extencion PDF => pdf
+                          //Fecha: 2017-01-03 | Incidencia con PDF
+                          if( $extDoc == "PDF" ){
+                          $extDoc = "pdf";
+                          }
+                          //FIN | INC00001
+                         */
+                        /* INC00002 | 2018-01-09
+                         * Corregir la Extencion del PNG a png
+                         */
+                        /* if( $extDoc == "PNG" ){
+                          $extDoc = "png";
+                          }
+                          //FIN | INC00002
+                         */
+                        // $target_path1 = "uploads/correspondencia" . "/" . $nameDoc . "." . $extDoc;                            
+
+                        /*                         * *********************************************** 
+                         * Se Comenta la Opcion de Adjuntar los Documentos
+                         * Sobrecargan el Correo de los Funcionarios
+                         * Fecha: 2018-03-12
+                         * ********************************************* */
+                        //$mail->attach(\Swift_Attachment::fromPath($target_path1));
+                        //}
+                        //} // FIN Array | Attach
+                        // Envia el Correo con todos los Parametros
+                        //$resuly = $mailer->send($mail);
+                        // ***** Fin de Envio de Correo ****************************
+                        //Consulta de el Alumno recien Ingresado *******************
+                        $alumnoConsulta = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "codAlumno" => $cod_alumno
+                        ));
+
+                        //Array de Mensajes
+                        $data = array(
+                            "status" => "success",
+                            "code" => 200,
+                            "msg" => "Se ha ingresado el Alumno con el Codigo: " . $cod_alumno .
+                            " pronto recibira una notificación vía correo. Gracias",
+                            "data" => $alumnoConsulta
+                        );
+                    } else {
+                        //Array de Mensajes
+                        $data = array(
+                            "status" => "error",
+                            "code" => 400,
+                            "msg" => "Ya existe un Alumno con este Codigo: " . $cod_alumno . ", ingresa uno distinto para"
+                            . " continuar",
+                            "data" => $isset_cod_alumno
+                        );
+                    }
                 }
             } else {
                 //Array de Mensajes
@@ -369,6 +402,8 @@ class AlumnoController extends Controller {
                 "msg" => "Autorizacion de Token no valida, tu sesion ha expirado, cierra y vuelve a iniciar. !!"
             );
         }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
     }
 
 // FIN | FND00001.2

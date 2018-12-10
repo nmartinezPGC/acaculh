@@ -10,67 +10,94 @@
       <mat-horizontal-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="firstFormGroup">
           <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Datos Generales</ng-template>
+            <ng-template matStepLabel>Datos Generales del Alumno</ng-template>
+            Datos Generales del Alumno
 
             <table class="example-full-width" cellspacing="0">
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #postalCode maxlength="20" placeholder="Codigo Alumno" value="">
-                    <mat-hint align="end">{{postalCode.value.length}} / 20</mat-hint>
+                    <input matInput #postalCode maxlength="20" placeholder="Codigo Alumno" [formControl]="codigoAlumno"
+                      [errorStateMatcher]="matcher" autofocus name="codAlumno" id="codAlumno" ngControl="codAlumno"
+                      [(ngModel)]="_alumnoModel.codAlumno">
+                    <!-- <mat-hint align="end">{{postalCode.value.length}} / 20</mat-hint> -->
+                    <mat-error *ngIf="codigoAlumno.hasError('required')">
+                      Codigo es: <strong>obligatorio</strong>
+                    </mat-error>
                   </mat-form-field>
                 </td>
               </tr>
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Primer Nombre">
+                    <input matInput placeholder="Primer Nombre" [formControl]="nombre1" [errorStateMatcher]="matcher"
+                      name="nombre1" id="nombre1" ngControl="nombre1" [(ngModel)]="_alumnoModel.nombre1">
+                    <mat-error *ngIf="nombre1.hasError('required')">
+                      Codigo es: <strong>obligatorio</strong>
+                    </mat-error>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Segundo Nombre">
+                    <input matInput placeholder="Segundo Nombre" name="nombre2" id="nombre2" ngControl="nombre2"
+                      [(ngModel)]="_alumnoModel.nombre2">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Segundo Apellido">
+                    <input matInput placeholder="Primer Apellido" [formControl]="apellido1" [errorStateMatcher]="matcher"
+                      name="apellido1" id="apellido1" ngControl="apellido1" [(ngModel)]="_alumnoModel.apellido1">
+                    <mat-error *ngIf="apellido1.hasError('required')">
+                      Codigo es: <strong>obligatorio</strong>
+                    </mat-error>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Segundo Apellido">
+                    <input matInput placeholder="Segundo Apellido" name="apellido2" id="apellido2" ngControl="apellido2"
+                      [(ngModel)]="_alumnoModel.apellido2">
                   </mat-form-field>
                 </td>
               </tr>
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+                    <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                      name="email" id="email" ngControl="email" [(ngModel)]="_alumnoModel.email">
                     <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
                     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                      Please enter a valid email address
+                      Por favor ingresa el Correo Electronico
                     </mat-error>
                     <mat-error *ngIf="emailFormControl.hasError('required')">
-                      Email is <strong>required</strong>
+                      Email es: <strong>obligatorio</strong>
                     </mat-error>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Telefono">
+                    <input type="number" maxlength="8" matInput placeholder="Telefono" [formControl]="telefonoAlumno"
+                      [errorStateMatcher]="matcher" name="telefono" id="telefono" ngControl="telefono" [(ngModel)]="_alumnoModel.telefono">
+                    <mat-error *ngIf="telefonoAlumno.hasError('required')">
+                      No. Telefono es: <strong>obligatorio</strong>
+                    </mat-error>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Celular">
+                    <input type="number" maxlength="8" matInput placeholder="Celular" [formControl]="celularAlumno"
+                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular" [(ngModel)]="_alumnoModel.celular">
+                    <mat-error *ngIf="celularAlumno.hasError('required')">
+                      No. Celular es: <strong>obligatorio</strong>
+                    </mat-error>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Sexo">
-                      <mat-option value="1">Femenino</mat-option>
-                      <mat-option value="2">Masculino</mat-option>
+                    <mat-select placeholder="Sexo" [formControl]="idGeneroAlumno" [errorStateMatcher]="matcher" name="idGenero"
+                      id="idGenero" ngControl="idGenero" [(ngModel)]="_alumnoModel.idGenero">
+                      <mat-option *ngFor="let genero of JsonOutgetlistaGeneroAll" [value]="genero.idGenero">
+                        {{ genero.descripcionGenero }}
+                      </mat-option>
                     </mat-select>
                     <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
                   </mat-form-field>
@@ -80,14 +107,16 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #message maxlength="250" placeholder="Direccion de Alumno">
+                    <input matInput #message maxlength="250" placeholder="Direccion de Alumno" name="direccion" id="direccion"
+                      ngControl="direccion" [(ngModel)]="_alumnoModel.direccion">
                     <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
                     <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento">
+                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="fechaNacimiento"
+                      id="fechaNacimiento" ngControl="fechaNacimiento" [(ngModel)]="_alumnoModel.fechaNacimiento">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -96,11 +125,15 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Profesion">
-                      <mat-option value="1">Bachiller</mat-option>
-                      <mat-option value="2">Universidad</mat-option>
-                      <mat-option value="2">Maestria</mat-option>
+                    <mat-select placeholder="Profesion Alumno" [formControl]="profesionAlumno" [errorStateMatcher]="matcher"
+                      name="idProfesion" id="idProfesion" ngControl="idProfesion" [(ngModel)]="_alumnoModel.idProfesion">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno" [value]="profesion.idProfesion">
+                        {{ profesion.descripcionProfesion }}
+                      </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="profesionAlumno.hasError('required')">
+                      La Profesion es: <strong>obligatoria</strong>
+                    </mat-error>
                     <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
                   </mat-form-field>
                 </td>
@@ -110,15 +143,22 @@
               </tr>
             </table>
 
-            <div>
-              <button mat-raised-button matStepperNext color="primary">Seguiente</button>
-            </div>
+            <table>
+              <tr>
+                <td>
+                  <button mat-raised-button matStepperNext color="primary">Seguiente</button>
+                </td>
+              </tr>
+            </table>
+
           </form>
         </mat-step>
         <!-- Datos de los Padres -->
         <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Datos de Padre / Madre</ng-template>
+            Datos de Parientes.
+
             <table class="example-full-width" cellspacing="0">
               <tr>
                 <td>
@@ -129,9 +169,9 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Profesion Padre">
-                      <mat-option value="1">Bachiller</mat-option>
-                      <mat-option value="2">Universidad</mat-option>
-                      <mat-option value="2">Maestria</mat-option>
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesPadre" [value]="profesion.idProfesion">
+                        {{ profesion.descripcionProfesion }}
+                      </mat-option>
                     </mat-select>
                     <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
                   </mat-form-field>
@@ -143,11 +183,10 @@
                 </td>
                 <td>
                   <mat-form-field>
-                    <mat-select [(value)]="selected">
-                      <mat-option>None</mat-option>
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                    <mat-select placeholder="Profesion Madre">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesMadre" [value]="profesion.idProfesion">
+                        {{ profesion.descripcionProfesion }}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </td>
@@ -181,6 +220,7 @@
             <br>
             <mat-divider></mat-divider>
 
+            <!-- Datos de Encargado -->
             <table class="example-full-width" cellspacing="0">
               <tr>
                 <td>
@@ -210,18 +250,79 @@
 
             <br>
 
-            <div>
-              <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
-              <button mat-raised-button matStepperNext color="primary">Siguiente</button>
-            </div>
+            <table>
+              <tr>
+                <td>
+                  <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
+                </td>
+                <td>
+                  <button mat-raised-button matStepperNext color="primary">Siguiente</button>
+                </td>
+              </tr>
+            </table>
+
           </form>
         </mat-step>
-        <mat-step>
+
+        <!-- Datos Complementarios -->
+        <mat-step [stepControl]="thirdFormGroup">
           <ng-template matStepLabel>Complemetarios</ng-template>
-          You are now done.
+          Datos Complementarios de la Ficha del Alumno.
+          <br>
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <!-- Datos Complemetarios -->
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Medio Conoce ACH">
+                      <mat-option value="Facebook">Facebook</mat-option>
+                      <mat-option value="Pagina Web">Pagina Web</mat-option>
+                      <mat-option value="Referencia Alumno">Referencia Alumno</mat-option>
+                    </mat-select>
+                    <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #problemasSalud maxlength="250" placeholder="Problemas de Salud">
+                    <mat-hint align="end">{{problemasSalud.value.length}} / 250</mat-hint>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #referencia maxlength="250" placeholder="Referencia">
+                    <mat-hint align="end">{{referencia.value.length}} / 250</mat-hint>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Tipo de Beca" [formControl]="tipoBeca" [errorStateMatcher]="matcher">
+                      <mat-option *ngFor="let tipoBeca of JsonOutgetlistaTipoBeca" [value]="tipoBeca.idTipoBeca">
+                        {{ tipoBeca.descTipoBeca }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+
+            <table>
+              <tr>
+                <td>
+                  <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
+                </td>
+                <td>
+                  <button mat-raised-button (click)="stepper.reset()" color="warn">Limpiar Ficha</button>
+                </td>
+                <td>
+                  <button mat-raised-button (click)="nuevoAlumno()" color="primary">Guardar Ficha</button>
+                </td>
+              </tr>
+            </table>
+
+            <!-- <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button> -->
           </div>
         </mat-step>
       </mat-horizontal-stepper>

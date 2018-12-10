@@ -28,6 +28,8 @@ import { AboutComponent } from './about/about.component';
 import { CoreModule } from '../core/core.module';
 import { AlumnoComponent } from './alumno/alumno.component';
 import { ServicesComponent } from "../pages/services/services.component";
+import { AlumnoService } from './alumno/service/alumno.service';
+import { SystemPropertiesService } from '../shared/services/systemProperties.service';
 
 @NgModule({
     imports: [
@@ -62,6 +64,8 @@ import { ServicesComponent } from "../pages/services/services.component";
     exports: [
     ],
     providers: [
+        AlumnoService,
+        SystemPropertiesService,
     ]
 })
 export class PagesModule {

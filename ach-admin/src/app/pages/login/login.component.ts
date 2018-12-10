@@ -178,7 +178,7 @@ export class LoginComponent implements OnInit {
           // login successful so redirect to return url
           if(response.status == "error"){
             //Mensaje de alerta del error en cuestion            
-            alert('Error en el Servidor ' + response.data);
+            alert('Error en el Servidor Paso 1 ' + response.data);
             // this.loading = 'hide';
           }else if (response.status == "success" ){
             //LocalStorage
@@ -186,7 +186,7 @@ export class LoginComponent implements OnInit {
             this.identity = identity;
             
             if(this.identity.length <= 1 ){
-                alert('Error en el Servidor');
+                alert('Error en el Servidor Paso 2 ');
             }else{
               if(!identity.status){
                 localStorage.setItem('identity', JSON.stringify(identity));                
@@ -198,7 +198,7 @@ export class LoginComponent implements OnInit {
                         this.token = token;
 
                         if(this.token.length <= 0){
-                            alert("Error en el servidor");                            
+                            alert("Error en el servidor Paso 3");                            
                         }else{
                           if(!this.token.status){
                             localStorage.setItem( 'token', token );                            

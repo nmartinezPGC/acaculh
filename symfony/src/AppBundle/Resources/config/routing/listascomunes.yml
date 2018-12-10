@@ -2,11 +2,23 @@
 ## Author: Nahum Martinez
 ## Fecha: 28-08-2017
 ---
-# Ruta para Seleccionar Listas Comunes
-# Lista de Estados de Usuarios
-listascomunes_estadosUsuarioList:
-    path: /estados-user-list
-    defaults: { _controller: "AppBundle:Comun/ListasComunes:estadosUsuarioList" }
+# Ruta para Seleccionar Listas Comunes ProfesionesAllList
+# Lista de Genero
+listascomunes_generoList:
+    path: /genero-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:GeneroAllList" }
+    methods: POST
+    
+# Lista de Profesiones
+listascomunes_profesionesList:
+    path: /profesiones-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:ProfesionesAllList" }
+    methods: POST
+
+# Lista de Tipo de Becas
+listascomunes_tipoBecaList:
+    path: /tipobeca-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoBecaAllList" }
     methods: POST
     
 # Lista de Estados de Comunicaciones | 30-08-2017

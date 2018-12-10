@@ -14,6 +14,7 @@ export class AlumnoService {
   //Propiedades de la Clases
   //URL Base de la Clase, Referencia a la API | Symfony
   public url: string;
+  public urlResourses: string;
 
   //Variables para el localStorage
   public identity;
@@ -23,6 +24,7 @@ export class AlumnoService {
   constructor(private _http: Http,
     private _systemPropertiesService: SystemPropertiesService) {
     this.url = this._systemPropertiesService.getmethodUrlService();
+    this.urlResourses = this._systemPropertiesService.getmethodUrlResourses();
   }
 
   /****************************************************

@@ -921,4 +921,92 @@ class TblAlumno
     {
         return $this->idUsuarioFicha;
     }
+    /**
+     * @var \DateTime
+     */
+    private $fechaIngreso;
+
+    /**
+     * @var \DateTime
+     */
+    private $horaIngreso;
+
+
+    /**
+     * Set fechaIngreso
+     *
+     * @param \DateTime $fechaIngreso
+     *
+     * @return TblAlumno
+     */
+    public function setFechaIngreso($fechaIngreso)
+    {
+        $this->fechaIngreso = $fechaIngreso;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaIngreso
+     *
+     * @return \DateTime
+     */
+    public function getFechaIngreso()
+    {
+        return $this->fechaIngreso;
+    }
+
+    /**
+     * Set horaIngreso
+     *
+     * @param \DateTime $horaIngreso
+     *
+     * @return TblAlumno
+     */
+    public function setHoraIngreso($horaIngreso)
+    {
+        $this->horaIngreso = $horaIngreso;
+
+        return $this;
+    }
+
+    /**
+     * Get horaIngreso
+     *
+     * @return \DateTime
+     */
+    public function getHoraIngreso()
+    {
+        return $this->horaIngreso;
+    }
+    
+    /**
+     * @var string
+     */
+    private $inicialesAlumno;
+
+
+    /**
+     * Set inicialesAlumno
+     *
+     * @param string $inicialesAlumno
+     *
+     * @return TblAlumno
+     */
+    public function setInicialesAlumno($inicialesAlumno)
+    {
+        $this->inicialesAlumno = $inicialesAlumno;
+
+        return $this;
+    }
+
+    /**
+     * Get inicialesAlumno
+     *
+     * @return string
+     */
+    public function getInicialesAlumno()
+    {
+        return $this->inicialesAlumno;
+    }
 }

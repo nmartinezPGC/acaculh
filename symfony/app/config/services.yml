@@ -12,6 +12,6 @@ services:
             class: AppBundle\Services\JwtAuth
             arguments: ["@doctrine.orm.entity_manager"]
             
-    app.    helpers:
+    app.helpers:
         class: AppBundle\Services\Helpers
-        arguments: ["null"]
+        arguments: ["@app.jwt_auth"]

@@ -1,0 +1,13 @@
+{ 
+  "codAlumno": "0801198612134", "inicialesAlumno": "EMBM", 
+  "nombre1": "Eva", "nombre2": "Maria", 
+  "apellido1": "Barahona", "apellido2": "Mira", 
+  "email": "evamariab@yahoo.com", "telefono": 22058495, "celular": 89085985, 
+  "direccion": "Col. centro America Oeste zona 5", "idGenero": 2, 
+  "fechaNacimiento":"1986-07-12", "hondureno": true, "idProfesion": 1, 
+  "nombrePadre": "Mario barahona", "idProfesionPadre": 2, "nombreMadre": "Maria Isabel Mira", "idProfesionMadre": 2,
+  "trabajoPadre": "No especificado", "telefonoTrabajoPadre": "", "trabajoMadre": "No especificado", "telefonoTrabajoMadre": "",
+  "nombreEncargado": "No especificado", "telefonoEncargado": "", "nombreEmergencia": "", "telefonoEmergencia": "",
+  "medioConoceAch": "Facebook", "problemasSalud": "Sin problemas de Salud", "referencia": "", "idUsuarioFicha": 1,
+  "idEstado": 1, "idTipoBeca": 1
+}

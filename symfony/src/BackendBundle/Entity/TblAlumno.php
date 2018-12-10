@@ -979,4 +979,34 @@ class TblAlumno
     {
         return $this->horaIngreso;
     }
+    
+    /**
+     * @var string
+     */
+    private $inicialesAlumno;
+
+
+    /**
+     * Set inicialesAlumno
+     *
+     * @param string $inicialesAlumno
+     *
+     * @return TblAlumno
+     */
+    public function setInicialesAlumno($inicialesAlumno)
+    {
+        $this->inicialesAlumno = $inicialesAlumno;
+
+        return $this;
+    }
+
+    /**
+     * Get inicialesAlumno
+     *
+     * @return string
+     */
+    public function getInicialesAlumno()
+    {
+        return $this->inicialesAlumno;
+    }
 }

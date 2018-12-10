@@ -68,6 +68,13 @@ BackendBundle\Entity\TblAlumno:
             length: 25
             options:
                 fixed: false
+        inicialesAlumno:
+            type: string
+            nullable: true
+            length: 4
+            options:
+                fixed: false
+            column: iniciales_alumno
         email:
             type: string
             nullable: false
