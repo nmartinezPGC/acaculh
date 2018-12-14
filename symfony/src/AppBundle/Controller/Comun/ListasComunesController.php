@@ -132,6 +132,44 @@ class ListasComunesController extends Controller {
 //FIN | FND00003
 
     /**
+     * @Route("/medio-ach-all-list", name="medio-ach-all-list")
+     * Creacion del Controlador: Medio Conoce ACH
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00004
+     */
+    public function MedioConoceACHAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos los medios que conoce ACH de la Tabla: TblMedioConoceAch
+        $medioACHAllList = $em->getRepository("BackendBundle:TblMedioConoceAch")->findAll();
+
+        // Condicion de la Busqueda
+        if (count($medioACHAllList) >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "msg" => "Se han encontrado el listado de todas los Medios que conoce ACH registrados.",
+                "data" => $medioACHAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Medios que Conoce ACH !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00004
+
+    /**
      * @Route("/sub-direcciones-sreci-list", name="sub-direcciones-sreci-list")
      * Creacion del Controlador: Sub Direcciones de SRECI
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>

@@ -20,6 +20,12 @@ listascomunes_tipoBecaList:
     path: /tipobeca-all-list
     defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoBecaAllList" }
     methods: POST
+
+# Lista de Medio Conoce ACH
+listascomunes_medioConoceACHList:
+    path: /medio-ach-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:MedioConoceACHAllList" }
+    methods: POST
     
 # Lista de Estados de Comunicaciones | 30-08-2017
 listascomunes_estadosComunicacionList:

@@ -5,25 +5,28 @@ BackendBundle\Entity\TblAlumno:
         cod_alumno:
             columns:
                 - cod_alumno
-        fk_tbl_alumnos_1_idx:
+        f1_idx:
             columns:
                 - id_estado
-        fk_tbl_alumnos_2_idx:
+        f2_idx:
             columns:
                 - id_genero
-        fk_tbl_alumnos_3_idx:
+        f3_idx:
             columns:
                 - id_profesion
-        fk_tbl_alumnos_4_idx:
+        f4_idx:
             columns:
                 - id_profesion_padre
-        fk_tbl_alumnos_5_idx:
+        f5_idx:
             columns:
                 - id_profesion_madre
-        fk_tbl_alumnos_6_idx:
+        f6_idx:
+            columns:
+                - medio_conoce_ach
+        f6_idx1:
             columns:
                 - id_usuario_ficha
-        fk_tbl_alumno_1_idx:
+        f7_idx:
             columns:
                 - id_tipo_beca
     id:
@@ -199,16 +202,6 @@ BackendBundle\Entity\TblAlumno:
             nullable: true
             column: hora_ingreso
     manyToOne:
-        idTipoBeca:
-            targetEntity: TblTipoBeca
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                id_tipo_beca:
-                    referencedColumnName: id_tipo_beca
-            orphanRemoval: false
         idEstado:
             targetEntity: TblEstado
             cascade: {  }
@@ -268,5 +261,15 @@ BackendBundle\Entity\TblAlumno:
             joinColumns:
                 id_usuario_ficha:
                     referencedColumnName: id_usuario
+            orphanRemoval: false
+        idTipoBeca:
+            targetEntity: TblTipoBeca
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_beca:
+                    referencedColumnName: id_tipo_beca
             orphanRemoval: false
     lifecycleCallbacks: {  }

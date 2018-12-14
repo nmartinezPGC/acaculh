@@ -47,34 +47,17 @@ export class AlumnoService {
   * Funcion: FND-00002
   * Fecha: 28-07-2017
   * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API (usuario/new).
-  * Objetivo: Agregar nuevo Usuario
+  * a la API (alumno/new).
+  * Objetivo: Agregar nuevo Alumno
   *****************************************************/
-  registerUser(user_to_register) {
-    let json = JSON.stringify(user_to_register);
-    let params = "json=" + json;
+  registerNewAlumno(token, alumno_to_register) {
+    let json = JSON.stringify(alumno_to_register);
+    let params = "json=" + json + "&authorization=" + token;
     //console.log(json);
     let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + "/usuario/usuario-new", params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + "/alumno/new-alumno", params, { headers: headers }).map(res => res.json());
   }
-
-
-  /****************************************************
-  * Funcion: FND-00002.1
-  * Fecha: 09-10-2017
-  * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API ( usuario/change-pass-user ).
-  * Objetivo: Cambiar Password a Usuario
-  *****************************************************/
-  changePassUser(user_to_change_pass) {
-    let json = JSON.stringify(user_to_change_pass);
-    let params = "json=" + json + "&authorization=" + this.getToken();
-    //console.log(json);
-    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this._http.post(this.url + "/usuario/change-pass-user", params, { headers: headers }).map(res => res.json());
-  } // FIN | FND-00002
 
 
   /****************************************************

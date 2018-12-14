@@ -44,8 +44,16 @@ export class AlumnoComponent implements OnInit {
     Validators.required,
   ]);
 
+  nombre2 = new FormControl('', [
+    // Validators.required,
+  ]);
+
   apellido1 = new FormControl('', [
     Validators.required,
+  ]);
+
+  apellido2 = new FormControl('', [
+    // Validators.required,
   ]);
 
   emailFormControl = new FormControl('', [
@@ -57,17 +65,94 @@ export class AlumnoComponent implements OnInit {
     Validators.required,
   ]);
 
-  telefonoAlumno = new FormControl('', [
-    Validators.required,
+  telAlumno = new FormControl('', [
+    // Validators.required,
   ]);
 
   profesionAlumno = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   idGeneroAlumno = new FormControl('', [
     Validators.required,
   ]);
+
+  medioConoceAch = new FormControl('', [
+    Validators.required,
+  ]);
+
+  direccionAlumno = new FormControl('', [
+    Validators.required,
+  ]);
+
+  fechaNacimiento = new FormControl('', [
+    Validators.required,
+  ]);
+
+  hondureno = new FormControl('', [
+    Validators.required,
+  ]);
+  
+  nombrePadre = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  idProfesionPadre = new FormControl('', [
+    // Validators.required,
+  ]);
+  
+  nombreMadre = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  idProfesionMadre = new FormControl('', [
+    // Validators.required,
+  ]);
+  
+  trabajoPadre = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  telefonoTrabajoPadre = new FormControl('', [
+    // Validators.required,
+  ]);
+  
+  trabajoMadre = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  telefonoTrabajoMadre = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  nameEncargado = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  telEncargado = new FormControl();
+
+  probleSalud = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  referenciaAl = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  tipoBeca = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  nameEmergencia = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  telEmergencia = new FormControl('', [
+    // Validators.required,
+  ]);
+  
+  
+
   // Fin de validadores
 
   matcher = new MyErrorStateMatcher();
@@ -85,6 +170,7 @@ export class AlumnoComponent implements OnInit {
 
   public JsonOutgetlistaTipoBeca: any[];
   public JsonOutgetlistaGeneroAll: any[];
+  public JsonOutgetlistaMediosACHAll: any[];
 
   public _alumnoModel: AlumnoModel;
 
@@ -118,12 +204,12 @@ export class AlumnoComponent implements OnInit {
     });
 
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
-    this._alumnoModel = new AlumnoModel(0, "",
-      "", "", "", "", "", "",
-      0, 0, "", 0, null, true, 0,
-      "", 0, "", 0, "", 0, "", 0,
-      "", 0, "", 0,
-      "", "", "", 0, 0, 0, null, null,
+    this._alumnoModel = new AlumnoModel(0, "", // Identificacion
+      "", "", "", "", "", "", // Generales 1
+      0, 0, "", 0, null, true, 0, // Generales 2
+      "", 0, "", 0, "", 0, "", 0, // Padres
+      "", 0, "", 0, // Encargados
+      "", "", "", 0, 1, 0, null, null, // Complentarios
     );
 
     // Iniciamos las Listas Comunes
@@ -133,6 +219,7 @@ export class AlumnoComponent implements OnInit {
 
     this.getlistaTipoBecas();
     this.getlistaGenerosAll();
+    this.getlistaMediosACHAll();
   }
 
   employees = [
@@ -279,7 +366,7 @@ export class AlumnoComponent implements OnInit {
     * ( generos-all-list ).
     ******************************************************/
   getlistaGenerosAll() {
-    // Llamamos al Servicio que provee todas los Tipo Becas
+    // Llamamos al Servicio que provee todas los Generos
 
     this._listasComunes.listasComunes("", "genero-all-list").subscribe(
       response => {
@@ -299,6 +386,31 @@ export class AlumnoComponent implements OnInit {
       });
   } // FIN : FND-00002.1
 
+  /*****************************************************
+    * Funcion: FND-00002.2
+    * Fecha: 12-02-2018
+    * Descripcion: Carga la Lista de los Medios Conoce ACH
+    * Objetivo: Obtener la lista de Todos los Medios Concoce ACH
+    * de la BD, Llamando a la API, por su metodo
+    * ( medio-ach-all-list ).
+    ******************************************************/
+  getlistaMediosACHAll() {
+    // Llamamos al Servicio que provee todas los Medios ACH
+    this._listasComunes.listasComunes("", "medio-ach-all-list").subscribe(
+      response => {
+        // listas/profesiones-all-list | so redirect to return url
+        if (response.status == "error") {
+          //Mensaje de alerta del error en cuestion
+          this.JsonOutgetlistaMediosACHAll = response.data;
+          // this.itemList = [];
+          // alert(response.msg);
+          // this.addToast(4, "Error", response.msg);
+        } else {
+          this.JsonOutgetlistaMediosACHAll = response.data;
+        }
+      });
+  } // FIN : FND-00002.2
+
 
   /*****************************************************
     * Funcion: FND-00003
@@ -309,7 +421,31 @@ export class AlumnoComponent implements OnInit {
     * ( alumno/new-alumno ).
     ******************************************************/
   nuevoAlumno() {
-    alert('Datos de Alumno **** ' + this._alumnoModel.idGenero);
+    // Prepara los datos a Enviar
+    console.log(this._alumnoModel);
+    let token1 = this._alumnoServices.getToken();
+
+    let identity = this._alumnoServices.getIdentity();
+
+    let userInto = identity.sub;
+
+    this._alumnoModel.idUsuarioFicha = userInto;
+
+    // Llamamos al Servicio que ingresa el nuevo Alumno
+    this._alumnoServices.registerNewAlumno(token1, this._alumnoModel).subscribe(
+      response => {
+        // alumno/new-alumno
+        if (response.status == "error") {
+          //Mensaje de alerta del error en cuestion
+          // this.itemList = [];
+          alert(response.msg);
+          // this.addToast(4, "Error", response.msg);
+        } else {
+          // Inicia el Formulario
+          alert(response.msg);
+          this.ngOnInit();
+        }
+      });
   }
 
 }
