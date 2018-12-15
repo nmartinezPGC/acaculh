@@ -17,6 +17,7 @@ import {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSnackBarModule,
 } from '@angular/material';
 
 import { MatChipsModule } from '@angular/material/chips';
@@ -53,6 +54,7 @@ import { SystemPropertiesService } from '../shared/services/systemProperties.ser
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatSnackBarModule,
         CoreModule,
         PagesRouterModule],
     declarations: [

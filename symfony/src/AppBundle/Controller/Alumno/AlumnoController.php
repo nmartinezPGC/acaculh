@@ -145,14 +145,21 @@ class AlumnoController extends Controller {
                     // Instanciamos el Objeto Doctrine                    
                     $em = $this->getDoctrine()->getManager();
 
-                    // Ejecutamos la Consulta, para validar si el Alumno existe
+                    // Ejecutamos la Consulta por Cod Alumno, para validar si el Alumno existe
                     $isset_cod_alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
                             array(
                                 "codAlumno" => $cod_alumno
                     ));
 
+                    // Ejecutamos la Consulta por Email, para validar si el Alumno existe
+                    $isset_email_alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                            array(
+                                "email" => $email_alumno
+                    ));
+
                     //Verificamos que el retorno de la Funcion sea = 0 ********* 
-                    if ($isset_cod_alumno == NULL) {
+                    if (($isset_cod_alumno == NULL && $isset_cod_alumno == 0) &&
+                            ($isset_email_alumno == null && $isset_email_alumno == 0 )) {
                         // Seteo de Datos Generales de la tabla: TblCorrespondenciaEnc
                         $ingresoAlumnoNew = new TblAlumno();
 
@@ -261,50 +268,46 @@ class AlumnoController extends Controller {
                                 array(
                                     "idUsuario" => $id_usuario_ficha
                         ));
-                        // Parametros de Salida
-                        /* $mailSend = $usuario_asignado_send->getEmailFuncionario() ; // Get de mail de Funcionario Asignado
-                          $nombreSend = $usuario_asignado_send->getNombre1Funcionario() ; // Get de Nombre de Funcionario Asignado
-                          $apellidoSend = $usuario_asignado_send->getApellido1Funcionario() ; // Get de Apellido de Funcionario Asignado
+                        // Parametros de Salida                        
+                        //Creamos la instancia con la configuración
+                        $transport = \Swift_SmtpTransport::newInstance()
+                                ->setHost('smtp.gmail.com')
+                                ->setPort(587)
+                                ->setEncryption('tls')
+                                ->setStreamOptions(array(
+                                    'ssl' => array(
+                                        'allow_self_signed' => true,
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false
+                                    )
+                                        )
+                                )
+                                ->setUsername("nahum.sreci@gmail.com")
+                                ->setPassword('1897Juve')
+                                ->setTimeout(180);
+                        //echo "Paso 1";
+                        //Creamos la instancia del envío
+                        $mailer = \Swift_Mailer::newInstance($transport);
 
-                          //Creamos la instancia con la configuración
-                          $transport = \Swift_SmtpTransport::newInstance()
-                          ->setHost('smtp.gmail.com')
-                          ->setPort(587)
-                          ->setEncryption('tls')
-                          ->setStreamOptions(array(
-                          'ssl' => array(
-                          'allow_self_signed' => true,
-                          'verify_peer' => false,
-                          'verify_peer_name' => false
-                          )
-                          )
-                          )
-                          ->setUsername("nahum.sreci@gmail.com")
-                          ->setPassword('1897Juve')
-                          ->setTimeout(180);
-                          //echo "Paso 1";
-                          //Creamos la instancia del envío
-                          $mailer = \Swift_Mailer::newInstance($transport);
+                        //Creamos el mensaje
+                        $mail = \Swift_Message::newInstance()
+                                ->setSubject('Notificación de Ingreso de Alumno | ACACULH')
+                                //->setFrom(array($mailSend => $identity->nombre . " " .  $identity->apellido ))
+                                ->setFrom(array("nahum.sreci@gmail.com" => "Academia Culinaria Hondureña | ACACULH"))
+                                ->setTo($email_alumno)
+                                //->addCc([ $setTo_array_convertIn ])
+                                ->setBody(
+                                $this->renderView(
+                                        // app/Resources/views/Emails/registration.html.twig
+                                        'Emails/sendMail.html.twig', array('nombreAlumno' => $nombre_1, 'apellidoAlumno' => $apellido_1,
+                                    'codAlumno' => $cod_alumno, 'nombresAlumno' => $nombre_1 . " " . $nombre_2,
+                                    'apellidosAlumno' => $apellido_1 . " " . $apellido_2,
+                                    'fechaCreacion' => date_format($fecha_ingreso, "Y-m-d"), 'emailAlumno' => $email_alumno,
+                                    'telefonoAlumno' => $telefono_alumno, 'celularAlumno' => $celular_alumno,
+                                    'direccionAlumno' => $direccion_alumno,
+                                        )
+                                ), 'text/html');
 
-                          //Creamos el mensaje
-                          $mail = \Swift_Message::newInstance()
-                          ->setSubject('Notificación de Ingreso de Comunicacion | SICDOC')
-                          //->setFrom(array($mailSend => $identity->nombre . " " .  $identity->apellido ))
-                          ->setFrom(array("correspondenciascpi@sreci.gob.hn" => "Administrador SICDOC" ))
-                          ->setTo($mailSend)
-                          //->addCc([ $setTo_array_convertIn ])
-                          ->setBody(
-                          $this->renderView(
-                          // app/Resources/views/Emails/registration.html.twig
-                          'Emails/sendMail.html.twig',
-                          array( 'name' => $nombreSend, 'apellidoOficio' => $apellidoSend,
-                          'oficioExtNo' => $cod_referenciaSreci, 'oficioInNo' => $cod_correspondencia . "-" . $new_secuencia ,
-                          'temaOficio' => $tema_correspondencia, 'descOficio' => $desc_correspondencia,
-                          'fechaIngresoOfi' => strval($fecha_maxima_entrega),
-                          'fechaIngresoCom' => date_format($fecha_ingreso, "Y-m-d"), 'obsComunicacion' => $observacion_correspondencia,
-                          'institucionCom' => $institucion->getPerfilInstitucion())
-                          ), 'text/html' );
-                         */
                         // Insercion de los Contactos en Copia
                         // Array | addCC                            
                         /* if ( $setTomail != null && $setTomail != ''  ) {
@@ -358,7 +361,7 @@ class AlumnoController extends Controller {
                         //}
                         //} // FIN Array | Attach
                         // Envia el Correo con todos los Parametros
-                        //$resuly = $mailer->send($mail);
+                        $resuly = $mailer->send($mail);
                         // ***** Fin de Envio de Correo ****************************
                         //Consulta de el Alumno recien Ingresado *******************
                         $alumnoConsulta = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
@@ -379,7 +382,7 @@ class AlumnoController extends Controller {
                         $data = array(
                             "status" => "error",
                             "code" => 400,
-                            "msg" => "Ya existe un Alumno con este Codigo: " . $cod_alumno . ", ingresa uno distinto para"
+                            "msg" => "Lo sentimos, ya existe un Alumno con este Codigo: " . $cod_alumno . " o Correo: " . $email_alumno . ",ingresa uno distinto para"
                             . " continuar",
                             "data" => $isset_cod_alumno
                         );

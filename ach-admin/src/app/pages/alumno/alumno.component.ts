@@ -8,6 +8,8 @@ import { ListasComunesService } from '../../shared/services/listas.service';
 import { AlumnoService } from './service/alumno.service';
 import { AlumnoModel } from './model/alumno.model';
 
+import { MatSnackBar } from '@angular/material';
+
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -92,7 +94,7 @@ export class AlumnoComponent implements OnInit {
   hondureno = new FormControl('', [
     Validators.required,
   ]);
-  
+
   nombrePadre = new FormControl('', [
     // Validators.required,
   ]);
@@ -100,7 +102,7 @@ export class AlumnoComponent implements OnInit {
   idProfesionPadre = new FormControl('', [
     // Validators.required,
   ]);
-  
+
   nombreMadre = new FormControl('', [
     // Validators.required,
   ]);
@@ -108,7 +110,7 @@ export class AlumnoComponent implements OnInit {
   idProfesionMadre = new FormControl('', [
     // Validators.required,
   ]);
-  
+
   trabajoPadre = new FormControl('', [
     // Validators.required,
   ]);
@@ -116,7 +118,7 @@ export class AlumnoComponent implements OnInit {
   telefonoTrabajoPadre = new FormControl('', [
     // Validators.required,
   ]);
-  
+
   trabajoMadre = new FormControl('', [
     // Validators.required,
   ]);
@@ -150,8 +152,8 @@ export class AlumnoComponent implements OnInit {
   telEmergencia = new FormControl('', [
     // Validators.required,
   ]);
-  
-  
+
+
 
   // Fin de validadores
 
@@ -180,13 +182,20 @@ export class AlumnoComponent implements OnInit {
   ******************************************************/
   constructor(private _formBuilder: FormBuilder,
     private _listasComunes: ListasComunesService,
-    private _alumnoServices: AlumnoService) {
+    private _alumnoServices: AlumnoService,
+    public snackBar: MatSnackBar) {
     // Seteo de la Ruta de la Url Config
     this.urlConfigLocal = this._alumnoServices.url;
     this.urlResourseLocal = this._alumnoServices.urlResourses;
     // this.urlComplete = this.urlResourseLocal + "uploads/correspondencia/";
   }
 
+  // Configuracion del Mensaje de Confirmacion
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
 
   /*****************************************************
   * Funcion: ngOnInit
@@ -439,10 +448,12 @@ export class AlumnoComponent implements OnInit {
           //Mensaje de alerta del error en cuestion
           // this.itemList = [];
           alert(response.msg);
+          this.openSnackBar(response.msg, 'Error al ingresar nuevo Alumno');
           // this.addToast(4, "Error", response.msg);
         } else {
           // Inicia el Formulario
           alert(response.msg);
+          this.openSnackBar(response.msg, 'Ingreso de nuevo Alumno');
           this.ngOnInit();
         }
       });
