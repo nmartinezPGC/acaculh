@@ -138,8 +138,9 @@ class AlumnoController extends Controller {
                 $hora_ingreso = new \DateTime('now');
                 $hora_ingreso->format('H:i');
 
-                //$fecha_nacimiento = date('Y-m-d H:i:s');
-                //var_dump($fecha_ingreso);
+                // $fecha_nacimiento = date('Y-m-d H:i:s');
+                $fecha_nacimiento_2 = new \DateTime($fecha_nacimiento);
+                // var_dump($fecha_nacimiento_2);
                 // Evaluamos que el Codigo del Alumno no se vacio
                 if ($cod_alumno != NULL && $nombre_1 != NULL && $apellido_1 != NULL && $telefono_alumno != 0 && $email_alumno != NULL && $email_alumno != NULL) {
                     // Instanciamos el Objeto Doctrine                    
@@ -185,7 +186,8 @@ class AlumnoController extends Controller {
                         ));
                         $ingresoAlumnoNew->setIdGenero($generoAlumno); // Set Entidad de Genero
 
-                        $ingresoAlumnoNew->setFechaNacimiento($fecha_ingreso);
+                        $ingresoAlumnoNew->setFechaNacimiento($fecha_nacimiento_2);
+                        // var_dump( date( $fecha_nacimiento) );
                         $ingresoAlumnoNew->setHondureno($hondureno);
 
                         // Instanciamos de la Clase TblProfesion de Alumno
@@ -394,7 +396,7 @@ class AlumnoController extends Controller {
                     "status" => "error",
                     "desc" => "Eror al enviar la informacion serializada, el Json no ha sido enviado",
                     "code" => 400,
-                    "msg" => "Comunicación no creada, falta ingresar los parametros !!"
+                    "msg" => "Alumno no creado, falta ingresar los parametros !!"
                 );
             }
         } else {

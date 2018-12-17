@@ -37,12 +37,12 @@ export class AlumnoModel {
     public telefonoTrabajoPadre: number,
     public trabajoMadre: string,
     public telefonoTrabajoMadre: number,
-    
+
     public nombreEncargado: string,
     public telefonoEncargado: number,
     public nombreEmergencia: string,
     public telefonoEmergencia: number,
-    
+
     public medioConoceAch: string,
     public problemasSalud: string,
     public referencia: string,

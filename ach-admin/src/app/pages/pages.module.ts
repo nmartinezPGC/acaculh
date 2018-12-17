@@ -28,9 +28,10 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { CoreModule } from '../core/core.module';
 import { AlumnoComponent } from './alumno/alumno.component';
-import { ServicesComponent } from "../pages/services/services.component";
+import { ServicesComponent } from '../pages/services/services.component';
 import { AlumnoService } from './alumno/service/alumno.service';
 import { SystemPropertiesService } from '../shared/services/systemProperties.service';
+import { InvoiceAlumnoComponent } from './alumno/invoice.alumno/invoice.alumno.component';
 
 @NgModule({
     imports: [
@@ -59,9 +60,10 @@ import { SystemPropertiesService } from '../shared/services/systemProperties.ser
         PagesRouterModule],
     declarations: [
         ContactComponent,
-        AboutComponent,        
+        AboutComponent,
         AlumnoComponent,
         ServicesComponent,
+        InvoiceAlumnoComponent,
     ],
     exports: [
     ],

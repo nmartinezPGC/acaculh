@@ -6,7 +6,7 @@
 
       <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
           {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-        </button> -->
+        </button>  -->
       <mat-horizontal-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="firstFormGroup">
           <form [formGroup]="firstFormGroup">
@@ -257,8 +257,7 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput maxlength="8" placeholder="Telefono Emergencia" type="number" name="telEmergencia"
-                      id="telEmergencia" [formControl]="telEmergencia" ngControl="telefonoEmergencia"
-                      [(ngModel)]="_alumnoModel.telefonoEmergencia">
+                      id="telEmergencia" [formControl]="telEmergencia" ngControl="telefonoEmergencia" [(ngModel)]="_alumnoModel.telefonoEmergencia">
                     <!-- <mat-hint align="end">{{telEmergencia.value.length}} / 8</mat-hint> -->
                   </mat-form-field>
                 </td>
@@ -294,7 +293,7 @@
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Medio Conoce ACH" [formControl]="medioConoceAch" [errorStateMatcher]="matcher"
                       name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch" [(ngModel)]="_alumnoModel.medioConoceAch">
-                      <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll" [value]="medioConoceAchJson.idMedioConoceAch">
+                      <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll" [value]="medioConoceAchJson.descripcionMedioConoceAch">
                         {{ medioConoceAchJson.descripcionMedioConoceAch }}
                       </mat-option>
                     </mat-select>
@@ -303,8 +302,8 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput maxlength="250" placeholder="Problemas de Salud" name="probleSalud"
-                      id="probleSalud" [formControl]="probleSalud" ngControl="problemasSalud" [(ngModel)]="_alumnoModel.problemasSalud">
+                    <input matInput maxlength="250" placeholder="Problemas de Salud" name="probleSalud" id="probleSalud"
+                      [formControl]="probleSalud" ngControl="problemasSalud" [(ngModel)]="_alumnoModel.problemasSalud">
                     <!-- <mat-hint align="end">{{problemasSalud.value.length}} / 250</mat-hint> -->
                   </mat-form-field>
                 </td>
@@ -344,16 +343,10 @@
 
             <!-- <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button> -->
-            <mat-form-field>
-              <input matInput value="Disco party!" placeholder="Message" #message>
-            </mat-form-field>
             
-            <mat-form-field>
-              <input matInput value="Dance" placeholder="Action" #action>
-            </mat-form-field>
-            
-            <button mat-button (click)="openSnackBar(message.value, action.value)">Show snack-bar</button>
-            
+            <app-invoicealumno></app-invoicealumno>
+            <button (click)='enviarMensaje()'Saludar hijo>Boton</button>
+
           </div>
         </mat-step>
       </mat-horizontal-stepper>
