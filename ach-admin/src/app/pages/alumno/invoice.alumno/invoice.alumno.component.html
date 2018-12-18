@@ -1,4 +1,4 @@
-<p>{{mensaje}}</p>
+<!-- <p>{{mensaje}}</p> -->
 
 <mat-card class="example-card" *ngIf="showTarget">
   <mat-card-header>
@@ -9,36 +9,129 @@
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content>
     <!-- Datos Generales del Alumno -->
+    <!-- <mat-card>
+      <mat-card-header> -->
+    <h3> Datos Generales </h3>
+    <!-- </mat-card-header> -->
+    <!-- <mat-card-content> -->
+    <table>
+      <tr>
+        <td>
+          <strong>Codigo del Alumno :</strong> {{codAlumno}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Primer Nombre : </strong> {{nombre1}}
+        </td>
+        <td>
+          <strong> Segundo Nombre :</strong> {{nombre2}}
+        </td>
+        <td>
+          <strong>Primer Apellido : </strong> {{apellido1}}
+        </td>
+        <td>
+          <strong> Segundo Apellido :</strong> {{apellido2}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Email : </strong> {{email}}
+        </td>
+        <td>
+          <strong> Telefono :</strong> {{telefono}}
+        </td>
+        <td>
+          <strong>Celular : </strong> {{celular}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Direccion : </strong> {{direccion}}
+        </td>
+        <td>
+          <strong>Fecha Nacimiento : </strong> {{fechaNacimiento | date: 'dd/MM/yyyy' }}
+        </td>
+        <td>
+          <strong>Profesion : </strong> {{descProfesion}}
+        </td>
+      </tr>
+    </table>
+
+    <br>
+    <mat-divider></mat-divider>
+    <!-- </mat-card-content> -->
+
+    <!-- </mat-card> -->
+    <!-- Segunda opcion para Imprimir -->
+    <!-- <mat-card> -->
+    <!-- <mat-card-header> -->
+    <h3> Seccion de Datos Padres </h3>
+    <!-- </mat-card-header> -->
+    <table>
+      <tr>
+        <td>
+          <strong>Nombres Padre :</strong> {{nombrePadre}}
+        </td>
+        <td>
+          <strong>Profesion Padre :</strong> {{descProfesionPadre}}
+        </td>
+        <td>
+          <strong>Trabajo Padre :</strong> {{trabajoPadre}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Nombres Madre : </strong> {{nombreMadre}}
+        </td>
+        <td>
+          <strong>Profesion Madre :</strong> {{descProfesionMadre}}
+        </td>
+        <td>
+          <strong>Trabajo Madre :</strong> {{trabajoMadre}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Nombres Encargado :</strong> {{nombreEncargado}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Nombres Emergencia : </strong> {{nombreEmergencia}}
+        </td>
+      </tr>
+    </table>
+
+    <br>
+    <mat-divider></mat-divider>
+    <!-- </mat-card>
     <mat-card>
-      <mat-card-header>
-        <h3> Datos Generales </h3>
-      </mat-card-header>
-      <mat-card-content>
-        <table>
-          <tr>
-            <td>
-              <strong>Codigo del Alumno :</strong> {{mensaje}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Primer Nombre : </strong> {{nombre1}}
-            </td>
-            <td>
-              <strong> Segundo Nombre :</strong> {{nombre2}}
-            </td>
-            <td>
-              <strong>Primer Apellido : </strong> {{apellido1}}
-            </td>
-            <td>
-              <strong> Segundo Apellido :</strong> {{apellido2}}
-            </td>
-          </tr>
-        </table>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>Seccion de Datos Padres</mat-card>
-    <mat-card>Seccion de Datos Complementarios</mat-card>
+      <mat-card-header> -->
+    <h3> Seccion de Datos Complementarios </h3>
+    <table>
+      <tr>
+        <td>
+          <strong>Medio Conoce ACACULH :</strong> {{medioConoceAch}}
+        </td>
+        <td>
+          <strong>Referencia :</strong> {{referencia}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Problemas de Salud :</strong> {{profesionPadre}}
+        </td>
+        <td>
+          <strong>Tipo de Beca :</strong> {{profesionPadre}}
+        </td>
+      </tr>
+    </table>
+
+    <br>
+    <mat-divider></mat-divider>
+    <!-- </mat-card-header> -->
+    <!-- </mat-card> -->
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>LIKE</button>

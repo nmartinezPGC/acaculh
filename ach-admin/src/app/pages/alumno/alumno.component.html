@@ -30,9 +30,9 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Primer Nombre" [formControl]="nombre1" [errorStateMatcher]="matcher"
+                    <input matInput placeholder="Primer Nombre" [formControl]="nombre11" [errorStateMatcher]="matcher"
                       name="nombre1" id="nombre1" ngControl="nombre1" [(ngModel)]="_alumnoModel.nombre1">
-                    <mat-error *ngIf="nombre1.hasError('required')">
+                    <mat-error *ngIf="nombre11.hasError('required')">
                       Primer Nombre es: <strong>obligatorio</strong>
                     </mat-error>
                   </mat-form-field>
@@ -127,7 +127,8 @@
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Profesion Alumno" [formControl]="profesionAlumno" [errorStateMatcher]="matcher"
                       name="idProfesion" id="idProfesion" ngControl="idProfesion" [(ngModel)]="_alumnoModel.idProfesion">
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno" [value]="profesion.idProfesion">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno" [value]="profesion.idProfesion"
+                        (click)="profesionDesc(profesion.descripcionProfesion, 1)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -173,7 +174,8 @@
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Profesion Padre" name="idProfesionPadre" id="idProfesionPadre"
                       [formControl]="idProfesionPadre" ngControl="idProfesionPadre" [(ngModel)]="_alumnoModel.idProfesionPadre">
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesPadre" [value]="profesion.idProfesion">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesPadre" [value]="profesion.idProfesion"
+                        (click)="profesionDesc(profesion.descripcionProfesion, 2)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -190,7 +192,8 @@
                   <mat-form-field>
                     <mat-select placeholder="Profesion Madre" name="idProfesionPadre" id="idProfesionMadre"
                       [formControl]="idProfesionMadre" ngControl="idProfesionMadre" [(ngModel)]="_alumnoModel.idProfesionMadre">
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesMadre" [value]="profesion.idProfesion">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesMadre" [value]="profesion.idProfesion"
+                        (click)="profesionDesc(profesion.descripcionProfesion, 3)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -291,7 +294,7 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Medio Conoce ACH" [formControl]="medioConoceAch" [errorStateMatcher]="matcher"
+                    <mat-select placeholder="Medio Conoce ACACULH" [formControl]="medioConoceAch" [errorStateMatcher]="matcher"
                       name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch" [(ngModel)]="_alumnoModel.medioConoceAch">
                       <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll" [value]="medioConoceAchJson.descripcionMedioConoceAch">
                         {{ medioConoceAchJson.descripcionMedioConoceAch }}
@@ -318,7 +321,8 @@
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Tipo de Beca" [formControl]="tipoBeca" [errorStateMatcher]="matcher"
                       ngControl="idTipoBeca" [(ngModel)]="_alumnoModel.idTipoBeca">
-                      <mat-option *ngFor="let tipoBeca of JsonOutgetlistaTipoBeca" [value]="tipoBeca.idTipoBeca">
+                      <mat-option *ngFor="let tipoBeca of JsonOutgetlistaTipoBeca" [value]="tipoBeca.idTipoBeca" 
+                      (click)="profesionDesc(tipoBeca.descTipoBeca, 3)">
                         {{ tipoBeca.descTipoBeca }}
                       </mat-option>
                     </mat-select>
@@ -343,9 +347,9 @@
 
             <!-- <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button> -->
-            
+
             <app-invoicealumno></app-invoicealumno>
-            <button (click)='enviarMensaje()'Saludar hijo>Boton</button>
+            <button (click)='enviarMensaje()' Saludar hijo>Boton</button>
 
           </div>
         </mat-step>

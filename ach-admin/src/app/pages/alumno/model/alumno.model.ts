@@ -27,12 +27,15 @@ export class AlumnoModel {
     public fechaNacimiento: Date,
     public hondureno: boolean,
     public idProfesion: number,
+    public descProfesion: string,
 
     // Padres
     public nombrePadre: string,
     public idProfesionPadre: number,
+    public descProfesionPadre: string,
     public nombreMadre: string,
     public idProfesionMadre: number,
+    public descProfesionMadre: string,
     public trabajoPadre: string,
     public telefonoTrabajoPadre: number,
     public trabajoMadre: string,
@@ -49,6 +52,7 @@ export class AlumnoModel {
     public idUsuarioFicha: number,
     public idEstado: number,
     public idTipoBeca: number,
+    public descTipoBeca: string,
     public fechaIngreso: Date,
     public horaIngreso: Date,
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -13,6 +13,7 @@ import { InvoiceAlumnoComponent } from './invoice.alumno/invoice.alumno.componen
 
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { switchAll } from 'rxjs/operators';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -50,12 +51,12 @@ export class AlumnoComponent implements OnInit {
     Validators.required,
   ]);
 
-  nombre1 = new FormControl('', [
+  nombre11 = new FormControl('', [
     Validators.required,
   ]);
 
   nombre2 = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   apellido1 = new FormControl('', [
@@ -63,7 +64,7 @@ export class AlumnoComponent implements OnInit {
   ]);
 
   apellido2 = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   emailFormControl = new FormControl('', [
@@ -76,7 +77,7 @@ export class AlumnoComponent implements OnInit {
   ]);
 
   telAlumno = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   profesionAlumno = new FormControl('', [
@@ -96,57 +97,57 @@ export class AlumnoComponent implements OnInit {
   ]);
 
   fechaNacimiento = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   hondureno = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   nombrePadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   idProfesionPadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   nombreMadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   idProfesionMadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   trabajoPadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   telefonoTrabajoPadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   trabajoMadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   telefonoTrabajoMadre = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   nameEncargado = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   telEncargado = new FormControl();
 
   probleSalud = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   referenciaAl = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   tipoBeca = new FormControl('', [
@@ -154,11 +155,11 @@ export class AlumnoComponent implements OnInit {
   ]);
 
   nameEmergencia = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   telEmergencia = new FormControl('', [
-    Validators.required,
+    // Validators.required,
   ]);
 
   // Fin de validadores
@@ -221,10 +222,10 @@ export class AlumnoComponent implements OnInit {
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
     this._alumnoModel = new AlumnoModel(0, '', // Identificacion
       '', '', '', '', '', '', // Generales 1
-      0, 0, '', 0, null, true, 0, // Generales 2
-      '', 0, '', 0, '', 0, '', 0, // Padres
+      0, 0, '', 0, null, true, 0, '', // Generales 2
+      '', 0, '', '', 0, '', '', 0, '', 0, // Padres
       '', 0, '', 0, // Encargados
-      '', '', '', 0, 1, 0, null, null, // Complentarios
+      '', '', '', 0, 1, 0, '', null, null, // Complentarios
     );
 
     // Iniciamos las Listas Comunes
@@ -496,9 +497,45 @@ export class AlumnoComponent implements OnInit {
       });
   }
 
+
+  /*****************************************************
+    * Funcion: FND-00004
+    * Fecha: 17-12-2018
+    * Descripcion: Enviamos los Datos a Componente Hijo
+    * Objetivo: Enviar datos para Imprimir Ficha
+    * (  ).
+    ******************************************************/
   enviarMensaje() {
     // console.log(this._alumnoModel);
     this.hijo.saludo(this._alumnoModel);
+  }
+
+  /*****************************************************
+    * Funcion: FND-00005
+    * Fecha: 17-12-2018
+    * Descripcion: Enviar la Profesion en Descripcion
+    * Objetivo: Enviar la Profesion en Descripcion
+    * para Imprimir Ficha
+    ******************************************************/
+  profesionDesc(descProfesion: string, indicatorSet: number) {
+    // Set de dato de la Profesion
+    switch (indicatorSet) {
+      case 1:
+        this._alumnoModel.descProfesion = descProfesion;
+        break;
+      case 2:
+        this._alumnoModel.descProfesionPadre = descProfesion;
+        break;
+      case 3:
+        this._alumnoModel.descProfesionMadre = descProfesion;
+        break;
+      case 4:
+        this._alumnoModel.descTipoBeca = descProfesion;
+        break;
+      default:
+        break;
+    }
+    console.log('Datos de Profesion del Alumno ' + descProfesion);
   }
 
 }
