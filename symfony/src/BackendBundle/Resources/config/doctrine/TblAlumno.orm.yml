@@ -22,7 +22,7 @@ BackendBundle\Entity\TblAlumno:
                 - id_profesion_madre
         f6_idx:
             columns:
-                - medio_conoce_ach
+                - id_medio_conoce_ach
         f6_idx1:
             columns:
                 - id_usuario_ficha
@@ -86,7 +86,7 @@ BackendBundle\Entity\TblAlumno:
                 fixed: false
         telefono:
             type: integer
-            nullable: false
+            nullable: true
             options:
                 unsigned: false
         celular:
@@ -102,7 +102,7 @@ BackendBundle\Entity\TblAlumno:
                 fixed: false
         fechaNacimiento:
             type: date
-            nullable: false
+            nullable: true
             column: fecha_nacimiento
         hondureno:
             type: boolean
@@ -173,13 +173,13 @@ BackendBundle\Entity\TblAlumno:
             options:
                 unsigned: false
             column: telefono_emergencia
-        medioConoceAch:
+        idMedioConoceAch:
             type: string
             nullable: true
             length: 150
             options:
                 fixed: false
-            column: medio_conoce_ach
+            column: id_medio_conoce_ach
         problemasSalud:
             type: string
             nullable: true

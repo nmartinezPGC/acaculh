@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use BackendBundle\Entity\TblPago;
 
 class AlumnoController extends Controller {
 
@@ -30,11 +31,39 @@ class AlumnoController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
+        // Parametros de la Consulta
+        $idDireccionSreciIn = $request->query->getInt("idDireccionSreci", null);
+
+        $opt = 0;
+        // Condicion de Direccion SRECI
+        $idDireccionSreciIn = 1;
+
+        if ($idDireccionSreciIn != 0 || $idDireccionSreciIn != null) {
+            $opt = 1;
+            $dql = $em->createQuery('SELECT A.idAlumno, A.codAlumno, A.email, '
+                    . "CONCAT( A.nombre1, ' ', A.nombre2) as nombres, "
+                    . "CONCAT( A.apellido1, ' ', A.apellido2) as apellidos, "
+                    . "A.celular, A.idMedioConoceAch medioConoceAch, C.descTipoBeca, "
+                    . "B.descripcionEstado, D.montoPago "
+                    . 'FROM BackendBundle:TblAlumno A '
+                    . 'INNER JOIN BackendBundle:TblEstado B WITH B.idEstado = A.idEstado '
+                    . 'INNER JOIN BackendBundle:TblTipoBeca C WITH C.idTipoBeca = A.idTipoBeca '
+                    . 'INNER JOIN BackendBundle:TblPago D WITH D.idAlumno = A.idAlumno '
+                    . 'WHERE D.idTipoPago = :idTipoPago '
+                    . 'ORDER BY A.idAlumno ')
+             ->setParameter('idTipoPago', 1);
+        }
+
+        // Ejecucion del Query
+        $alumnosAllList = $dql->getResult();
+
         // Query para Obtener todos los Alumnos Registrados de la Tabla: TblAlumno
-        $alumnosAllList = $em->getRepository("BackendBundle:TblAlumno")->findBy(
-                array(
-                    "idEstado" => 1
-        ));
+        /* $alumnosAllList = $em->getRepository("BackendBundle:TblAlumno")->findBy(
+          array(
+          "idEstado" => 1
+          ));
+         * 
+         */
 
         // Total de Alumnos
         $countAlumnos = count($alumnosAllList);
@@ -43,6 +72,7 @@ class AlumnoController extends Controller {
             $data = array(
                 "status" => "success",
                 "code" => 200,
+                "totalRecord" => $countAlumnos,
                 "data" => $alumnosAllList
             );
         } else {
@@ -132,6 +162,9 @@ class AlumnoController extends Controller {
                 $id_usuario_ficha = ($params->idUsuarioFicha != null) ? $params->idUsuarioFicha : 0;
                 $id_estado = ($params->idEstado != null) ? $params->idEstado : 0;
                 $id_tipo_beca = ($params->idTipoBeca != null) ? $params->idTipoBeca : 0;
+
+                $id_forma_pago = ($params->idFormaPago != null) ? $params->idFormaPago : 0;
+                $monto_matricula = ($params->montoMatricula != null) ? $params->montoMatricula : 0;
 
                 $fecha_ingreso = new \DateTime('now');
 
@@ -257,9 +290,63 @@ class AlumnoController extends Controller {
                         $ingresoAlumnoNew->setFechaIngreso($fecha_ingreso);
                         $ingresoAlumnoNew->setHoraIngreso($hora_ingreso);
 
-                        //Realizar la Persistencia de los Datos y enviar a la BD
+                        // Realizar la Persistencia de los Datos y enviar a la BD
                         $em->persist($ingresoAlumnoNew);
-                        //Realizar la actualizacion en el storage de la BD
+                        // Realizar la actualizacion en el storage de la BD
+                        $em->flush();
+
+
+                        // *****************************************************
+                        // Ingreso de la Matricula del Alumno en la Tabla: TblPago                 
+                        // Seteo de Datos Generales de la tabla: TblPago
+                        $pagoAlumnoMatricula = new TblPago();
+
+                        // Ejecutamos la Consulta por Cod Alumno, para ingresar el Pago de la Matricula
+                        $pagoAlumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "codAlumno" => $cod_alumno
+                        ));
+                        $pagoAlumnoMatricula->setIdAlumno($pagoAlumno);
+
+                        // Instanciamos de la Clase TblEstado
+                        $estadoPagoAlumno = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
+                                array(
+                                    "idEstado" => 3 // Recibido
+                        ));
+                        $pagoAlumnoMatricula->setIdEstadoPago($estadoPagoAlumno);
+
+                        // Instanciamos de la Clase TblFormaPago
+                        $formaPagoAlumno = $em->getRepository("BackendBundle:TblFormaPago")->findOneBy(
+                                array(
+                                    "idFormaPago" => $id_forma_pago
+                        ));
+                        $pagoAlumnoMatricula->setIdFormaPago($formaPagoAlumno);
+
+                        // Instanciamos de la Clase TblTipoPago
+                        $tipoPagoAlumno = $em->getRepository("BackendBundle:TblTipoPago")->findOneBy(
+                                array(
+                                    "idTipoPago" => 1
+                        ));
+                        $pagoAlumnoMatricula->setIdTipoPago($tipoPagoAlumno);
+
+                        // Instanciamos de la Clase TblSecuenciales
+                        $secuenciaPagoAlumno = $em->getRepository("BackendBundle:TblSecuenciales")->findOneBy(
+                                array(
+                                    "codSecuencia" => 'SEC-PAM'
+                        ));
+                        $pagoAlumnoMatricula->setCodDocumento('SEC-PAM' . $secuenciaPagoAlumno->getValor1());
+                        // Aumentamos el Valor de l Secuencia
+                        $secuenciaPagoAlumno->setValor1($secuenciaPagoAlumno->getValor1() + 1);
+                        
+                        $pagoAlumnoMatricula->setFechaPago($fecha_ingreso);
+                        $pagoAlumnoMatricula->setHoraPago($hora_ingreso);
+                        $pagoAlumnoMatricula->setConceptoPago('Pago de Matricula por valor de : ' . $monto_matricula);
+                        $pagoAlumnoMatricula->setMontoPago($monto_matricula);
+
+                        // Realizar la Persistencia de los Datos y enviar a la BD
+                        $em->persist($pagoAlumnoMatricula);
+                        $em->persist($secuenciaPagoAlumno);
+                        // Realizar la actualizacion en el storage de la BD
                         $em->flush();
 
                         // Envio de Correo despues de la Grabacion de Datos
@@ -270,6 +357,7 @@ class AlumnoController extends Controller {
                                 array(
                                     "idUsuario" => $id_usuario_ficha
                         ));
+
                         // Parametros de Salida                        
                         //Creamos la instancia con la configuración
                         $transport = \Swift_SmtpTransport::newInstance()
@@ -307,6 +395,8 @@ class AlumnoController extends Controller {
                                     'fechaCreacion' => date_format($fecha_ingreso, "Y-m-d"), 'emailAlumno' => $email_alumno,
                                     'telefonoAlumno' => $telefono_alumno, 'celularAlumno' => $celular_alumno,
                                     'direccionAlumno' => $direccion_alumno,
+                                    // 'formaPago' => $formaPagoAlumno->getDescFormaPago, 
+                                    'montoPago' => $monto_matricula,
                                         )
                                 ), 'text/html');
 

@@ -1,140 +1,220 @@
 <!-- <p>{{mensaje}}</p> -->
 
-<mat-card class="example-card" *ngIf="showTarget">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Academia Culinaria Hondureña</mat-card-title>
-    <mat-card-subtitle>ACACULH</mat-card-subtitle>
-  </mat-card-header>
-  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-  <mat-card-content>
-    <!-- Datos Generales del Alumno -->
-    <!-- <mat-card>
+<div id="exampleCard" #exampleCard>
+  <mat-card class="example-card" *ngIf="showTarget">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <img src="../../../../assets/logos/logo-academia-culinaria-500.png" width="250" height="200" alt="ACACULH">
+      <!-- <mat-card-title>Academia Culinaria Hondureña</mat-card-title> -->
+      <!-- <mat-card-subtitle>ACACULH</mat-card-subtitle> -->
+    </mat-card-header>
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-content>
+      <!-- Datos Generales del Alumno -->
+      <!-- <mat-card>
       <mat-card-header> -->
-    <h3> Datos Generales </h3>
-    <!-- </mat-card-header> -->
-    <!-- <mat-card-content> -->
-    <table>
-      <tr>
-        <td>
-          <strong>Codigo del Alumno :</strong> {{codAlumno}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Primer Nombre : </strong> {{nombre1}}
-        </td>
-        <td>
-          <strong> Segundo Nombre :</strong> {{nombre2}}
-        </td>
-        <td>
-          <strong>Primer Apellido : </strong> {{apellido1}}
-        </td>
-        <td>
-          <strong> Segundo Apellido :</strong> {{apellido2}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Email : </strong> {{email}}
-        </td>
-        <td>
-          <strong> Telefono :</strong> {{telefono}}
-        </td>
-        <td>
-          <strong>Celular : </strong> {{celular}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Direccion : </strong> {{direccion}}
-        </td>
-        <td>
-          <strong>Fecha Nacimiento : </strong> {{fechaNacimiento | date: 'dd/MM/yyyy' }}
-        </td>
-        <td>
-          <strong>Profesion : </strong> {{descProfesion}}
-        </td>
-      </tr>
-    </table>
+      <h3> Datos Generales </h3>
+      <!-- </mat-card-header> -->
+      <!-- <mat-card-content> -->
+          <!-- <mat-toolbar class="table-header">
+              <h1 class="mat-headline center-align" >Responsive Tables</h1>
+            </mat-toolbar> -->
+      <table class="table">
+        <tr>
+          <td>
+            <strong>Codigo del Alumno :</strong> {{codAlumno}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Primer Nombre : </strong> {{nombre1}}
+          </td>
+          <td>
+            <strong> Segundo Nombre :</strong> {{nombre2}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Primer Apellido : </strong> {{apellido1}}
+          </td>
+          <td>
+            <strong> Segundo Apellido :</strong> {{apellido2}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Email : </strong> {{email}}
+          </td>
+          <td>
+            <strong> Telefono :</strong> {{telefono}}
+          </td>
+          <td>
+            <strong>Celular : </strong> {{celular}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Direccion : </strong> {{direccion}}
+          </td>
+          <td>
+            <strong>Fecha Nacimiento : </strong> {{fechaNacimiento | date: 'dd/MM/yyyy' }}
+          </td>
+          <td>
+            <strong>Profesion : </strong> {{descProfesion}}
+          </td>
+        </tr>
+      </table>
 
-    <br>
-    <mat-divider></mat-divider>
-    <!-- </mat-card-content> -->
+      <br>
+      <mat-divider></mat-divider>
+      <!-- </mat-card-content> -->
 
-    <!-- </mat-card> -->
-    <!-- Segunda opcion para Imprimir -->
-    <!-- <mat-card> -->
-    <!-- <mat-card-header> -->
-    <h3> Seccion de Datos Padres </h3>
-    <!-- </mat-card-header> -->
-    <table>
-      <tr>
-        <td>
-          <strong>Nombres Padre :</strong> {{nombrePadre}}
-        </td>
-        <td>
-          <strong>Profesion Padre :</strong> {{descProfesionPadre}}
-        </td>
-        <td>
-          <strong>Trabajo Padre :</strong> {{trabajoPadre}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Nombres Madre : </strong> {{nombreMadre}}
-        </td>
-        <td>
-          <strong>Profesion Madre :</strong> {{descProfesionMadre}}
-        </td>
-        <td>
-          <strong>Trabajo Madre :</strong> {{trabajoMadre}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Nombres Encargado :</strong> {{nombreEncargado}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Nombres Emergencia : </strong> {{nombreEmergencia}}
-        </td>
-      </tr>
-    </table>
+      <!-- </mat-card> -->
+      <!-- Segunda opcion para Imprimir -->
+      <!-- <mat-card> -->
+      <!-- <mat-card-header> -->
+      <h3> Seccion de Datos Padres </h3>
+      <!-- </mat-card-header> -->
+      <table>
+        <tr>
+          <td>
+            <strong>Nombres Padre :</strong> {{nombrePadre}}
+          </td>
+          <td>
+            <strong>Profesion Padre :</strong> {{descProfesionPadre}}
+          </td>
+          <td>
+            <strong>Trabajo Padre :</strong> {{trabajoPadre}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Nombres Madre : </strong> {{nombreMadre}}
+          </td>
+          <td>
+            <strong>Profesion Madre :</strong> {{descProfesionMadre}}
+          </td>
+          <td>
+            <strong>Trabajo Madre :</strong> {{trabajoMadre}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Nombres Encargado :</strong> {{nombreEncargado}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Nombres Emergencia : </strong> {{nombreEmergencia}}
+          </td>
+        </tr>
+      </table>
 
-    <br>
-    <mat-divider></mat-divider>
-    <!-- </mat-card>
+      <br>
+      <mat-divider></mat-divider>
+      <!-- </mat-card>
     <mat-card>
       <mat-card-header> -->
-    <h3> Seccion de Datos Complementarios </h3>
-    <table>
-      <tr>
-        <td>
-          <strong>Medio Conoce ACACULH :</strong> {{medioConoceAch}}
-        </td>
-        <td>
-          <strong>Referencia :</strong> {{referencia}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Problemas de Salud :</strong> {{profesionPadre}}
-        </td>
-        <td>
-          <strong>Tipo de Beca :</strong> {{profesionPadre}}
-        </td>
-      </tr>
-    </table>
+      <h3> Seccion de Datos Complementarios </h3>
+      <table>
+        <tr>
+          <td>
+            <strong>Medio Conoce ACACULH :</strong> {{medioConoceAch}}
+          </td>
+          <td>
+            <strong>Referencia :</strong> {{referencia}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Problemas de Salud :</strong> {{problemasSalud}}
+          </td>
+          <td>
+            <strong>Tipo de Beca :</strong> {{descTipoBeca}}
+          </td>
+        </tr>
+      </table>
 
-    <br>
-    <mat-divider></mat-divider>
-    <!-- </mat-card-header> -->
-    <!-- </mat-card> -->
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+      <br>
+      <mat-divider></mat-divider>
+      <!-- </mat-card-header> -->
+      <!-- </mat-card> -->
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="footer"> Ficha de Alumno </div>
+</div>
+
+<!-- <mat-card-actions>
+  <button mat-button (click)="print()">LIKE</button>
+  <button mat-button (click)="printComponent('exampleCard')">SHARE</button>
+</mat-card-actions> -->
+
+
+<!-- <div fxFlex="35" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+  <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <h3 class="mat-headline" fxFlex="80">New Contact</h3>
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+      <button mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+
+    </div>
+
+  </div>
+  <mat-divider></mat-divider>
+
+  <div fxFlex="25" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxFlex="40">
+      <img class="avatar" src="assets/images/avatars/chef-antonio-600.png" width="220" height="200" />
+
+    </div>
+    <div fxFlex="60" fxLayout="column" fxLayoutAlign="center start">
+      <h3 class="mat-title">Sujith</h3>
+      <h3 class="mat-body-2">Developer</h3>
+    </div>
+
+
+  </div>
+
+  <div id="postre" fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+    <div fxFlex="50" fxLayout.lt-lg="100">
+      <mat-form-field>
+        <input matInput placeholder="phone">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" fxLayout.lt-lg="100">
+      <mat-form-field>
+        <input matInput placeholder="Office">
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+    <div fxFlex="50" fxLayout.lt-lg="100">
+      <mat-form-field>
+        <input matInput placeholder="skype">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" fxLayout.lt-lg="100">
+      <mat-form-field>
+        <input matInput placeholder="Email">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex fxLayout="column" fxLayoutAlign="end stretch">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <button mat-raised-button>CANCEL</button>
+      <button mat-raised-button color="primary">SAVE</button>
+    </div>
+  </div>
+</div> -->
+
+<!-- Ventana Modal -->
+<!-- <button mat-button (click)="openDialog()">Open dialog</button> -->

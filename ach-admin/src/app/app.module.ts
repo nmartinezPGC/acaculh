@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-//Libreria para poder Usar los Formularios de Html y Indexarlos con Angular (uso del #)
+// Libreria para poder Usar los Formularios de Html y Indexarlos con Angular (uso del #)
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { NgForm } from '@angular/forms';
 

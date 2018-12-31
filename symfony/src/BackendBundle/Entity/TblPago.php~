@@ -225,4 +225,91 @@ class TblPago
     {
         return $this->idAlumno;
     }
+    /**
+     * @var \BackendBundle\Entity\TblFormaPago
+     */
+    private $idFormaPago;
+
+    /**
+     * @var \BackendBundle\Entity\TblTipoPago
+     */
+    private $idTipoPago;
+
+
+    /**
+     * Set idFormaPago
+     *
+     * @param \BackendBundle\Entity\TblFormaPago $idFormaPago
+     *
+     * @return TblPago
+     */
+    public function setIdFormaPago(\BackendBundle\Entity\TblFormaPago $idFormaPago = null)
+    {
+        $this->idFormaPago = $idFormaPago;
+
+        return $this;
+    }
+
+    /**
+     * Get idFormaPago
+     *
+     * @return \BackendBundle\Entity\TblFormaPago
+     */
+    public function getIdFormaPago()
+    {
+        return $this->idFormaPago;
+    }
+
+    /**
+     * Set idTipoPago
+     *
+     * @param \BackendBundle\Entity\TblTipoPago $idTipoPago
+     *
+     * @return TblPago
+     */
+    public function setIdTipoPago(\BackendBundle\Entity\TblTipoPago $idTipoPago = null)
+    {
+        $this->idTipoPago = $idTipoPago;
+
+        return $this;
+    }
+
+    /**
+     * Get idTipoPago
+     *
+     * @return \BackendBundle\Entity\TblTipoPago
+     */
+    public function getIdTipoPago()
+    {
+        return $this->idTipoPago;
+    }
+    /**
+     * @var \BackendBundle\Entity\TblUsuario
+     */
+    private $idUsuario;
+
+
+    /**
+     * Set idUsuario
+     *
+     * @param \BackendBundle\Entity\TblUsuario $idUsuario
+     *
+     * @return TblPago
+     */
+    public function setIdUsuario(\BackendBundle\Entity\TblUsuario $idUsuario = null)
+    {
+        $this->idUsuario = $idUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get idUsuario
+     *
+     * @return \BackendBundle\Entity\TblUsuario
+     */
+    public function getIdUsuario()
+    {
+        return $this->idUsuario;
+    }
 }

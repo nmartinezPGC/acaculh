@@ -17,3 +17,8 @@ app_listas:
 app_alumno:
     resource: "@AppBundle/Resources/config/routing/alumno.yml"
     prefix: /alumno
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de Pagos
+app_pagos:
+    resource: "@AppBundle/Resources/config/routing/pagoAlumno.yml"
+    prefix: /pagos

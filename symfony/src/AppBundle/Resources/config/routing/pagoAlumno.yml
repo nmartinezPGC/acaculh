@@ -1,0 +1,17 @@
+## Rutas Pago Alumno.
+pagos_listAllPagoAlumno:
+    path: /all-list-pagos
+    defaults: { _controller: "AppBundle:Pagos/Pagos:ActiveAllPagosList" }
+    methods: GET
+
+## Ruta para Agregar Nuevo Pago de Alumno
+pagos_newAlumnoPago:
+    path: /new-pago-alumno
+    defaults: { _controller: "AppBundle:Pagos/Pagos:NewPagoAlumno" }
+    methods: POST
+
+## Ruta para Editar Alumno
+pagos_editAlumno:
+    path: /login
+    defaults: { _controller: "AppBundle:Default:login" }
+    methods: POST

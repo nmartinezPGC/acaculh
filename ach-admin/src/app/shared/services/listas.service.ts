@@ -1,28 +1,28 @@
 import { Component, Injectable } from '@angular/core';
 
-//Clases nesesarias para el envio via Ajax
-import { HttpModule,  Http, Response, Headers } from '@angular/http';
+// Clases nesesarias para el envio via Ajax
+import { HttpModule, Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 // Importamos la Clase de las Propiedades del Sistema
-import { SystemPropertiesService } from "./systemProperties.service";
+import { SystemPropertiesService } from './systemProperties.service';
 
 @Injectable()
 export class ListasComunesService {
-  //Propiedades de la Clases
-  //URL Base de la Clase, Referencia a la API | Symfony
-  public url:string;
-  
-  //Variables para el localStorage
+  // Propiedades de la Clases
+  // URL Base de la Clase, Referencia a la API | Symfony
+  public url: string;
+
+  // Variables para el localStorage
   public identity;
   public token;
 
-  //Constructor de la Clase
-  constructor( private _http: Http,
-              private _systemPropertiesService: SystemPropertiesService ) { 
+  // Constructor de la Clase
+  constructor(private _http: Http,
+    private _systemPropertiesService: SystemPropertiesService) {
     this.url = this._systemPropertiesService.getmethodUrlService();
   }
 
@@ -34,14 +34,14 @@ export class ListasComunesService {
   * cion del Token (tiene que estar logeado)
   * (listascomunes).
   ******************************************************/
-  listasComunes( lista_comun, lista ){
-      let json = JSON.stringify( lista_comun );
-      this.url = this._systemPropertiesService.getmethodUrlService();
-      let params = "json=" + json;
-      let listaIn = lista;
-      let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+  listasComunes(lista_comun, lista) {
+    let json = JSON.stringify(lista_comun);
+    this.url = this._systemPropertiesService.getmethodUrlService();
+    let params = 'json=' + json;
+    let listaIn = lista;
+    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + "/listas/"+listaIn, params, { headers:headers }).map( res => res.json());
+    return this._http.post(this.url + '/listas/' + listaIn, params, { headers: headers }).map(res => res.json());
   } // FIN : FND-00001
 
 
@@ -52,14 +52,14 @@ export class ListasComunesService {
   * Objetivo: Obtener la lista serializada
   * (listascomunes).
   ******************************************************/
-  listasComunesGet( lista_comun, lista ){
-      let json = JSON.stringify( lista_comun );
-      this.url = this._systemPropertiesService.getmethodUrlService();
-      let params = "json=" + json;
-      let listaIn = lista;
-      let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+  listasComunesGet(lista_comun, lista) {
+    let json = JSON.stringify(lista_comun);
+    this.url = this._systemPropertiesService.getmethodUrlService();
+    let params = 'json=' + json;
+    let listaIn = lista;
+    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.get(this.url + "/listas/" + listaIn, params).map( res => res.json());
+    return this._http.get(this.url + '/listas/' + listaIn, params).map(res => res.json());
   } // FIN : FND-00001.1
 
 
@@ -70,12 +70,12 @@ export class ListasComunesService {
   * Objetivo: Obtener la lista serializada
   * (listascomunes).
   ******************************************************/
-  listasOficiosDir( page = null ){
-      if( page == null ){
-        page = 1;
-      }
+  listasOficiosDir(page = null) {
+    if (page == null) {
+      page = 1;
+    }
 
-    return this._http.get(this.url + "/listas/asignar-oficios-list?page=" + page).map( res => res.json());
+    return this._http.get(this.url + '/listas/asignar-oficios-list?page=' + page).map(res => res.json());
   } // FIN : FND-00001.2
 
 
@@ -87,14 +87,14 @@ export class ListasComunesService {
   * Token y el servicio invocado
   * (comunes).
   ******************************************************/
-  listasComunesToken( lista_comun_token, lista ){
-      let json = JSON.stringify( lista_comun_token );
+  listasComunesToken(lista_comun_token, lista) {
+    let json = JSON.stringify(lista_comun_token);
 
-      let params  = "json=" + json + "&authorization=" + this.getToken();
-      let listaIn = lista;
-      let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+    let params = 'json=' + json + '&authorization=' + this.getToken();
+    let listaIn = lista;
+    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + "/comunes/" + listaIn, params, { headers:headers }).map( res => res.json());
+    return this._http.post(this.url + '/comunes/' + listaIn, params, { headers: headers }).map(res => res.json());
   }
 
 
@@ -107,14 +107,14 @@ export class ListasComunesService {
   * Token y el servicio invocado
   * ( documentos/listar-documentos ).
   ******************************************************/
-  listasDocumentosToken( lista_comun_token, lista ){
-      let json = JSON.stringify( lista_comun_token );
+  listasDocumentosToken(lista_comun_token, lista) {
+    let json = JSON.stringify(lista_comun_token);
 
-      let params  = "json=" + json + "&authorization=" + this.getToken();
-      let listaIn = lista;
-      let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+    let params = 'json=' + json + '&authorization=' + this.getToken();
+    let listaIn = lista;
+    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + "/documentos/" + listaIn, params, { headers:headers }).map( res => res.json());
+    return this._http.post(this.url + '/documentos/' + listaIn, params, { headers: headers }).map(res => res.json());
   } // FIN | FND-00002.1.1
 
 
@@ -126,14 +126,14 @@ export class ListasComunesService {
   * Token y el servicio invocado
   * ( listas/ ).
   ******************************************************/
-  listasComunesTokenListas( lista_comun_token, lista ){
-      let json = JSON.stringify( lista_comun_token );
+  listasComunesTokenListas(lista_comun_token, lista) {
+    let json = JSON.stringify(lista_comun_token);
 
-      let params  = "json=" + json + "&authorization=" + this.getToken();
-      let listaIn = lista;
-      let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+    let params = 'json=' + json + '&authorization=' + this.getToken();
+    let listaIn = lista;
+    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + "/listas/" + listaIn, params, { headers:headers }).map( res => res.json());
+    return this._http.post(this.url + '/listas/' + listaIn, params, { headers: headers }).map(res => res.json());
   }
 
 
@@ -144,14 +144,14 @@ export class ListasComunesService {
   * variable identity del localStorage
   * Objetivo: Seteo de las variables en json
   *****************************************************/
-  getIdentity(){
+  getIdentity() {
     let identity = JSON.parse(localStorage.getItem('identity'));
-    //Pregunta por el valor de la identity
-      if(identity != "undefined"){
-        this.identity = identity;
-      }else{
-        this.identity = null;
-      }
+    // Pregunta por el valor de la identity
+    if (identity !== 'undefined') {
+      this.identity = identity;
+    } else {
+      this.identity = null;
+    }
 
     return this.identity;
   } // FIN : FND-00003
@@ -164,15 +164,15 @@ export class ListasComunesService {
   * variable identity del localStorage
   * Objetivo: Seteo de las variables en json
   *****************************************************/
-  getToken(){
-    //No hace el parse; porque no es Json
+  getToken() {
+    // No hace el parse; porque no es Json
     let token = localStorage.getItem('token');
-    //Pregunta por el valor del Token
-      if(token != "undefined"){
-        this.token = token;
-      }else{
-        this.token = null;
-      }
+    // Pregunta por el valor del Token
+    if (token !== 'undefined') {
+      this.token = token;
+    } else {
+      this.token = null;
+    }
 
     return this.token;
   } // FIN : FND-00004

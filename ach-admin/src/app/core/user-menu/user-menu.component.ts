@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class UserMenuComponent implements OnInit {
 	isOpen: boolean = false;
 
-	//currentUser = null;
+	// currentUser = null;
 	Nahum;
 
 
@@ -39,12 +39,12 @@ export class UserMenuComponent implements OnInit {
 	logoutUser() {
 		var bar = confirm('Estas seguro de Cerrar session ?');
 
-		if( bar == true ){
+		if (bar === true) {
 			// Redireccionamos al Login y Borramos las LocalStorage
 			// Quitamos las variables del Storage
 			localStorage.removeItem('identity');
 			localStorage.removeItem('token');
-			
+
 			this.router.navigate(['/login']);
 		}
 	}

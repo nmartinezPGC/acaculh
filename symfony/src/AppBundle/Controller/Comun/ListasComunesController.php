@@ -170,6 +170,94 @@ class ListasComunesController extends Controller {
 //FIN | FND00004
 
     /**
+     * @Route("/forma-pago-all-list", name="forma-pago-all-list")
+     * Creacion del Controlador: Forma de Pago ACH
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00005
+     */
+    public function FormaPagoAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos las formas de Pago ACH de la Tabla: TblFormaPago
+        $formaPagoAllList = $em->getRepository("BackendBundle:TblFormaPago")->findBy(
+                array(
+                    "activo" => true
+        ));
+
+        $countRecords = count($formaPagoAllList);
+
+        // Condicion de la Busqueda
+        if ($countRecords >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "totalRecords" => $countRecords,
+                "msg" => "Se han encontrado el listado de todas las formas e pago ACH registrados.",
+                "data" => $formaPagoAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Formas de Pago ACH !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00005
+
+    /**
+     * @Route("/tipo-pago-all-list", name="tipo-pago-all-list")
+     * Creacion del Controlador: Tipo de Pago ACH
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00006
+     */
+    public function TipoPagoAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos los Tipos de Pago ACH de la Tabla: TblTipoPago
+        $tipoPagoAllList = $em->getRepository("BackendBundle:TblTipoPago")->findBy(
+                array(
+                    "activo" => true
+        ));
+
+        $countRecords = count($tipoPagoAllList);
+
+        // Condicion de la Busqueda
+        if ($countRecords >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "totalRecords" => $countRecords,
+                "msg" => "Se han encontrado el listado de todos los Tipos de pago ACH registrados.",
+                "data" => $tipoPagoAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Tipos de Pago ACH !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00006
+
+    /**
      * @Route("/sub-direcciones-sreci-list", name="sub-direcciones-sreci-list")
      * Creacion del Controlador: Sub Direcciones de SRECI
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>

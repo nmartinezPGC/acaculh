@@ -1,3 +1,6 @@
+import { DecimalPipe } from "@angular/common";
+import { Numeric } from "d3";
+
 /**
  * @author Nahum Martinez
  * @returns Models of the class
@@ -55,6 +58,11 @@ export class AlumnoModel {
     public descTipoBeca: string,
     public fechaIngreso: Date,
     public horaIngreso: Date,
+
+    // Matriculas
+    public montoMatricula: number,
+    public idFormaPago: number,
+    public descFormaPago: string,
 
     ) { }
 }

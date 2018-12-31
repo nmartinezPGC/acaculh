@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// Nuevas librerias
+import { DataTableModule } from "angular-6-datatable";
+
 import {
     MatCardModule,
     MatButtonModule,
@@ -18,6 +21,11 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
 } from '@angular/material';
 
 import { MatChipsModule } from '@angular/material/chips';
@@ -32,6 +40,8 @@ import { ServicesComponent } from '../pages/services/services.component';
 import { AlumnoService } from './alumno/service/alumno.service';
 import { SystemPropertiesService } from '../shared/services/systemProperties.service';
 import { InvoiceAlumnoComponent } from './alumno/invoice.alumno/invoice.alumno.component';
+import { ConsultaAlumnosComponent } from './consultas/consulta.alumnos/consulta.alumnos.component';
+import { RegistroPagosComponent } from './pagos/registro-pagos/registro-pagos.component';
 
 @NgModule({
     imports: [
@@ -57,13 +67,23 @@ import { InvoiceAlumnoComponent } from './alumno/invoice.alumno/invoice.alumno.c
         MatNativeDateModule,
         MatSnackBarModule,
         CoreModule,
-        PagesRouterModule],
+        PagesRouterModule,
+        DataTableModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatProgressSpinnerModule,
+    ],
     declarations: [
         ContactComponent,
         AboutComponent,
         AlumnoComponent,
         ServicesComponent,
         InvoiceAlumnoComponent,
+        ConsultaAlumnosComponent,
+        RegistroPagosComponent,
     ],
     exports: [
     ],

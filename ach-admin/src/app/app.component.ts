@@ -6,7 +6,8 @@ import {
   animate,
   transition,
   query,
-} from '@angular/animations'
+} from '@angular/animations';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +18,6 @@ import {
 export class AppComponent {
   title = 'app';
   getRouteAnimation(outlet) {
-
-    return outlet.activatedRouteData.animation
+    return outlet.activatedRouteData.animation;
   }
 }

@@ -80,4 +80,62 @@ class TblTipoPago
     {
         return $this->descTipoPago;
     }
+    /**
+     * @var boolean
+     */
+    private $activado = '1';
+
+
+    /**
+     * Set activado
+     *
+     * @param boolean $activado
+     *
+     * @return TblTipoPago
+     */
+    public function setActivado($activado)
+    {
+        $this->activado = $activado;
+
+        return $this;
+    }
+
+    /**
+     * Get activado
+     *
+     * @return boolean
+     */
+    public function getActivado()
+    {
+        return $this->activado;
+    }
+    /**
+     * @var boolean
+     */
+    private $activo = '1';
+
+
+    /**
+     * Set activo
+     *
+     * @param boolean $activo
+     *
+     * @return TblTipoPago
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo
+     *
+     * @return boolean
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
 }

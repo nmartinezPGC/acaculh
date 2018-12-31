@@ -26,4 +26,9 @@ BackendBundle\Entity\TblTipoPago:
             options:
                 fixed: false
             column: desc_tipo_pago
+        activo:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
     lifecycleCallbacks: {  }

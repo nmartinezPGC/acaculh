@@ -26,4 +26,9 @@ BackendBundle\Entity\TblFormaPago:
             options:
                 fixed: false
             column: desc_forma_pago
+        activo:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
     lifecycleCallbacks: {  }

@@ -1,0 +1,113 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+      <mat-toolbar class="icon-header">
+        <h1 class="mat-headline center-align">Consulta de Alumnos</h1>
+      </mat-toolbar>
+
+      <div class="loader" *ngIf="showData == true">
+        <!-- Loader de la Tabla -->
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alumno">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="idAlumno">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>ID Alumno</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.idAlumno}} </mat-cell>
+          </ng-container>
+
+          <!-- Codigo Column -->
+          <ng-container matColumnDef="codAlumno">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Codigo</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.codAlumno}} </mat-cell>
+          </ng-container>
+
+          <!-- Nombres Column -->
+          <ng-container matColumnDef="nombres">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Nombres</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nombres}}</mat-cell>
+          </ng-container>
+
+          <!-- Apellidos Column -->
+          <ng-container matColumnDef="apellidos">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Apellidos</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.apellidos}} </mat-cell>
+          </ng-container>
+
+          <!-- Celular Column -->
+          <ng-container matColumnDef="celular">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Celular</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.celular}} </mat-cell>
+          </ng-container>
+
+          <!-- ACH Conoce Ach Column -->
+          <ng-container matColumnDef="medioConoceAch">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Conoce ACACULH</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.medioConoceAch}} </mat-cell>
+          </ng-container>
+
+          <!-- Tipo Beca Column -->
+          <ng-container matColumnDef="descTipoBeca">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Tipo Beca</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.descTipoBeca}} </mat-cell>
+          </ng-container>
+
+          <!-- Monto Pago Column -->
+          <ng-container matColumnDef="montoPago">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Monto Matricula</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.montoPago}} </mat-cell>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="color">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="accion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Accion </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.accion}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>

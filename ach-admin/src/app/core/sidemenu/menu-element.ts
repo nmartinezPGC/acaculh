@@ -5,6 +5,7 @@ export const menus = [
         'link': '/auth/dashboard',
         'open': false,
         'chip': { 'value': 1, 'color': 'accent' },
+        'perfil': [1, 2, 3, 4],
         /*'sub': [
             {
                 'name': 'Dashboard',
@@ -15,17 +16,71 @@ export const menus = [
             }
         ]*/
     },
-    {
+    { // Menu de Alumnos
         'name': 'Alumnos',
         'icon': 'supervisor_account',
         'open': false,
         'link': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'Nuevo Alumno',
-                'icon': 'account_box',
+                // 'icon': 'account_box',
                 'open': false,
-                'link': 'pages/nuevo-alumno',
+                'link': 'pages/alumnos/nuevo-alumno',
+                'perfil': [1, 2, 3, 4],
+            }, /*{
+                'name': 'Services',
+                'icon': 'local_laundry_service',
+                'open': false,
+                'link': 'pages/services',
+            }, {
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
+    { // Menu de Consultas
+        'name': 'Consultas',
+        'icon': 'search',
+        'open': false,
+        'link': false,
+        'perfil': [1, 2, 3],
+        'sub': [
+            {
+                'name': 'Consulta de Alumnos',
+                // 'icon': 'supervisor_account',
+                'open': false,
+                'link': 'pages/consulta/alumnos',
+                'perfil': [1, 2, 3, 4],
+            }, /*{
+                'name': 'Services',
+                'icon': 'local_laundry_service',
+                'open': false,
+                'link': 'pages/services',
+            }, {
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
+    { // Menu de Pagos
+        'name': 'Pagos',
+        'icon': 'credit_card',
+        'open': false,
+        'link': false,
+        'perfil': [1],
+        'sub': [
+            {
+                'name': 'Registro de Pagos',
+                'icon': '',
+                'open': false,
+                'link': 'pages/pagos/registro-pago-alumno',
+                'perfil': [1],
             }, /*{
                 'name': 'Services',
                 'icon': 'local_laundry_service',
@@ -44,6 +99,7 @@ export const menus = [
         'icon': 'widgets',
         'link': false,
         'open': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'Buttons',
@@ -51,6 +107,7 @@ export const menus = [
                 'icon': 'indeterminate_check_box',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'List',
@@ -58,6 +115,7 @@ export const menus = [
                 'icon': 'list',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
 
@@ -66,7 +124,7 @@ export const menus = [
                 'icon': 'view_week',
                 'chip': false,
                 'open': false,
-
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Expansion',
@@ -74,6 +132,7 @@ export const menus = [
                 'icon': 'web_aaset',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Progress Spinner',
@@ -81,6 +140,7 @@ export const menus = [
                 'icon': 'cached',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Cards',
@@ -88,6 +148,7 @@ export const menus = [
                 'icon': 'crop_16_9',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Icons',
@@ -95,6 +156,7 @@ export const menus = [
                 'icon': 'gif',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
 
@@ -103,6 +165,7 @@ export const menus = [
                 'icon': 'get_app',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'CheckBox',
@@ -110,6 +173,7 @@ export const menus = [
                 'icon': 'check_box',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'DatePicker',
@@ -117,6 +181,7 @@ export const menus = [
                 'icon': 'date_range',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
 
             {
@@ -125,6 +190,7 @@ export const menus = [
                 'icon': 'keyboard_tab',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Slide Toggle',
@@ -132,6 +198,7 @@ export const menus = [
                 'icon': 'album',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Menu',
@@ -139,6 +206,7 @@ export const menus = [
                 'link': 'material-widgets/menu',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Progress Bar',
@@ -146,12 +214,14 @@ export const menus = [
                 'icon': 'trending_flat',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Input',
                 'icon': 'input',
                 'link': 'material-widgets/input',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Radio',
@@ -159,12 +229,14 @@ export const menus = [
                 'link': 'material-widgets/radio',
                 'chip': false,
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Select',
                 'icon': 'select_all',
                 'link': 'material-widgets/select',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
         ]
     },
@@ -194,24 +266,28 @@ export const menus = [
         'link': false,
         'open': false,
         'chip': { 'value': 2, 'color': 'accent' },
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'Fixed',
                 'icon': 'filter_list',
                 'link': 'tables/fixed',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Feature',
                 'icon': 'done_all',
                 'link': 'tables/featured',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Responsive Tables',
                 'icon': 'filter_center_focus',
                 'link': 'tables/responsive',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             }
         ]
 
@@ -221,34 +297,40 @@ export const menus = [
         'icon': 'mode_edit',
         'link': '/auth/guarded-routes',
         'open': false,
+        'perfil': [1, 2, 3, 4],
     }, {
         'name': 'Scrumboard',
         'open': false,
         'link': '/auth/scrumboard',
         'icon': 'grade',
+        'perfil': [1, 2, 3, 4],
     }, {
         'name': 'Applications',
         'icon': 'view_module',
         'open': false,
         'link': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'chat',
                 'icon': 'chat',
                 'link': 'chats/chat',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'mail',
                 'icon': 'mail',
                 'link': 'mail/mail',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'Editor',
                 'icon': 'editor',
                 'link': 'editor/editor',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             }
         ]
     }
@@ -257,22 +339,26 @@ export const menus = [
         'icon': 'content_copy',
         'open': false,
         'link': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'Login',
                 'icon': 'work',
                 'open': false,
                 'link': '../login',
+                'perfil': [1, 2, 3, 4],
             }, {
                 'name': 'Services',
                 'icon': 'local_laundry_service',
                 'open': false,
                 'link': 'pages/services',
+                'perfil': [1, 2, 3, 4],
             }, {
                 'name': 'Contact',
                 'icon': 'directions',
                 'open': false,
-                'link': 'pages/contact'
+                'link': 'pages/contact',
+                'perfil': [1, 2, 3, 4],
             }
         ]
     }
@@ -282,25 +368,28 @@ export const menus = [
         'icon': 'pie_chart_outlined',
         'open': false,
         'link': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'chartjs',
                 'icon': 'view_list',
                 'link': 'charts/chartjs',
                 'open': false,
-
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'ngx-chart',
                 'icon': 'show_chart',
                 'open': false,
                 'link': 'charts/ngx-charts',
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'nvd3',
                 'icon': 'pie_chart',
                 'open': false,
                 'link': 'charts/nvd3-charts',
+                'perfil': [1, 2, 3, 4],
             }
         ]
     }, {
@@ -308,18 +397,21 @@ export const menus = [
         'icon': 'map',
         'open': false,
         'link': false,
+        'perfil': [1, 2, 3, 4],
         'sub': [
             {
                 'name': 'google-map',
                 'icon': 'directions',
                 'link': 'maps/googlemap',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             },
             {
                 'name': 'leaflet-map',
                 'icon': 'directions',
                 'link': 'maps/leafletmap',
                 'open': false,
+                'perfil': [1, 2, 3, 4],
             }
         ]
     }

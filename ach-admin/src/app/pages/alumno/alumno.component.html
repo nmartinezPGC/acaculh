@@ -84,8 +84,12 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input type="number" maxlength="8" matInput placeholder="Celular" [formControl]="celularAlumno"
-                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular" [(ngModel)]="_alumnoModel.celular">
+                    <input type="number" #cel maxlength="8" matInput placeholder="Celular" [formControl]="celularAlumno"
+                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular" [(ngModel)]="_alumnoModel.celular"
+                      required>
+                    <mat-error *ngIf="celularAlumno.hasError('celular') && !celularAlumno.hasError('required')">
+                      Por favor ingresa el Celular
+                    </mat-error>
                     <mat-error *ngIf="celularAlumno.hasError('required')">
                       No. Celular es: <strong>obligatorio</strong>
                     </mat-error>
@@ -93,26 +97,45 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Sexo" [formControl]="idGeneroAlumno" [errorStateMatcher]="matcher" name="idGenero"
-                      id="idGenero" ngControl="idGenero" [(ngModel)]="_alumnoModel.idGenero">
+                    <mat-select placeholder="Genero" [formControl]="idGeneroAlumno" [errorStateMatcher]="matcher" name="idGeneroAlumno"
+                      id="idGeneroAlumno" ngControl="idGeneroAlumno" [(ngModel)]="_alumnoModel.idGenero" required>
                       <mat-option *ngFor="let genero of JsonOutgetlistaGeneroAll" [value]="genero.idGenero">
                         {{ genero.descripcionGenero }}
                       </mat-option>
                     </mat-select>
+                    <!-- <mat-error *ngIf="idGeneroAlumno.hasError('required')">
+                      Genero es: <strong>obligatorio</strong>
+                    </mat-error> -->
                     <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
                   </mat-form-field>
                 </td>
               </tr>
 
               <tr>
-                <td>
+                <td colspan="2">
                   <mat-form-field class="example-full-width">
-                    <input matInput #message maxlength="250" [formControl]="direccionAlumno" placeholder="Direccion de Alumno"
-                      name="direccion" id="direccion" ngControl="direccion" [(ngModel)]="_alumnoModel.direccion">
-                    <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
+                    <!-- <input matInput #message maxlength="250" [formControl]="direccionAlumno" placeholder="Direccion de Alumno"
+                      name="direccion" id="direccion" ngControl="direccion" [(ngModel)]="_alumnoModel.direccion"> -->
+
+                    <textarea matInput #message maxlength="250" [formControl]="direccionAlumno" placeholder="Direccion de Alumno"
+                      name="direccion" id="direccion" ngControl="direccion" [(ngModel)]="_alumnoModel.direccion"
+                      autocomplete="false"></textarea>
                     <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
+
+                <td colspan="2">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl" id="referenciaAl"
+                      [formControl]="referenciaAl" ngControl="referencia" [(ngModel)]="_alumnoModel.referencia"></textarea>
+                    <!-- <input matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl" id="referenciaAl"
+                      [formControl]="referenciaAl" ngControl="referencia" [(ngModel)]="_alumnoModel.referencia"> -->
+                    <!-- <mat-hint align="end">{{referencia.value.length}} / 250</mat-hint> -->
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput [matDatepicker]="picker" [formControl]="fechaNacimiento" placeholder="Fecha de Nacimiento"
@@ -121,12 +144,12 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </td>
-              </tr>
-              <tr>
-                <td>
+
+                <td colspan="2">
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Profesion Alumno" [formControl]="profesionAlumno" [errorStateMatcher]="matcher"
-                      name="idProfesion" id="idProfesion" ngControl="idProfesion" [(ngModel)]="_alumnoModel.idProfesion">
+                      name="idProfesion" id="idProfesion" ngControl="idProfesion" [(ngModel)]="_alumnoModel.idProfesion"
+                      required>
                       <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno" [value]="profesion.idProfesion"
                         (click)="profesionDesc(profesion.descripcionProfesion, 1)">
                         {{ profesion.descripcionProfesion }}
@@ -139,9 +162,9 @@
                   </mat-form-field>
                 </td>
                 <td>
-                  <mat-checkbox name="hondureno" id="hondureno" [formControl]="hondureno" ngControl="hondureno"
+                  Es Hondureño ? <mat-checkbox name="hondureno" id="hondureno" [formControl]="hondureno" ngControl="hondureno"
                     [(ngModel)]="_alumnoModel.hondureno">
-                    Hondureño?</mat-checkbox>
+                  </mat-checkbox>
                 </td>
               </tr>
             </table>
@@ -159,8 +182,8 @@
         <!-- Datos de los Padres -->
         <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Datos de Padre / Madre</ng-template>
-            Datos de Parientes.
+            <ng-template matStepLabel>Datos Padres / Parientes / Encargados</ng-template>
+            Datos de Padres o Parientes
             <br><br>
             <table class="example-full-width" cellspacing="0">
               <tr>
@@ -234,7 +257,7 @@
             </table>
             <br>
             <mat-divider></mat-divider>
-
+            <br>
             <!-- Datos de Encargado -->
             <table class="example-full-width" cellspacing="0">
               <tr>
@@ -285,7 +308,7 @@
 
         <!-- Datos Complementarios -->
         <mat-step [stepControl]="thirdFormGroup">
-          <ng-template matStepLabel>Complemetarios</ng-template>
+          <ng-template matStepLabel>Datos Complemetarios</ng-template>
           Datos Complementarios de la Ficha del Alumno.
           <br><br>
           <div>
@@ -295,7 +318,8 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Medio Conoce ACACULH" [formControl]="medioConoceAch" [errorStateMatcher]="matcher"
-                      name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch" [(ngModel)]="_alumnoModel.medioConoceAch">
+                      name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch" [(ngModel)]="_alumnoModel.medioConoceAch"
+                      required>
                       <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll" [value]="medioConoceAchJson.descripcionMedioConoceAch">
                         {{ medioConoceAchJson.descripcionMedioConoceAch }}
                       </mat-option>
@@ -303,27 +327,46 @@
                     <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
                   </mat-form-field>
                 </td>
+
                 <td>
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Tipo de Beca" [formControl]="tipoBeca" [errorStateMatcher]="matcher"
+                      ngControl="idTipoBeca" [(ngModel)]="_alumnoModel.idTipoBeca" required>
+                      <mat-option *ngFor="let tipoBeca of JsonOutgetlistaTipoBeca" [value]="tipoBeca.idTipoBeca"
+                        (click)="profesionDesc(tipoBeca.descTipoBeca, 4)">
+                        {{ tipoBeca.descTipoBeca }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
                   <mat-form-field class="example-full-width">
                     <input matInput maxlength="250" placeholder="Problemas de Salud" name="probleSalud" id="probleSalud"
                       [formControl]="probleSalud" ngControl="problemasSalud" [(ngModel)]="_alumnoModel.problemasSalud">
                     <!-- <mat-hint align="end">{{problemasSalud.value.length}} / 250</mat-hint> -->
                   </mat-form-field>
                 </td>
-                <td>
-                  <mat-form-field class="example-full-width">
-                    <input matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl" id="referenciaAl"
-                      [formControl]="referenciaAl" ngControl="referencia" [(ngModel)]="_alumnoModel.referencia">
-                    <!-- <mat-hint align="end">{{referencia.value.length}} / 250</mat-hint> -->
+              </tr>
+
+              <!-- Datos de Pago de Matricula -->
+              <tr>
+                <td colspan="2">
+                  <mat-form-field>
+                    <input matInput placeholder="Monto de Matricula" type="number" class="example-right-align" name="montoMatricula"
+                      id="montoMatricula" [formControl]="montoMatricula" ngControl="montoMatricula" [(ngModel)]="_alumnoModel.montoMatricula"
+                      required>
+                    <span matPrefix>L&nbsp;</span>
+                    <!-- <span matSuffix>.00</span> -->
                   </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Tipo de Beca" [formControl]="tipoBeca" [errorStateMatcher]="matcher"
-                      ngControl="idTipoBeca" [(ngModel)]="_alumnoModel.idTipoBeca">
-                      <mat-option *ngFor="let tipoBeca of JsonOutgetlistaTipoBeca" [value]="tipoBeca.idTipoBeca" 
-                      (click)="profesionDesc(tipoBeca.descTipoBeca, 3)">
-                        {{ tipoBeca.descTipoBeca }}
+
+                  <mat-form-field>
+                    <mat-select placeholder="Forma de Pago" [formControl]="idFormaPago" [errorStateMatcher]="matcher"
+                      ngControl="idFormaPago" [(ngModel)]="_alumnoModel.idFormaPago" required>
+                      <mat-option *ngFor="let formaPago of JsonOutgetlistaFormasPago" [value]="formaPago.idFormaPago"
+                        (click)="profesionDesc(formaPago.descFormaPago, 5)">
+                        {{ formaPago.descFormaPago }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -337,7 +380,7 @@
                   <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
                 </td>
                 <td>
-                  <button mat-raised-button (click)="stepper.reset()" color="warn">Limpiar Ficha</button>
+                  <button mat-raised-button (click)="limpiarFichaIngresoAlumno()" color="warn">Limpiar Ficha</button>
                 </td>
                 <td>
                   <button mat-raised-button (click)="nuevoAlumno()" color="primary">Guardar Ficha</button>
@@ -348,8 +391,8 @@
             <!-- <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button> -->
 
-            <app-invoicealumno></app-invoicealumno>
-            <button (click)='enviarMensaje()' Saludar hijo>Boton</button>
+            <!-- <app-invoicealumno></app-invoicealumno>
+            <button (click)='enviarMensaje()' Saludar hijo>Boton</button> -->
 
           </div>
         </mat-step>

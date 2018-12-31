@@ -80,4 +80,33 @@ class TblFormaPago
     {
         return $this->descFormaPago;
     }
+    /**
+     * @var boolean
+     */
+    private $activo = '1';
+
+
+    /**
+     * Set activo
+     *
+     * @param boolean $activo
+     *
+     * @return TblFormaPago
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo
+     *
+     * @return boolean
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
 }

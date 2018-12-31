@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+
+// Importar la Lireria de Impresion de pdf
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 // Impotamos los Servicios a Utilizar
 import { ListasComunesService } from '../../shared/services/listas.service';
@@ -33,6 +37,9 @@ export class AlumnoComponent implements OnInit {
   // Variables de inicio
   // Decorador de la Clase Hijo de Invoice
   @ViewChild(InvoiceAlumnoComponent) hijo: InvoiceAlumnoComponent;
+
+  // Vista de la Clase en Html
+  @ViewChild('example-card') exampleCard: ElementRef;
 
   // Activamos la Opcion de Formularios lineales
   isLinear = false;
@@ -162,6 +169,14 @@ export class AlumnoComponent implements OnInit {
     // Validators.required,
   ]);
 
+  montoMatricula = new FormControl('', [
+    // Validators.required,
+  ]);
+
+  idFormaPago = new FormControl('', [
+    // Validators.required,
+  ]);
+
   // Fin de validadores
 
   matcher = new MyErrorStateMatcher();
@@ -180,6 +195,7 @@ export class AlumnoComponent implements OnInit {
   public JsonOutgetlistaTipoBeca: any[];
   public JsonOutgetlistaGeneroAll: any[];
   public JsonOutgetlistaMediosACHAll: any[];
+  public JsonOutgetlistaFormasPago: any[];
 
   public _alumnoModel: AlumnoModel;
 
@@ -222,10 +238,11 @@ export class AlumnoComponent implements OnInit {
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
     this._alumnoModel = new AlumnoModel(0, '', // Identificacion
       '', '', '', '', '', '', // Generales 1
-      0, 0, '', 0, null, true, 0, '', // Generales 2
-      '', 0, '', '', 0, '', '', 0, '', 0, // Padres
-      '', 0, '', 0, // Encargados
+      null, null, '', 0, null, true, 0, '', // Generales 2
+      '', null, '', '', null, '', '', null, '', null, // Padres
+      '', null, '', null, // Encargados
       '', '', '', 0, 1, 0, '', null, null, // Complentarios
+      null, 0, '', // Matricula
     );
 
     // Iniciamos las Listas Comunes
@@ -233,9 +250,11 @@ export class AlumnoComponent implements OnInit {
     this.getlistaProfesionesAllPadre();
     this.getlistaProfesionesAllMadre();
 
+    // Complementarios
     this.getlistaTipoBecas();
     this.getlistaGenerosAll();
     this.getlistaMediosACHAll();
+    this.getlistaFormasPagoAll();
   }
 
   /**
@@ -443,6 +462,37 @@ export class AlumnoComponent implements OnInit {
       });
   } // FIN : FND-00002.2
 
+  /*****************************************************
+    * Funcion: FND-00002.3
+    * Fecha: 25-12-2018
+    * Descripcion: Carga la Lista de las Formas de Pago ACH
+    * Objetivo: Obtener la lista de Todas las Formas de Pago ACH
+    * de la BD, Llamando a la API, por su metodo
+    * ( forma-pago-all-list ).
+    ******************************************************/
+  getlistaFormasPagoAll() {
+    // Llamamos al Servicio que provee todas las Formas de Pago ACH
+    this._listasComunes.listasComunes('', 'forma-pago-all-list').subscribe(
+      response => {
+        // listas/forma-pago-all-list | so redirect to return url
+        if (response.status === 'error') {
+          // Mensaje de alerta del error en cuestion
+          this.JsonOutgetlistaFormasPago = response.data;
+          this.openSnackBar(response.msg, 'Error al obtener la informacion de Formas de Pago');
+        } else {
+          this.JsonOutgetlistaFormasPago = response.data;
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Client-side error');
+          this.openSnackBar(err.message, 'Client-side error');
+        } else {
+          console.log('Server-side error');
+          this.openSnackBar(err.message, 'Server-side error');
+        }
+      });
+  } // FIN : FND-00002.3
+
 
   /*****************************************************
     * Funcion: FND-00003
@@ -453,6 +503,12 @@ export class AlumnoComponent implements OnInit {
     * ( alumno/new-alumno ).
     ******************************************************/
   nuevoAlumno() {
+    // Validacion de los Datos Obligatorios
+    if (this.validarForm() == 1) {
+      // Regresamos al Formulario a completarlo
+      return -1;
+    }
+
     // Prepara los datos a Enviar
     // console.log(this._alumnoModel);
     const token1 = this._alumnoServices.getToken();
@@ -499,6 +555,47 @@ export class AlumnoComponent implements OnInit {
 
 
   /*****************************************************
+    * Funcion: FND-00003.1
+    * Fecha: 27-12-2018
+    * Descripcion: Validacion del Formulario
+    * Objetivo: Validar los campos del Formulario
+    * (  ).
+    ******************************************************/
+  validarForm() {
+    if ((this._alumnoModel.codAlumno == '' || this._alumnoModel.codAlumno == null)) {
+      this.openSnackBar('Falta Ingresar el Codigo del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.nombre1 == '' || this._alumnoModel.apellido1 == '')) {
+      this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.direccion == '' || this._alumnoModel.direccion == null)) {
+      this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.idGenero == 0 || this._alumnoModel.idGenero == null)) {
+      this.openSnackBar('Falta Ingresar el Genero del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.idProfesion == 0 || this._alumnoModel.idProfesion == null)) {
+      this.openSnackBar('Falta Ingresar la Profesion del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.medioConoceAch == '' || this._alumnoModel.medioConoceAch == null)) {
+      this.openSnackBar('Falta Ingresar el Medio como conocio ACACULH', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.idTipoBeca == 0 || this._alumnoModel.idTipoBeca == null)) {
+      this.openSnackBar('Falta Ingresar el Tipo de Beca del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.montoMatricula == 0 || this._alumnoModel.montoMatricula == null)) {
+      this.openSnackBar('Falta Ingresar el Monto de la Matricula del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._alumnoModel.idFormaPago == 0 || this._alumnoModel.idFormaPago == null)) {
+      this.openSnackBar('Falta Ingresar la Forma de Pago de Matricula del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    }
+    // Retorna 0 cuando todo esta bien
+    return 0;
+  }
+
+
+  /*****************************************************
     * Funcion: FND-00004
     * Fecha: 17-12-2018
     * Descripcion: Enviamos los Datos a Componente Hijo
@@ -532,10 +629,81 @@ export class AlumnoComponent implements OnInit {
       case 4:
         this._alumnoModel.descTipoBeca = descProfesion;
         break;
+      case 5:
+        this._alumnoModel.descFormaPago = descProfesion;
+        break;
       default:
         break;
     }
     console.log('Datos de Profesion del Alumno ' + descProfesion);
   }
+
+
+  /*****************************************************
+    * Funcion: FND-00006
+    * Fecha: 22-12-2018
+    * Descripcion: Limpiar la Ficha de Ingreso de Alumno
+    * Objetivo: Limpiar la Ficha de Ingreso de Alumno
+    ******************************************************/
+  limpiarFichaIngresoAlumno() {
+    this.ngOnInit();
+  }
+
+  dowloadPDF() {
+    let doc = new jspdf();
+    doc.text(20, 20, 'Hello world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+    doc.addPage();
+    doc.text(20, 20, 'Do you like that?');
+
+    // Save the PDF
+    doc.save('Test.pdf');
+  }
+
+  public generatePDF() {
+    let data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      let imgWidth = 208;
+      let pageHeight = 295;
+      let imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      let position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('MYPdf.pdf'); // Generated PDF
+    });
+  }
+
+  public captureScreen() {
+    let data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      let imgWidth = 208;
+      let pageHeight = 295;
+      let imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      let position = 0;
+      // pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('MYPdf.pdf'); // Generated PDF
+    });
+  }
+
+  printComponent(cmpName) {
+    let printContents = document.getElementById(cmpName).innerHTML;
+    let originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+  }
+
 
 }

@@ -45,7 +45,7 @@ class JwtAuth {
             // Query para Obtener el Departamento al que corresponde de la Tabla: TblTipoUsuario
             $tipo_user = $this->manager->getRepository("BackendBundle:TblTipoUsuario")->findOneBy(
                     array(
-                        "idTipoUsuario" => 1
+                        "idTipoUsuario" => $user->getIdTipoUsuario()
             ));
 
             //Generamos el Token

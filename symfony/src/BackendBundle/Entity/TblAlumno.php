@@ -1009,4 +1009,33 @@ class TblAlumno
     {
         return $this->inicialesAlumno;
     }
+    /**
+     * @var string
+     */
+    private $idMedioConoceAch;
+
+
+    /**
+     * Set idMedioConoceAch
+     *
+     * @param string $idMedioConoceAch
+     *
+     * @return TblAlumno
+     */
+    public function setIdMedioConoceAch($idMedioConoceAch)
+    {
+        $this->idMedioConoceAch = $idMedioConoceAch;
+
+        return $this;
+    }
+
+    /**
+     * Get idMedioConoceAch
+     *
+     * @return string
+     */
+    public function getIdMedioConoceAch()
+    {
+        return $this->idMedioConoceAch;
+    }
 }

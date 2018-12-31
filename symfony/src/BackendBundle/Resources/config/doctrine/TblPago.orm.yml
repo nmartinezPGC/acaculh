@@ -8,6 +8,15 @@ BackendBundle\Entity\TblPago:
         fk_tbl_pago_2_idx:
             columns:
                 - id_alumno
+        fk_tbl_pago_3_idx:
+            columns:
+                - id_forma_pago
+        fk_tbl_pago_4_idx:
+            columns:
+                - id_tipo_pago
+        fk_tbl_pago_5_idx:
+            columns:
+                - id_usuario
     id:
         idPago:
             type: integer
@@ -67,5 +76,35 @@ BackendBundle\Entity\TblPago:
             joinColumns:
                 id_alumno:
                     referencedColumnName: id_alumno
+            orphanRemoval: false
+        idFormaPago:
+            targetEntity: TblFormaPago
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_forma_pago:
+                    referencedColumnName: id_forma_pago
+            orphanRemoval: false
+        idTipoPago:
+            targetEntity: TblTipoPago
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_pago:
+                    referencedColumnName: id_tipo_pago
+            orphanRemoval: false
+        idUsuario:
+            targetEntity: TblUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_usuario:
+                    referencedColumnName: id_usuario
             orphanRemoval: false
     lifecycleCallbacks: {  }
