@@ -40,18 +40,18 @@ class AlumnoController extends Controller {
 
         if ($idDireccionSreciIn != 0 || $idDireccionSreciIn != null) {
             $opt = 1;
-            $dql = $em->createQuery('SELECT A.idAlumno, A.codAlumno, A.email, '
-                    . "CONCAT( A.nombre1, ' ', A.nombre2) as nombres, "
-                    . "CONCAT( A.apellido1, ' ', A.apellido2) as apellidos, "
-                    . "A.celular, A.idMedioConoceAch medioConoceAch, C.descTipoBeca, "
-                    . "B.descripcionEstado, D.montoPago "
-                    . 'FROM BackendBundle:TblAlumno A '
-                    . 'INNER JOIN BackendBundle:TblEstado B WITH B.idEstado = A.idEstado '
-                    . 'INNER JOIN BackendBundle:TblTipoBeca C WITH C.idTipoBeca = A.idTipoBeca '
-                    . 'INNER JOIN BackendBundle:TblPago D WITH D.idAlumno = A.idAlumno '
-                    . 'WHERE D.idTipoPago = :idTipoPago '
-                    . 'ORDER BY A.idAlumno ')
-             ->setParameter('idTipoPago', 1);
+            $dql = $em->createQuery('SELECT DISTINCT A.idAlumno, A.codAlumno, A.email, '
+                            . "CONCAT( A.nombre1, ' ', A.nombre2) as nombres, "
+                            . "CONCAT( A.apellido1, ' ', A.apellido2) as apellidos, "
+                            . "A.celular, A.idMedioConoceAch medioConoceAch, C.descTipoBeca, "
+                            . "B.descripcionEstado, D.montoPago "
+                            . 'FROM BackendBundle:TblAlumno A '
+                            . 'INNER JOIN BackendBundle:TblEstado B WITH B.idEstado = A.idEstado '
+                            . 'INNER JOIN BackendBundle:TblTipoBeca C WITH C.idTipoBeca = A.idTipoBeca '
+                            . 'INNER JOIN BackendBundle:TblPago D WITH D.idAlumno = A.idAlumno '
+                            . 'WHERE D.idTipoPago = :idTipoPago '
+                            . 'ORDER BY A.idAlumno ')
+                    ->setParameter('idTipoPago', 1);
         }
 
         // Ejecucion del Query
@@ -106,12 +106,21 @@ class AlumnoController extends Controller {
         //Se Chekea el Token
         $checkToken = $helpers->authCheck($hash);
 
+        //Convertimos los Parametros POSt a Json
+        $json = $request->get("json", null);
+
+        //Array de Mensajes
+        $data = array(
+            "status" => "success",
+            "code" => 200,
+            "msg" => "No se ha podido ingresar el Alumno, presenta problemas",
+            "validToken" => $checkToken,
+            "json" => $json
+        );
+
         //Evalua que el Token sea True
         if ($checkToken == true) {
             $identity = $helpers->authCheck($hash, true);
-
-            //Convertimos los Parametros POSt a Json
-            $json = $request->get("json", null);
 
             //Comprobamos que Json no es Null
             if ($json != null) {
@@ -332,12 +341,12 @@ class AlumnoController extends Controller {
                         // Instanciamos de la Clase TblSecuenciales
                         $secuenciaPagoAlumno = $em->getRepository("BackendBundle:TblSecuenciales")->findOneBy(
                                 array(
-                                    "codSecuencia" => 'SEC-PAM'
+                                    "codSecuencia" => 'SEC-PAMA'
                         ));
-                        $pagoAlumnoMatricula->setCodDocumento('SEC-PAM' . $secuenciaPagoAlumno->getValor1());
+                        $pagoAlumnoMatricula->setCodDocumento('SEC-PAMA' . $secuenciaPagoAlumno->getValor1());
                         // Aumentamos el Valor de l Secuencia
                         $secuenciaPagoAlumno->setValor1($secuenciaPagoAlumno->getValor1() + 1);
-                        
+
                         $pagoAlumnoMatricula->setFechaPago($fecha_ingreso);
                         $pagoAlumnoMatricula->setHoraPago($hora_ingreso);
                         $pagoAlumnoMatricula->setConceptoPago('Pago de Matricula por valor de : ' . $monto_matricula);

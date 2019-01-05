@@ -374,6 +374,13 @@
               </tr>
             </table>
 
+            
+            <div class="loader2" *ngIf="showData2 == true">
+              <!-- Loader de la Tabla -->
+              Cargando... <br><br>
+              <mat-spinner></mat-spinner>
+            </div>
+
             <table>
               <tr>
                 <td>
@@ -393,6 +400,7 @@
 
             <!-- <app-invoicealumno></app-invoicealumno>
             <button (click)='enviarMensaje()' Saludar hijo>Boton</button> -->
+
 
           </div>
         </mat-step>

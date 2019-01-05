@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // Clases nesesarias para el envio via Ajax
-import { Http,Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -9,7 +9,7 @@ import { SystemPropertiesService } from '../../../shared/services/systemProperti
 @Injectable({
   providedIn: 'root'
 })
-export class RegistroPagosService {
+export class RevertirPagosService {
 
   // Propiedades de la Clases
   // URL Base de la Clase, Referencia a la API | Symfony
@@ -28,20 +28,57 @@ export class RegistroPagosService {
   }
 
   /****************************************************
-  * Funcion: FND-00002
-  * Fecha: 28-07-2017
+  * Funcion: FND-00001
+  * Fecha: 01-01-2019
   * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API ( pagos/new-pago-alumno ).
-  * Objetivo: Agregar Pago a Alumno
+  * a la API ( pagos/all-list-pagos ).
+  * Objetivo: Listar todos los Pagos Registrados por
+  * todos los Alumnos en el tiempo
   *****************************************************/
-  registerNewPagoAlumno(token, alumno_to_register) {
-    const json = JSON.stringify(alumno_to_register);
-    const params = 'json=' + json + '&authorization=' + token;
+  listAllPagos(token) {
+    // const json = JSON.stringify(alumno_to_register);
+    const params = 'authorization=' + token;
     // console.log(json);
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/pagos/new-pago-alumno', params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/pagos/all-list-pagos', params, { headers: headers }).map(res => res.json());
+  } // FIN | FND-00001
+
+
+  /****************************************************
+  * Funcion: FND-00002
+  * Fecha: 01-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API ( pagos/all-list-alumno-pagos ).
+  * Objetivo: Listar todos los Pagos Registrados por
+  * Alumnos en el tiempo
+  *****************************************************/
+  listAllAlumnoPagos(token, alumno_to_register) {
+    const json = JSON.stringify(alumno_to_register);
+    const params = 'json=' + json + '&authorization=' + token;
+    // Encabezados Http a enviar
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this._http.post(this.url + '/pagos/all-list-alumno-pagos', params, { headers: headers }).map(res => res.json());
   } // FIN | FND-00002
+
+
+  /****************************************************
+  * Funcion: FND-00003
+  * Fecha: 01-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API ( pagos/all-list-alumno-pagos ).
+  * Objetivo: Listar todos los Pagos Registrados por
+  * Alumnos en el tiempo
+  *****************************************************/
+  revertirPagoAlumno(token, alumno_to_pay) {
+    const json = JSON.stringify(alumno_to_pay);
+    const params = 'json=' + json + '&authorization=' + token;
+    // Encabezados Http a enviar
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this._http.post(this.url + '/pagos/revert-pago-alumno', params, { headers: headers }).map(res => res.json());
+  } // FIN | FND-00003
 
 
   /****************************************************

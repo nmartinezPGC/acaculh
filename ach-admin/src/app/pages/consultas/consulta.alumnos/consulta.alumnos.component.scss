@@ -25,6 +25,7 @@
 .contact-list-container {
 	background-color: white;
 	padding: 10px;
+	overflow: auto;
 
 	.contact-list {
 		height: 400px;

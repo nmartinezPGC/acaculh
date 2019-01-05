@@ -258,6 +258,50 @@ class ListasComunesController extends Controller {
 //FIN | FND00006
 
     /**
+     * @Route("/tipo-usuario-all-list", name="tipo-usuario-all-list")
+     * Creacion del Controlador: Tipo de Usuario
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00007
+     */
+    public function TipoUsuarioAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos los Tipos de Pago ACH de la Tabla: TblTipoUsuario
+        $tipoUsuarioAllList = $em->getRepository("BackendBundle:TblTipoUsuario")->findBy(
+                array(
+                    "activo" => true
+        ));
+
+        $countRecords = count($tipoUsuarioAllList);
+
+        // Condicion de la Busqueda
+        if ($countRecords >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "totalRecords" => $countRecords,
+                "msg" => "Se han encontrado el listado de todos los Tipos de Usuarios registrados.",
+                "data" => $tipoUsuarioAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Tipos de Usuarios !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00007
+
+    /**
      * @Route("/sub-direcciones-sreci-list", name="sub-direcciones-sreci-list")
      * Creacion del Controlador: Sub Direcciones de SRECI
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>

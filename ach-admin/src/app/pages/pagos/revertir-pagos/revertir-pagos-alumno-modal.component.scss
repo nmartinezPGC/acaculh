@@ -46,11 +46,35 @@
 		}
 	}
 
-	.example-full-width {
-		width: 100%;
-	  }	
-
-	  .loader2 {
+	// estilo el loader
+	.loader {
 		margin-left: 40%;
-		// margin-top: 8%;
-		}
+		margin-top: 5%;
+	}
+
+	.loader2 {
+		margin-left: 45%;
+		margin-top: 1%;
+	}
+	
+
+	// tamaños de las columnas
+	// ID
+	.customWidthClass{
+		flex: 0 0 30px;
+	 }
+
+	 // Accion
+	.customWidthClass2{
+		flex: 0 0 50px;
+	 }
+
+	 // Celular
+	.customWidthClass3{
+		flex: 0 0 70px;
+	 }
+
+	 // Email
+	.customWidthClass4{
+		flex: 0 0 250px;
+	 }

@@ -1,15 +1,15 @@
 /**
  * @author Nahum Martinez
  * @returns Models of the class
- * @name RegistroPagosModel
- * @alias _registroPagosModel
+ * @name RevertirPagosModel
+ * @alias _revertirPagosModel
  * @version 1.0.0
  */
-export class RegistroPagosModel {
+export class RevertirPagosModel {
     // Contructor de la clase
     constructor(
         // Identificacion Pago
-        public idPago: number,
+        public idPagoAlumno: number,
         public codDocumento: string,
         public fechaPago: Date,
         public horaPago: Date,
@@ -21,7 +21,6 @@ export class RegistroPagosModel {
         public codAlumno: string,
         public nombres: string,
         public apellidos: string,
-        public inicialesAlumno: string,
         public email: string,
         public celular: number,
         

@@ -56,6 +56,14 @@ BackendBundle\Entity\TblPago:
             precision: 10
             scale: 0
             column: monto_pago
+        fechaModificacion:
+            type: date
+            nullable: true
+            column: fecha_modificacion
+        horaModificacion:
+            type: datetime
+            nullable: true
+            column: hora_modificacion
     manyToOne:
         idEstadoPago:
             targetEntity: TblEstado

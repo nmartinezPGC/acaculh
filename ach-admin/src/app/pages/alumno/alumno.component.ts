@@ -199,6 +199,9 @@ export class AlumnoComponent implements OnInit {
 
   public _alumnoModel: AlumnoModel;
 
+  // Variables de mostrar Datos de la tabla
+  public showData2: boolean = false;
+
   /*****************************************************
   * Funcion: Constructor
   *
@@ -503,9 +506,17 @@ export class AlumnoComponent implements OnInit {
     * ( alumno/new-alumno ).
     ******************************************************/
   nuevoAlumno() {
+    // Ocultamos el Loader
+    this.showData2 = true;
+
     // Validacion de los Datos Obligatorios
     if (this.validarForm() == 1) {
       // Regresamos al Formulario a completarlo
+      // Ocultamos el Loader
+      setTimeout(() => {
+        this.showData2 = false;
+      }, 3000);
+      
       return -1;
     }
 
@@ -526,29 +537,34 @@ export class AlumnoComponent implements OnInit {
       this._alumnoModel.apellido2.substring(0, 1);
     this._alumnoModel.inicialesAlumno = inicialesAlumno;
 
-    // console.log(this._alumnoModel);
-
     // Llamamos al Servicio que ingresa el nuevo Alumno
     this._alumnoServices.registerNewAlumno(token1, this._alumnoModel).subscribe(
       response => {
         // alumno/new-alumno
         if (response.status === 'error') {
           // Mensaje de alerta del error en cuestion
-          // alert(response.msg);
+          // Ocultamos el Loader
+          this.showData2 = false;
           this.openSnackBar(response.msg, 'Error al ingresar nuevo Alumno');
         } else {
-          // Inicia el Formulario
-          alert(response.msg);
+          // Inicia el Formulario          
           this.openSnackBar(response.msg, 'Ingreso de nuevo Alumno');
           this.ngOnInit();
+
+          // Ocultamos el Loader
+          this.showData2 = false;
         }
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log('Client-side error');
+          // console.log('Client-side error');
           this.openSnackBar(err.message, 'Client-side error');
+          // Ocultamos el Loader
+          this.showData2 = false;
         } else {
-          console.log('Server-side error');
+          // console.log('Server-side error');
           this.openSnackBar(err.message, 'Server-side error');
+          // Ocultamos el Loader
+          this.showData2 = false;
         }
       });
   }
@@ -562,6 +578,7 @@ export class AlumnoComponent implements OnInit {
     * (  ).
     ******************************************************/
   validarForm() {
+    // Inicio de las validaciones
     if ((this._alumnoModel.codAlumno == '' || this._alumnoModel.codAlumno == null)) {
       this.openSnackBar('Falta Ingresar el Codigo del Alumno', 'Error al ingresar nuevo Alumno');
       return 1;
@@ -590,6 +607,7 @@ export class AlumnoComponent implements OnInit {
       this.openSnackBar('Falta Ingresar la Forma de Pago de Matricula del Alumno', 'Error al ingresar nuevo Alumno');
       return 1;
     }
+
     // Retorna 0 cuando todo esta bien
     return 0;
   }

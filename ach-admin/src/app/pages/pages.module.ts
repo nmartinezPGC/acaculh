@@ -26,6 +26,7 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatTooltipModule,
 } from '@angular/material';
 
 import { MatChipsModule } from '@angular/material/chips';
@@ -42,6 +43,10 @@ import { SystemPropertiesService } from '../shared/services/systemProperties.ser
 import { InvoiceAlumnoComponent } from './alumno/invoice.alumno/invoice.alumno.component';
 import { ConsultaAlumnosComponent } from './consultas/consulta.alumnos/consulta.alumnos.component';
 import { RegistroPagosComponent } from './pagos/registro-pagos/registro-pagos.component';
+import { RevertirPagosComponent } from './pagos/revertir-pagos/revertir-pagos.component';
+import { RevertirPagosAlumnoModalComponent } from './pagos/revertir-pagos/revertir-pagos-alumno-modal.component';
+import { RegisterUserComponent } from './security/register-user/register-user.component';
+import { EvaluacionPracticaComponent } from './evaluaciones/evaluacion-practica/evaluacion-practica.component';
 
 @NgModule({
     imports: [
@@ -75,6 +80,7 @@ import { RegistroPagosComponent } from './pagos/registro-pagos/registro-pagos.co
         MatProgressSpinnerModule,
         MatDialogModule,
         MatProgressSpinnerModule,
+        MatTooltipModule,
     ],
     declarations: [
         ContactComponent,
@@ -84,6 +90,13 @@ import { RegistroPagosComponent } from './pagos/registro-pagos/registro-pagos.co
         InvoiceAlumnoComponent,
         ConsultaAlumnosComponent,
         RegistroPagosComponent,
+        RevertirPagosComponent,
+        RevertirPagosAlumnoModalComponent,
+        RegisterUserComponent,
+        EvaluacionPracticaComponent,
+    ],
+    entryComponents: [
+        RevertirPagosAlumnoModalComponent
     ],
     exports: [
     ],

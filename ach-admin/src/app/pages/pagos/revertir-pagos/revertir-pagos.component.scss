@@ -4,7 +4,8 @@
 .contact-list-container {
 	background-color: white;
 	padding: 10px;
-
+	overflow: auto;
+	
 	.contact-list {
 		height: 400px;
 		overflow: auto;
@@ -46,11 +47,45 @@
 		}
 	}
 
-	.example-full-width {
-		width: 100%;
-	  }	
-
-	  .loader2 {
+	// estilo el loader
+	.loader {
 		margin-left: 40%;
-		// margin-top: 8%;
-		}
+		margin-top: 5%;
+	}
+
+	.loader2 {
+		margin-left: 30%;
+		margin-top: 8%;
+	}
+	
+
+	// tamaños de las columnas
+	// ID
+	.customWidthClass{
+		flex: 0 0 30px;
+	 }
+
+	 // Accion
+	.customWidthClass2{
+		flex: 0 0 50px;
+	 }
+
+	 // Celular
+	.customWidthClass3{
+		flex: 0 0 80px;
+	 }
+
+	 // Email
+	.customWidthClass4{
+		flex: 0 0 260px;
+	 }
+
+	 // No Pagos
+	.customWidthClass5{
+		flex: 0 0 60px;
+	 }
+
+	 // Total Pagos
+	.customWidthClass6{
+		flex: 0 0 120px;
+	 }

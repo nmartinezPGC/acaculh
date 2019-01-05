@@ -312,4 +312,62 @@ class TblPago
     {
         return $this->idUsuario;
     }
+    /**
+     * @var \DateTime
+     */
+    private $fechaModificacion;
+
+    /**
+     * @var \DateTime
+     */
+    private $horaModificacion;
+
+
+    /**
+     * Set fechaModificacion
+     *
+     * @param \DateTime $fechaModificacion
+     *
+     * @return TblPago
+     */
+    public function setFechaModificacion($fechaModificacion)
+    {
+        $this->fechaModificacion = $fechaModificacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaModificacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaModificacion()
+    {
+        return $this->fechaModificacion;
+    }
+
+    /**
+     * Set horaModificacion
+     *
+     * @param \DateTime $horaModificacion
+     *
+     * @return TblPago
+     */
+    public function setHoraModificacion($horaModificacion)
+    {
+        $this->horaModificacion = $horaModificacion;
+
+        return $this;
+    }
+
+    /**
+     * Get horaModificacion
+     *
+     * @return \DateTime
+     */
+    public function getHoraModificacion()
+    {
+        return $this->horaModificacion;
+    }
 }

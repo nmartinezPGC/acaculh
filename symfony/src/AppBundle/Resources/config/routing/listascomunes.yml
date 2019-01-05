@@ -39,3 +39,9 @@ listascomunes_tipoPagoACHList:
     defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoPagoAllList" }
     methods: POST
  
+# Lista de Tipos de Usuarios
+listascomunes_tipoUsuarioList:
+    path: /tipo-usuario-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoUsuarioAllList" }
+    methods: POST
+ 

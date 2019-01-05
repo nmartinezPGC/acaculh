@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 import { ListasComunesService } from '../../../shared/services/listas.service';
 import { ConsultaAlumnoService } from '../../consultas/service/consulta.service.service';
-import { ConsultaAlumnoModel } from '../../consultas/model/consulta.alumno.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { RegistroPagosModel } from '../model/registro-pagos.model';
@@ -29,10 +28,9 @@ export class RegistroPagosComponent implements OnInit {
   public JsonOutgetAllListAlumnos: any[];
   public JsonOutgetAllListAlumnosSend: any[];
 
-  public _consultaAlumnoModel: ConsultaAlumnoModel;
-
   // Variables de mostrar Datos de la tabla
   public showData: boolean = true;
+  public showData2: boolean = false;
 
   // Datos a enviar al Formulario
   public idAlumnoSend: number;
@@ -71,7 +69,7 @@ export class RegistroPagosComponent implements OnInit {
   constructor(private _listasComunes: ListasComunesService,
     private _consultaAlumnoServices: ConsultaAlumnoService,
     public _snackBar: MatSnackBar,
-    public _registroPagosService: RegistroPagosService ) {
+    public _registroPagosService: RegistroPagosService) {
 
     // Iniciamos las Listas Comunes
     this.getAllListAlumnos();
@@ -99,9 +97,11 @@ export class RegistroPagosComponent implements OnInit {
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
     this._registroPagosModel = new RegistroPagosModel(
       0, '', null, null, '', null, // Identificacion Pago
-      0, '', '', '', '', '', // Identificacion Alumno
+      0, '', '', '', '', '', null,// Identificacion Alumno
       3, '', 0, '', 0, '', 0 // Relaciones de Tablas
     );
+
+    // Limpia los campos
 
     // Ejecutamos las Listas
     this.getlistaFormasPagoAll();
@@ -142,7 +142,7 @@ export class RegistroPagosComponent implements OnInit {
         if (response.status === 'error') {
           // Mensaje de alerta del error en cuestion
           this.JsonOutgetAllListAlumnos = response.data;
-          this.openSnackBar(response.msg, 'Error al obtener la informacion de los Alumnos resgitrados en la BD');
+          this.openSnackBar(response.msg, 'Error al obtener la informacion');
         } else {
           this.JsonOutgetAllListAlumnos = response.data;
           console.log(this.JsonOutgetAllListAlumnos);
@@ -163,7 +163,6 @@ export class RegistroPagosComponent implements OnInit {
         }
       });
   } // FIN : FND-00001
-
 
 
   /*****************************************************
@@ -187,6 +186,8 @@ export class RegistroPagosComponent implements OnInit {
     this._registroPagosModel.nombres = nombresIn;
     this._registroPagosModel.apellidos = apellidosIn;
     this._registroPagosModel.email = emailIn;
+    this._registroPagosModel.celular = celularIn;
+    // console.log(this._registroPagosModel.email);
     // this.openSnackBar('Prueba de Boton de tabla : ' + nombresIn + ' ' + apellidosIn, 'Server-side error');
   }// FIN : FND-00002
 
@@ -263,17 +264,109 @@ export class RegistroPagosComponent implements OnInit {
     * ( pagos/new-pago-alumno ).
     ******************************************************/
   nuevoPagoAlumno() {
+    // Cargamos el Loader
+    this.showData2 = true;
+
+    // Validacion de los Datos Obligatorios
+    if (this.validarForm() == 1) {
+      // Regresamos al Formulario a completarlo
+      // Ocultamos el Loader
+      setTimeout(() => {
+        this.showData2 = false;
+      }, 3000);
+      return -1;
+    }
+
     // Prepara los datos a Enviar
     const token1 = this._registroPagosService.getToken();
-    
     const identity = this._registroPagosService.getIdentity();
-    
+
     // Id del Usuario que esta registrando
     const userInto = identity.sub;
     this._registroPagosModel.idUsuarioPago = userInto;
+
+    // console.log('Modelo de la Clase ' + JSON.stringify( this._registroPagosModel.email));
+
+    // Llamamos al Servicio que ingresa el Pago nuevo Alumno
+    this._registroPagosService.registerNewPagoAlumno(token1, this._registroPagosModel).subscribe(
+      response => {
+        // pagos/new-pago-alumno
+        if (response.status === 'error') {
+          // Mensaje de alerta del error en cuestion
+          this.openSnackBar(response.msg, 'Error al ingresar el Pago del Alumno');
+          // Ocultamos el Loader
+          this.showData2 = false;
+        } else {
+          // Inicia el Formulario          
+          this.openSnackBar(response.msg, 'Ingreso de nuevo Pago del Alumno');
+          // this.ngOnInit();
+          this.initForm();
+
+          // Ocultamos el Loader
+          this.showData2 = false;
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log('Client-side error');
+          this.openSnackBar(err.message, 'Client-side error');
+          // Ocultamos el Loader
+          this.showData2 = false;
+        } else {
+          // console.log('Server-side error');
+          this.openSnackBar(err.message, 'Server-side error');
+          // Ocultamos el Loader
+          this.showData2 = false;
+        }
+      });
+
     // console.log(this._registroPagosModel);
   } // FIN : FND-00004
 
+
+  /*****************************************************
+    * Funcion: FND-00005
+    * Fecha: 27-12-2018
+    * Descripcion: Validacion del Formulario
+    * Objetivo: Validar los campos del Formulario
+    * (  ).
+    ******************************************************/
+  validarForm() {
+    if ((this._registroPagosModel.codAlumno == '' || this._registroPagosModel.codAlumno == null)) {
+      this.openSnackBar('Falta Ingresar el Codigo del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._registroPagosModel.nombres == '' || this._registroPagosModel.apellidos == '')) {
+      this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._registroPagosModel.montoPago == 0 || this._registroPagosModel.montoPago == null)) {
+      this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
+      return 1;
+    } else if ((this._registroPagosModel.idTipoPago == 0 || this._registroPagosModel.idTipoPago == null)) {
+      this.openSnackBar('Falta Ingresar el Tipo de Pago', 'Error al ingresar el Pago de Alumno');
+      return 1;
+    } else if ((this._registroPagosModel.idFormaPago == 0 || this._registroPagosModel.idFormaPago == null)) {
+      this.openSnackBar('Falta Ingresar la forma de Pago', 'Error al ingresar el Pago de Alumno');
+      return 1;
+    }
+  } // FND-00005
+
+
+  /*****************************************************
+    * Funcion: FND-00006
+    * Fecha: 31-12-2018
+    * Descripcion: Inicializacion del Formulario
+    * Objetivo: Inicializa los campos del Formulario
+    * (  ).
+    ******************************************************/
+  initForm() {
+    this.ngOnInit();
+
+    // Limpia los Campos
+    this.codAlumnoSend = null;
+    this.idAlumnoSend = null;
+    this.nombresSend = null;
+    this.apellidosSend = null;
+    this.celularSend = null;
+  }
 
 } // FIN Clase RegistroPagosComponent
 

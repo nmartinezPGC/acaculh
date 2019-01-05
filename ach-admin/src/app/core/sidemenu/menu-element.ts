@@ -25,7 +25,7 @@ export const menus = [
         'sub': [
             {
                 'name': 'Nuevo Alumno',
-                // 'icon': 'account_box',
+                'icon': 'account_box',
                 'open': false,
                 'link': 'pages/alumnos/nuevo-alumno',
                 'perfil': [1, 2, 3, 4],
@@ -51,7 +51,7 @@ export const menus = [
         'sub': [
             {
                 'name': 'Consulta de Alumnos',
-                // 'icon': 'supervisor_account',
+                'icon': 'supervisor_account',
                 'open': false,
                 'link': 'pages/consulta/alumnos',
                 'perfil': [1, 2, 3, 4],
@@ -70,22 +70,77 @@ export const menus = [
     },
     { // Menu de Pagos
         'name': 'Pagos',
-        'icon': 'credit_card',
+        'icon': 'account_balance_wallet',
         'open': false,
         'link': false,
         'perfil': [1],
         'sub': [
             {
                 'name': 'Registro de Pagos',
-                'icon': '',
+                'icon': 'credit_card',
                 'open': false,
                 'link': 'pages/pagos/registro-pago-alumno',
                 'perfil': [1],
-            }, /*{
-                'name': 'Services',
-                'icon': 'local_laundry_service',
+            }, {
+                'name': 'Revertir Pagos',
+                'icon': 'redo',
                 'open': false,
-                'link': 'pages/services',
+                'link': 'pages/pagos/revertir-pago-alumno',
+                'perfil': [1],
+            }, /*{
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
+    { // Menu de Evaluaciones
+        'name': 'Evaluaciones',
+        'icon': 'assignment',
+        'open': false,
+        'link': false,
+        'perfil': [1,3],
+        'sub': [
+            {
+                'name': 'Evaluar Alumno',
+                'icon': 'description',
+                'open': false,
+                'link': 'pages/evaluaciones/evaluacion-practica',
+                'perfil': [1,3],
+            }, /*{
+                'name': 'Revertir Pagos',
+                'icon': 'redo',
+                'open': false,
+                'link': 'pages/pagos/revertir-pago-alumno',
+                'perfil': [1,3],
+            }, {
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
+    { // Menu de Seguridad
+        'name': 'Seguridad',
+        'icon': 'build',
+        'open': false,
+        'link': false,
+        'perfil': [1],
+        'sub': [
+            {
+                'name': 'Registrar Usuario',
+                'icon': 'account_box',
+                'open': false,
+                'link': 'pages/security/register-user',
+                'perfil': [1],
+            }, /*{
+                'name': 'Revertir Pagos',
+                'icon': 'redo',
+                'open': false,
+                'link': 'pages/pagos/revertir-pago-alumno',
+                'perfil': [1,3],
             }, {
                 'name': 'Contact',
                 'icon': 'directions',

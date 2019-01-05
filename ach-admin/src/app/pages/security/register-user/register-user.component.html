@@ -1,0 +1,126 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Datos Generales del Usuario</ng-template>
+            Datos Generales del Usuario
+            <br><br>
+
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #codUsuar maxlength="20" placeholder="Codigo Usuario" [formControl]="codUsuario"
+                      [errorStateMatcher]="matcher" autofocus name="codUsuario" id="codUsuario" ngControl="codUsuario"
+                      [(ngModel)]="_registerUserModel.codUsuario">
+                    <mat-error *ngIf="codUsuario.hasError('required')">
+                      Codigo es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #name1 maxlength="20" placeholder="Primer Nombre" [formControl]="nombre1"
+                      [errorStateMatcher]="matcher" name="nombre1" id="nombre1" ngControl="nombre1" [(ngModel)]="_registerUserModel.nombre1">
+                    <mat-error *ngIf="nombre1.hasError('required')">
+                      Nombre es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #name2 maxlength="20" placeholder="Segundo Nombre" [formControl]="nombre2"
+                      [errorStateMatcher]="matcher" name="nombre2" id="nombre2" ngControl="nombre2" [(ngModel)]="_registerUserModel.nombre2">
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #apell1 maxlength="20" placeholder="Primer Apellido" [formControl]="apellido1"
+                      [errorStateMatcher]="matcher" name="apellido1" id="apellido1" ngControl="apellido1" [(ngModel)]="_registerUserModel.apellido1">
+                    <mat-error *ngIf="apellido1.hasError('required')">
+                      Apellido es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #apell2 maxlength="20" placeholder="Segundo Apellido" [formControl]="apellido2"
+                      [errorStateMatcher]="matcher" name="apellido2" id="apellido2" ngControl="apellido2" [(ngModel)]="_registerUserModel.apellido2">
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #emai maxlength="20" placeholder="Email" [formControl]="email" [errorStateMatcher]="matcher"
+                      name="email" id="email" ngControl="email" [(ngModel)]="_registerUserModel.email">
+                    <mat-error *ngIf="email.hasError('required')">
+                      Email es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #telef maxlength="20" placeholder="Telefono" [formControl]="telefono"
+                      [errorStateMatcher]="matcher" name="telefono" id="telefono" ngControl="telefono" [(ngModel)]="_registerUserModel.telefono">
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #celu maxlength="20" placeholder="Celular" [formControl]="celular"
+                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular" [(ngModel)]="_registerUserModel.celular">
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #pass maxlength="20" placeholder="Password Usuario" [formControl]="password"
+                      [errorStateMatcher]="matcher" autofocus name="password" id="password" ngControl="password"
+                      [(ngModel)]="_registerUserModel.password">
+                    <mat-error *ngIf="password.hasError('required')">
+                      Password es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+                <td colspan="2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Tipo Usuario" [formControl]="idTipoUsuario" [errorStateMatcher]="matcher"
+                      name="idTipoUsuario" id="idTipoUsuario" ngControl="idTipoUsuario" [(ngModel)]="_registerUserModel.idTipoUsuario"
+                      required>
+                      <mat-option *ngFor="let tipoUsuario of JsonOutgetlistaTipoUsuario" [value]="tipoUsuario.idTipoUsuario">
+                        {{ tipoUsuario.descripcionTipoUsuario }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="idTipoUsuario.hasError('required')">
+                      Tipo Usuario es: <strong>obligatoria</strong>
+                    </mat-error>
+                    <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+
+          </form>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+
+    </div>
+  </div>
+</div>

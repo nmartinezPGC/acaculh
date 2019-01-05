@@ -1,0 +1,118 @@
+<h2 mat-dialog-title>Listado de los Pagos de : {{ data.nombres }} {{ data.apellidos }}</h2>
+<mat-divider></mat-divider>
+
+<div class="loader2" *ngIf="showData2 == true">
+  <!-- Loader de la Tabla -->
+  Cargando... <br><br>
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <!-- <h3>{{ data.nombres }}</h3> -->
+  <!-- <p> Nombre de Clase Hija : +++++++ {{ data.nombres }} tu Id de Alumno es : {{ data.idAlumno }} </p> -->
+
+  <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between stretch" class="contact-list-container">
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between stretch" *ngIf="showData2 == false">
+      <div fxflex="100" class="full">
+        <mat-form-field class="full">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Pago de Alumno">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="example-container mat-elevation-z8">
+
+      <mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="idPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+            <h3>ID</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> {{row.idPago}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+        </ng-container>
+
+        <!-- Cod Documento Column -->
+        <ng-container matColumnDef="codDocumento">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Documento</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.codDocumento}} </mat-cell>
+        </ng-container>
+
+        <!-- Fecha Pago Column -->
+        <ng-container matColumnDef="fechaPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Fecha Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.fechaPago}} </mat-cell>
+        </ng-container>
+
+        <!-- Hora Pago Column -->
+        <ng-container matColumnDef="horaPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Hora Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.horaPago | date:'shortTime'}} </mat-cell>
+        </ng-container>
+
+        <!-- descFormaPago Column -->
+        <ng-container matColumnDef="descTipoPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Tipo Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.descTipoPago}} </mat-cell>
+        </ng-container>
+
+        <!-- descFormaPago Column -->
+        <ng-container matColumnDef="descFormaPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Forma Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.descFormaPago}} </mat-cell>
+        </ng-container>
+
+        <!-- descripcionEstado Column -->
+        <ng-container matColumnDef="descripcionEstado">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Estado Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.descripcionEstado}} </mat-cell>
+        </ng-container>
+
+        <!-- Monto de Pago Column -->
+        <ng-container matColumnDef="montoPago">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <h3>Monto Pago</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.montoPago | number:'3.2-5' }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass2'">
+            <h3>Accion</h3>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass2'">
+            <button mat-icon-button matTooltip="Anular Pago de Alumno" 
+            (click)="revertirPagoAlumno(row.idPago, row.idTipoPago, row.idFormaPago, row.codDocumento, row.montoPago)">
+              <mat-icon>account_balance_wallet</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button mat-raised-button color="primary" (click)="revertirPagoAlumno()">Prueba</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

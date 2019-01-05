@@ -4,6 +4,7 @@
 .contact-list-container {
 	background-color: white;
 	padding: 10px;
+	overflow: auto;
 
 	.contact-list {
 		height: 400px;
@@ -50,6 +51,11 @@
 	.loader {
 		margin-left: 40%;
 		margin-top: 5%;
+	}
+
+	.loader2 {
+		margin-left: 30%;
+		margin-top: 8%;
 	}
 	
 

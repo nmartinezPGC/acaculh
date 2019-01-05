@@ -1,3 +1,7 @@
+<!-- <mat-toolbar color="primary">
+  Angular Material Dialog Demo
+</mat-toolbar> -->
+
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
 
   <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
@@ -15,6 +19,7 @@
 
       <div class="loader" *ngIf="showData == true">
         <!-- Loader de la Tabla -->
+        Cargando... <br><br>
         <mat-spinner></mat-spinner>
       </div>
 
@@ -88,8 +93,8 @@
                 <h3>Accion</h3>
               </mat-header-cell>
               <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass2'">
-                <button mat-icon-button (click)="sendDataForm(row.idAlumno, row.codAlumno, row.nombres,
-                row.apellidos, row.celular)">
+                <button mat-icon-button matTooltip="Registrar Pago de Alumno" 
+                (click)="sendDataForm(row.idAlumno, row.codAlumno, row.nombres, row.apellidos, row.celular, row.email)">
                   <mat-icon>account_balance_wallet</mat-icon>
                 </button>
               </mat-cell>
@@ -193,15 +198,19 @@
           </mat-form-field>
         </div>
       </div> -->
+      
+      <div class="loader2" *ngIf="showData2 == true">
+        <!-- Loader de la Tabla -->
+        Cargando... <br><br>
+        <mat-spinner></mat-spinner>
+      </div>
 
       <div fxFlex fxLayout="column" fxLayoutAlign="end stretch">
         <div fxLayout="row" fxLayoutAlign="space-between stretch">
-          <button mat-raised-button>CANCEL</button>
-          <button mat-raised-button color="primary">SAVE</button>
+          <button mat-raised-button (click)="initForm()" >CANCEL</button>
+          <button mat-raised-button color="primary" (click)="nuevoPagoAlumno()" >SAVE</button>
         </div>
       </div>
     </div>
-
   </div>
-
 </div>

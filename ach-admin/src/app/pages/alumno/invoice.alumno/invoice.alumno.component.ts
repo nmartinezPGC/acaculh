@@ -191,7 +191,7 @@ export class InvoiceAlumnoComponent implements OnInit {
 // Exportamos el Componente del Modal de Ficha de Alumnos
 @Component({
   selector: 'app-dialog-content-example-dialog',
-  templateUrl: 'dialog-content-example-dialog.html',
+  // templateUrl: 'dialog-content-example-dialog.html',
 })
 export class DialogContentExampleDialog {}
 
