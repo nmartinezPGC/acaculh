@@ -1,0 +1,71 @@
+BackendBundle\Entity\TblHoraPractica:
+    type: entity
+    table: tbl_hora_practica
+    indexes:
+        fk_tbl_horas_practica_1_idx:
+            columns:
+                - id_alumno
+        fk_tbl_horas_practica_2_idx:
+            columns:
+                - id_lugar_practica
+    id:
+        idHorasPractica:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_horas_practica
+            generator:
+                strategy: IDENTITY
+    fields:
+        codHoraPractica:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            column: cod_hora_practica
+        fechaInicio:
+            type: date
+            nullable: true
+            column: fecha_inicio
+        fechaFin:
+            type: datetime
+            nullable: true
+            column: fecha_fin
+        observaciones:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        urlDocumento:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: url_documento
+    manyToOne:
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+        idLugarPractica:
+            targetEntity: TblLugarPractica
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_lugar_practica:
+                    referencedColumnName: id_lugar_practica
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

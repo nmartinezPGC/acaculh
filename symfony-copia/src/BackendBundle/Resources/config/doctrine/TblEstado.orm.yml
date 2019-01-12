@@ -1,0 +1,44 @@
+BackendBundle\Entity\TblEstado:
+    type: entity
+    table: tbl_estado
+    indexes:
+        fk_tbl_estado_1_idx:
+            columns:
+                - id_grupo
+    id:
+        idEstado:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_estado
+            generator:
+                strategy: IDENTITY
+    fields:
+        codEstado:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+            column: cod_estado
+        descripcionEstado:
+            type: string
+            nullable: true
+            length: 60
+            options:
+                fixed: false
+            column: descripcion_estado
+    manyToOne:
+        idGrupo:
+            targetEntity: TblGrupo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_grupo:
+                    referencedColumnName: id_grupos
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

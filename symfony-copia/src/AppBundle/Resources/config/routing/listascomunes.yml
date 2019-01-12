@@ -1,0 +1,47 @@
+## YAML Template.
+## Author: Nahum Martinez
+## Fecha: 28-08-2017
+---
+# Ruta para Seleccionar Listas Comunes ProfesionesAllList
+# Lista de Genero
+listascomunes_generoList:
+    path: /genero-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:GeneroAllList" }
+    methods: POST
+    
+# Lista de Profesiones
+listascomunes_profesionesList:
+    path: /profesiones-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:ProfesionesAllList" }
+    methods: POST
+
+# Lista de Tipo de Becas
+listascomunes_tipoBecaList:
+    path: /tipobeca-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoBecaAllList" }
+    methods: POST
+
+# Lista de Medio Conoce ACH
+listascomunes_medioConoceACHList:
+    path: /medio-ach-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:MedioConoceACHAllList" }
+    methods: POST
+    
+# Lista de Formas de Pago ACH
+listascomunes_formaPagoACHList:
+    path: /forma-pago-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:FormaPagoAllList" }
+    methods: POST
+    
+# Lista de Tipos de Pago ACH
+listascomunes_tipoPagoACHList:
+    path: /tipo-pago-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoPagoAllList" }
+    methods: POST
+ 
+# Lista de Tipos de Usuarios
+listascomunes_tipoUsuarioList:
+    path: /tipo-usuario-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoUsuarioAllList" }
+    methods: POST
+ 

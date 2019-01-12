@@ -1,0 +1,34 @@
+BackendBundle\Entity\TblFormaPago:
+    type: entity
+    table: tbl_forma_pago
+    id:
+        idFormaPago:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_forma_pago
+            generator:
+                strategy: IDENTITY
+    fields:
+        codFormaPago:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: cod_forma_pago
+        descFormaPago:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: desc_forma_pago
+        activo:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
+    lifecycleCallbacks: {  }

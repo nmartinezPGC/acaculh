@@ -1,0 +1,24 @@
+## Carga de las Rutas.
+## Ruta default
+app_default:
+    resource: "@AppBundle/Resources/config/routing/default.yml"
+    prefix: /
+
+app_usuario:
+    resource: "@AppBundle/Resources/config/routing/usuario.yml"
+    prefix: /usuario
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de ListasComunes
+app_listas:
+    resource: "@AppBundle/Resources/config/routing/listascomunes.yml"
+    prefix: /listas
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de Alumnos
+app_alumno:
+    resource: "@AppBundle/Resources/config/routing/alumno.yml"
+    prefix: /alumno
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de Pagos
+app_pagos:
+    resource: "@AppBundle/Resources/config/routing/pagoAlumno.yml"
+    prefix: /pagos

@@ -1,0 +1,32 @@
+BackendBundle\Entity\TblProfesion:
+    type: entity
+    table: tbl_profesion
+    id:
+        idProfesion:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_profesion
+            generator:
+                strategy: IDENTITY
+    fields:
+        codProfesion:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+            column: cod_profesion
+        descripcionProfesion:
+            type: string
+            nullable: true
+            length: 150
+            options:
+                fixed: false
+            column: descripcion_profesion
+        activo:
+            type: boolean
+            nullable: true
+    lifecycleCallbacks: {  }
