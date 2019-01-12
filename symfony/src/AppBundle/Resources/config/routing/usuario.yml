@@ -1,7 +1,7 @@
 ## Rutas de Usuario.
 usuario_new:
     path: /usuario-new
-    defaults: { _controller: "AppBundle:Usuario/Usuario:newUser" }
+    defaults: { _controller: "AppBundle:Usuario/Usuario:NewUser" }
     methods: POST
     
 usuario_update:

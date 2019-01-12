@@ -20,181 +20,209 @@ use BackendBundle\Entity\TblTipoUsuario;
 class UsuarioController extends Controller {
 
     /**
-     * @Route("/usuario/new", name="new")
+     * @Route("/usuario/usuario-new", name="/usuario/usuario-new")
      * Creacion del Controlador: Usuario
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
      * @since 1.0
      * Funcion: FND00001
      */
-    public function newUserAction(Request $request) {
+    public function NewUserAction(Request $request) {
         date_default_timezone_set('America/Tegucigalpa');
         //Instanciamos el Servicio Helpers
         $helpers = $this->get("app.helpers");
+        
+        //Recogemos el Hash y la Autorizacion del Mismo        
+        $hash = $request->get("authorization", null);
+        //Se Chekea el Token
+        $checkToken = $helpers->authCheck($hash);
 
+        //Convertimos los Parametros POSt a Json
         $json = $request->get("json", null);
-        $params = json_decode($json);
 
         //Array de Mensajes
-        $data = $data = array(
+        $data = array(
             "status" => "error",
-            "code" => "400",
-            "msg" => "Usuario no creado, hay problemas en los datos, faltan campos por llenar !!"
+            "code" => 200,
+            "msg" => "No se ha podido ingresar el Usuario, presenta problemas",
+            "validToken" => $checkToken,
+            "json" => $json
         );
 
-        //Evaluamos el Json
-        if ($json != null) {
-            //Variables que vienen del Json ***********************************************
-            //Seccion de Identificacion ***************************************************
-            //El ID no se incluye; ya que es un campo Serial            
-            $cod_usuario = (isset($params->codUsuario)) ? $params->codUsuario : null;
-            $iniciales = (isset($params->inicialesUsuario)) ? $params->inicialesUsuario : null;
-            $nombre1 = (isset($params->primerNombre) && ctype_alpha($params->primerNombre) ) ? $params->primerNombre : null;
-            $nombre2 = (isset($params->segundoNombre) && ctype_alpha($params->segundoNombre) ) ? $params->segundoNombre : null;
-            $apellido1 = (isset($params->primerApellido) && ctype_alpha($params->primerApellido) ) ? $params->primerApellido : null;
-            $apellido2 = (isset($params->segundoApellido) && ctype_alpha($params->segundoApellido) ) ? $params->segundoApellido : null;
-            $email = (isset($params->emailUsuario)) ? $params->emailUsuario : null;
-            //Seccion de Relaciones entre Tablas ********************************************************************
-            $cod_estado = (isset($params->idEstado)) ? $params->idEstado : 0;
-            $cod_tipo_usuario = (isset($params->idTipoUsuario)) ? $params->idTipoUsuario : 0;
-            //Datos de Bitacora *************************************************************************************
-            $createdAt = new \DateTime("now");
-            $image = "";
-            $password = (isset($params->passwordUsuairo)) ? $params->passwordUsuairo : null;
-            $celular = (isset($params->celularFuncionario)) ? $params->celularFuncionario : null;
-            $telefono = (isset($params->telefonoFuncionario)) ? $params->telefonoFuncionario : null;
+        //Evalua que el Token sea True
+        if ($checkToken == true) {
+            $identity = $helpers->authCheck($hash, true);
+            
+            //Evaluamos el Json
+            if ($json != null) {                
+                $params = json_decode($json);
+                //Variables que vienen del Json ***********************************************
+                //Seccion de Identificacion ***************************************************
+                //El ID no se incluye; ya que es un campo Serial            
+                $cod_usuario = (isset($params->codUsuario)) ? $params->codUsuario : null;
+                $iniciales = (isset($params->iniciales)) ? $params->iniciales : null;
+                $nombre1 = (isset($params->nombre1) && ctype_alpha($params->nombre1) ) ? $params->nombre1 : null;
+                $nombre2 = (isset($params->nombre2) && ctype_alpha($params->nombre2) ) ? $params->nombre2 : null;
+                $apellido1 = (isset($params->apellido1) && ctype_alpha($params->apellido1) ) ? $params->apellido1 : null;
+                $apellido2 = (isset($params->apellido2) && ctype_alpha($params->apellido2) ) ? $params->apellido2 : null;
+                $email = (isset($params->email)) ? $params->email : null;
+                // Seccion de Relaciones entre Tablas ********************************************************************
+                // $cod_estado = (isset($params->idEstado)) ? $params->idEstado : 0;
+                $cod_tipo_usuario = (isset($params->idTipoUsuario)) ? $params->idTipoUsuario : 0;
+                //Datos de Bitacora *************************************************************************************
+                $createdAt = new \DateTime("now");
+                $image = "";
+                $password = (isset($params->password)) ? $params->password : null;
+                $celular = (isset($params->celular)) ? $params->celular : null;
+                $telefono = (isset($params->telefono)) ? $params->telefono : null;
 
-            // Fechas Nulas
-            $fecha_null = new \DateTime('2999-12-31');
+                // Fechas Nulas
+                $fecha_null = new \DateTime('2999-12-31');
 
-            //Validamos el Email ************************************************************************************
-            $emailConstraint = new Assert\Email();
-            $emailConstraint->message = "El Email no es valido!!";
+                //Validamos el Email ************************************************************************************
+                $emailConstraint = new Assert\Email();
+                $emailConstraint->message = "El Email no es valido!!";
 
-            $valid_email = $this->get("validator")->validate($email, $emailConstraint);
-            //Entitie Manager Definition ****************************************************************************
-            $em = $this->getDoctrine()->getManager();
-
-            if ($email != null && count($valid_email) == 0 && $cod_usuario != null &&
-                    $password != null && $nombre1 != null && $apellido1 != null && $celular != 0) {
-                //Instanciamos la Entidad TblUsuario *****************************************                
-                $usuario = new TblUsuario();
-                //Seteamos los valores de Identificacion ***********************
-                $usuario->setcodUsuario($cod_usuario);
-                $usuario->setNombre1($nombre1);
-                $usuario->setNombre2($nombre2);
-                $usuario->setApellido1($apellido1);
-                $usuario->setApellido2($apellido2);
-                $usuario->setEmail($email);
+                $valid_email = $this->get("validator")->validate($email, $emailConstraint);
+                //Entitie Manager Definition ****************************************************************************
+                $em = $this->getDoctrine()->getManager();
                 
-                $usuario->setCelular($celular);
-                $usuario->setTelefono($telefono);
-                
-                $usuario->setActivo(true);
+                if ($email != null && count($valid_email) == 0 && $cod_usuario != null &&
+                        $password != null && $nombre1 != null && $apellido1 != null && $celular != 0) {
+                    //Instanciamos la Entidad TblUsuario *****************************************                
+                    $usuario = new TblUsuario();
+                    
+                    //Seteamos los valores de Identificacion ***********************
+                    $usuario->setcodUsuario($cod_usuario);
+                    $usuario->setNombre1($nombre1);
+                    $usuario->setNombre2($nombre2);
+                    $usuario->setApellido1($apellido1);
+                    $usuario->setApellido2($apellido2);
+                    $usuario->setEmail($email);
 
-                //Seteamos los valores de Relaciones de Tablas *****************
-                //Instancia a la Tabla: TblEstados *****************************                
-                $estados = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
-                        array(
-                            "idEstado" => $cod_estado
-                ));
-                $usuario->setIdEstado($estados);
+                    $usuario->setCelular($celular);
+                    $usuario->setTelefono($telefono);
+
+                    $usuario->setActivo(true);
+                    
+                    //Seteamos los valores de Relaciones de Tablas *****************
+                    //Instancia a la Tabla: TblEstados *****************************                
+                    $estados = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
+                            array(
+                                "idEstado" => 1
+                    ));
+                    $usuario->setIdEstado($estados);
 
 
-                //Instancia a la Tabla: TblTipoUsuario *************************                
-                $tipoUsuario = $em->getRepository("BackendBundle:TblTipoUsuario")->findOneBy(
-                        array(
-                            "idTipoUsuario" => $cod_tipo_usuario
-                ));
-                $usuario->setIdTipoUsuario($tipoUsuario);
+                    //Instancia a la Tabla: TblTipoUsuario *************************                
+                    $tipoUsuario = $em->getRepository("BackendBundle:TblTipoUsuario")->findOneBy(
+                            array(
+                                "idTipoUsuario" => $cod_tipo_usuario
+                    ));
+                    $usuario->setIdTipoUsuario($tipoUsuario);
 
-                //Seteamos el Resto de campos de la Tabla: TblUsuario *********
-                $usuario->setIniciales($iniciales);
+                    //Seteamos el Resto de campos de la Tabla: TblUsuario *********
+                    $usuario->setIniciales($iniciales);
 
-                //Cifrar la Contraseña *****************************************
-                $pwd = hash('sha256', $password);
-                $usuario->setPassword($pwd);
+                    //Cifrar la Contraseña *****************************************
+                    $pwd = hash('sha256', $password);
+                    $usuario->setPassword($pwd);
 
-                // Imagen del usuario
-                $usuario->setUrlImagen("sreci.png");
+                    // Imagen del usuario
+                    $usuario->setUrlImagen("sreci.png");
 
-                //Seteamos los valores de la Bitacora **************************
-                $usuario->setFechaCreacion($createdAt);
-                $usuario->setHoraCreacion($createdAt);
+                    //Seteamos los valores de la Bitacora **************************
+                    $usuario->setFechaCreacion($createdAt);
+                    $usuario->setHoraCreacion($createdAt);
 
-                //Verificacion del Codigo y Email en la Tabla: TblUsuarios *****                
-                $isset_user_mail = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
-                        array(
-                            "email" => $email
-                ));
+                    //Verificacion del Codigo y Email en la Tabla: TblUsuarios *****                
+                    $isset_user_mail = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
+                            array(
+                                "email" => $email
+                    ));
 
-                //Verificacion del Codigo del Usuario **************************
-                $isset_user_cod = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
-                        array(
-                            "codUsuario" => $cod_usuario
-                ));
-                
-                //Verificamos que el retorno de la Funcion sea = 0 *************                
-                if ($isset_user_cod == null && $isset_user_mail == null) {
-                    $em->persist($usuario);
-                    $em->flush();
+                    //Verificacion del Codigo del Usuario **************************
+                    $isset_user_cod = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
+                            array(
+                                "codUsuario" => $cod_usuario
+                    ));
+                    
+                    //Verificamos que el retorno de la Funcion sea = 0 *************                
+                    if ($isset_user_cod == null && $isset_user_mail == null) {
+                        $em->persist($usuario);
+                        $em->flush();
 
-                    // Termina Tblusuario **************************************                   
-                    // Envio de Correo despues de la Grabacion de Datos
-                    // *************************************************
-                    // los Datos de envio de Mail **********************
-                    //Creamos la instancia con la configuración 
-                    $transport = \Swift_SmtpTransport::newInstance()
-                            ->setHost('smtp.gmail.com')
-                            ->setPort(587)
-                            ->setEncryption('tls')
-                            ->setStreamOptions(array(
-                                'ssl' => array(
-                                    'allow_self_signed' => true,
-                                    'verify_peer' => false,
-                                    'verify_peer_name' => false
-                                )
+                        // Termina Tblusuario **************************************                   
+                        // Envio de Correo despues de la Grabacion de Datos
+                        // *************************************************
+                        // los Datos de envio de Mail **********************
+                        //Creamos la instancia con la configuración 
+                        $transport = \Swift_SmtpTransport::newInstance()
+                                ->setHost('smtp.gmail.com')
+                                ->setPort(587)
+                                ->setEncryption('tls')
+                                ->setStreamOptions(array(
+                                    'ssl' => array(
+                                        'allow_self_signed' => true,
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false
                                     )
-                            )
-                            ->setUsername("nahum.sreci@gmail.com")
-                            ->setPassword('1897Juve')
-                            ->setTimeout(180);
-                    //echo "Paso 1";
-                    //Creamos la instancia del envío
-                    $mailer = \Swift_Mailer::newInstance($transport);
+                                        )
+                                )
+                                ->setUsername("nahum.sreci@gmail.com")
+                                ->setPassword('1897Juve')
+                                ->setTimeout(180);
+                        //echo "Paso 1";
+                        //Creamos la instancia del envío
+                        $mailer = \Swift_Mailer::newInstance($transport);
 
-                    //Creamos el mensaje
-                    $mail = \Swift_Message::newInstance()
-                            ->setSubject('Creacion de Usuario | SICDOC')
-                            ->setFrom(array("nahum.sreci@gmail.com" => "Administrador ACACULH"))
-                            //->addCc('correspondenciascpi@sreci.gob.hn')
-                            ->setTo($email)
-                            /* ->setBody(
-                            $this->renderView(
-                                    'Emails/newUser.html.twig', array('name' => $nombre1, 'apellidoOficio' => $apellido1,
-                                'fechaCreated' => date_format($createdAt, "Y-m-d"), 'userActual' => $email,
-                                'passActual' => $password)
-                            ), 'text/html') */
-                            ;
+                        //Creamos el mensaje
+                        $mail = \Swift_Message::newInstance()
+                                ->setSubject('Creacion de Usuario | ACACULH')
+                                ->setFrom(array("nahum.sreci@gmail.com" => "Administrador ACACULH"))
+                                //->addCc('correspondenciascpi@sreci.gob.hn')
+                                ->setTo($email)
+                        /* ->setBody(
+                          $this->renderView(
+                          'Emails/newUser.html.twig', array('name' => $nombre1, 'apellidoOficio' => $apellido1,
+                          'fechaCreated' => date_format($createdAt, "Y-m-d"), 'userActual' => $email,
+                          'passActual' => $password)
+                          ), 'text/html') */
+                        ;
 
-                    // Envia el Correo con todos los Parametros
-                    // $resuly = $mailer->send($mail);
-
-                    // ***** Fin de Envio de Correo ********************
-                    //Seteamos el array de Mensajes a enviar *******************
-                    $data = array(
-                        "status" => "success",
-                        "code" => "200",
-                        "msg" => "El Usuario, " . $nombre1 . " " . $apellido1 . " se ha creado satisfactoriamente."
-                    );
-                } else {
-                    $data = array(
-                        "status" => "error",
-                        "code" => "400",
-                        "msg" => "Error al registrar, el Usuario ya existe revise el "
-                        . "EMail o el No. de Identidad !!"
-                    );
+                        // Envia el Correo con todos los Parametros
+                        // $resuly = $mailer->send($mail);
+                        // ***** Fin de Envio de Correo ********************
+                        //Seteamos el array de Mensajes a enviar *******************
+                        $data = array(
+                            "status" => "success",
+                            "code" => 200,
+                            "msg" => "El Usuario, " . $nombre1 . " " . $apellido1 . " se ha creado satisfactoriamente."
+                        );
+                    } else {
+                        $data = array(
+                            "status" => "error",
+                            "code" => "400",
+                            "msg" => "Error al registrar, el Usuario ya existe revise el "
+                            . "EMail o el No. de Identidad !!"
+                        );
+                    }
                 }
+            } else {
+                //Array de Mensajes
+                $data = array(
+                    "status" => "error",
+                    "desc" => "Eror al enviar la informacion serializada, el Json no ha sido enviado",
+                    "code" => 400,
+                    "msg" => "Usuario no creado, falta ingresar los parametros !! " . $json . " Capos"
+                );
             }
+        } else {
+            $data = array(
+                "status" => "error",
+                "desc" => "El Token, es invalido",
+                "code" => 400,
+                "msg" => "Autorizacion de Token no valida, tu sesion ha expirado, cierra y vuelve a iniciar. !!"
+            );
         }
         //Retorno de la Funcion ************************************************
         return $helpers->parserJson($data);

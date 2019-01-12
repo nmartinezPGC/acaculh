@@ -64,6 +64,13 @@ BackendBundle\Entity\TblPago:
             type: datetime
             nullable: true
             column: hora_modificacion
+        descripcionPago:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: descripcion_pago
     manyToOne:
         idEstadoPago:
             targetEntity: TblEstado

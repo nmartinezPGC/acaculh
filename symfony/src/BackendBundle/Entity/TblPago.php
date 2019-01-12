@@ -370,4 +370,33 @@ class TblPago
     {
         return $this->horaModificacion;
     }
+    /**
+     * @var string
+     */
+    private $descripcionPago;
+
+
+    /**
+     * Set descripcionPago
+     *
+     * @param string $descripcionPago
+     *
+     * @return TblPago
+     */
+    public function setDescripcionPago($descripcionPago)
+    {
+        $this->descripcionPago = $descripcionPago;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionPago
+     *
+     * @return string
+     */
+    public function getDescripcionPago()
+    {
+        return $this->descripcionPago;
+    }
 }

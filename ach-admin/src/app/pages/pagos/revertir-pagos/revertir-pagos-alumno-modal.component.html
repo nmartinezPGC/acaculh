@@ -57,6 +57,14 @@
           <mat-cell *matCellDef="let row"> {{row.horaPago | date:'shortTime'}} </mat-cell>
         </ng-container>
 
+        <!-- Decripcion Pago Column -->
+        <ng-container matColumnDef="descripcionPago">
+            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass4'">
+              <h3>Descripcion Pago</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass4'" > {{row.descripcionPago}} </mat-cell>
+          </ng-container>
+
         <!-- descFormaPago Column -->
         <ng-container matColumnDef="descTipoPago">
           <mat-header-cell *matHeaderCellDef mat-sort-header>

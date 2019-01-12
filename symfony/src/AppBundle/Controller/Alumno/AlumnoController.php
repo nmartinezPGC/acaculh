@@ -43,27 +43,21 @@ class AlumnoController extends Controller {
             $dql = $em->createQuery('SELECT DISTINCT A.idAlumno, A.codAlumno, A.email, '
                             . "CONCAT( A.nombre1, ' ', A.nombre2) as nombres, "
                             . "CONCAT( A.apellido1, ' ', A.apellido2) as apellidos, "
+                            . "DATE_SUB(A.fechaIngreso, 0, 'DAY') AS fechaIngreso, "
                             . "A.celular, A.idMedioConoceAch medioConoceAch, C.descTipoBeca, "
-                            . "B.descripcionEstado, D.montoPago "
+                            . "B.descripcionEstado, D.montoPago, E.descripcionEstado "
                             . 'FROM BackendBundle:TblAlumno A '
                             . 'INNER JOIN BackendBundle:TblEstado B WITH B.idEstado = A.idEstado '
                             . 'INNER JOIN BackendBundle:TblTipoBeca C WITH C.idTipoBeca = A.idTipoBeca '
                             . 'INNER JOIN BackendBundle:TblPago D WITH D.idAlumno = A.idAlumno '
+                            . 'INNER JOIN BackendBundle:TblEstado E WITH E.idEstado = A.idEstado '
                             . 'WHERE D.idTipoPago = :idTipoPago '
-                            . 'ORDER BY A.idAlumno ')
+                            . 'ORDER BY A.fechaIngreso DESC ')
                     ->setParameter('idTipoPago', 1);
         }
 
         // Ejecucion del Query
         $alumnosAllList = $dql->getResult();
-
-        // Query para Obtener todos los Alumnos Registrados de la Tabla: TblAlumno
-        /* $alumnosAllList = $em->getRepository("BackendBundle:TblAlumno")->findBy(
-          array(
-          "idEstado" => 1
-          ));
-         * 
-         */
 
         // Total de Alumnos
         $countAlumnos = count($alumnosAllList);

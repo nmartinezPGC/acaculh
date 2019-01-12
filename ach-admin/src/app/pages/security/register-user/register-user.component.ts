@@ -25,7 +25,7 @@ export class RegisterUserComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  
+
   /**
    * Seccion de Planificar los validadores
    */
@@ -77,7 +77,7 @@ export class RegisterUserComponent implements OnInit {
   // Variables para Listas Comunes
   // Json de Listas Comunes
   public JsonOutgetlistaTipoUsuario: any[];
-  
+
   public _registerUserModel: RegisterUserModel;
 
   // Variables de mostrar Datos de la tabla
@@ -122,8 +122,8 @@ export class RegisterUserComponent implements OnInit {
     this._registerUserModel = new RegisterUserModel(
       0, '', // Identifiacion
       null, null, null, null, null, // Generales 1
-      0, 0, null, null, null, null, // Generales 2
-      0, 0, null, null, // Relaciones
+      0, 0, null, null, null, true, // Generales 2
+      0, 1, null, null, // Relaciones
     );
 
     // Iniciamos las Listas Comunes
@@ -139,28 +139,69 @@ export class RegisterUserComponent implements OnInit {
   * de la BD, Llamando a la API, por su metodo
   * ( tipo-usuario-all-list ).
   ******************************************************/
- getlistaProfesionesAllPadre() {
-  // Llamamos al Servicio que provee todas las Profesiones
-  this._listasComunes.listasComunes('', 'tipo-usuario-all-list').subscribe(
-    response => {
-      // listas/profesiones-all-list | so redirect to return url
-      if (response.status === 'error') {
-        // Mensaje de alerta del error en cuestion
-        this.JsonOutgetlistaTipoUsuario = response.data;
-        // alert(response.msg);
-        this.openSnackBar(response.msg, 'Error al obtener la informacion');
-      } else {
-        this.JsonOutgetlistaTipoUsuario = response.data;
-      }
-    }, (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        // console.log('Client-side error');
-        this.openSnackBar(err.message, 'Client-side error');
-      } else {
-        // console.log('Server-side error');
-        this.openSnackBar(err.message, 'Server-side error');
-      }
-    });
-} // FIN : FND-00002
+  getlistaProfesionesAllPadre() {
+    // Llamamos al Servicio que provee todas las Profesiones
+    this._listasComunes.listasComunes('', 'tipo-usuario-all-list').subscribe(
+      response => {
+        // listas/profesiones-all-list | so redirect to return url
+        if (response.status === 'error') {
+          // Mensaje de alerta del error en cuestion
+          this.JsonOutgetlistaTipoUsuario = response.data;
+          // alert(response.msg);
+          this.openSnackBar(response.msg, 'Error al obtener la informacion');
+        } else {
+          this.JsonOutgetlistaTipoUsuario = response.data;
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log('Client-side error');
+          this.openSnackBar(err.message, 'Client-side error');
+        } else {
+          // console.log('Server-side error');
+          this.openSnackBar(err.message, 'Server-side error');
+        }
+      });
+  } // FIN : FND-00002
+
+  /*****************************************************
+    * Funcion: FND-00003
+    * Fecha: 12-02-2018
+    * Descripcion: Guardar el Nuevo Alumno
+    * Objetivo: Guardar el Nuevo Alumno
+    * de la BD, Llamando a la API, por su metodo
+    * ( /usuario/usuario-new ).
+    ******************************************************/
+  nuevoUsuario() {
+    // Iniciales de Nombre
+    const inicialesusuario: string = this._registerUserModel.nombre1.substring(0, 1) +
+      this._registerUserModel.nombre2.substring(0, 1) +
+      this._registerUserModel.apellido1.substring(0, 1) +
+      this._registerUserModel.apellido2.substring(0, 1);
+    this._registerUserModel.iniciales = inicialesusuario;
+
+    // Llamamos al Servicio que Ingresa el Usuario
+    this._registerUserService.registerNewUser(this._registerUserModel).subscribe(
+      response => {
+        // /usuario/usuario-new | so redirect to return url
+        if (response.status === 'error') {
+          // Mensaje de alerta del error en cuestion
+          // this.JsonOutgetlistaTipoUsuario = response.data;
+          // alert(response.msg);
+          this.openSnackBar(response.msg, 'Error al Ingresar el Usuario');
+        } else if (response.status === 'success') {
+          // Reinicia el Formulario
+          this.ngOnInit();
+          this.openSnackBar(response.msg, 'Usuario Ingresado exitosamente');
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log('Client-side error');
+          this.openSnackBar(err.message, 'Client-side error');
+        } else {
+          // console.log('Server-side error');
+          this.openSnackBar(err.message, 'Server-side error');
+        }
+      });
+  }
 
 }

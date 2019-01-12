@@ -15,6 +15,7 @@ export class RegistroPagosModel {
         public horaPago: Date,
         public conceptoPago: string,
         public montoPago: number,
+        public descripcionPago: string,
 
         // Identificacion Alumno
         public idAlumno: number,

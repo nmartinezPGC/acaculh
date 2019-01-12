@@ -27,10 +27,10 @@
 
           <!-- ID Column -->
           <ng-container matColumnDef="idAlumno">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <h3>ID Alumno</h3>
+            <mat-header-cell *matHeaderCellDef mat-sort-header  [ngClass]="'customWidthClass'" >
+              <h3>ID</h3>
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.idAlumno}} </mat-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'" > {{row.idAlumno}} </mat-cell>
           </ng-container>
 
           <!-- Codigo Column -->
@@ -57,12 +57,28 @@
             <mat-cell *matCellDef="let row"> {{row.apellidos}} </mat-cell>
           </ng-container>
 
+          <!-- Fecha Ingreso Column -->
+          <ng-container matColumnDef="fechaIngreso">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <h3>Fecha Ingreso</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fechaIngreso}} </mat-cell>
+          </ng-container>
+
           <!-- Celular Column -->
           <ng-container matColumnDef="celular">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               <h3>Celular</h3>
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.celular}} </mat-cell>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass4'">
+              <h3>Email</h3>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass4'"> {{row.email}} </mat-cell>
           </ng-container>
 
           <!-- ACH Conoce Ach Column -->
@@ -81,12 +97,20 @@
             <mat-cell *matCellDef="let row"> {{row.descTipoBeca}} </mat-cell>
           </ng-container>
 
+          <!-- Estado Column -->
+          <ng-container matColumnDef="descripcionEstado">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'">
+                <h3>Estado</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'"> {{row.descripcionEstado}} </mat-cell>
+            </ng-container>
+
           <!-- Monto Pago Column -->
           <ng-container matColumnDef="montoPago">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <h3>Monto Matricula</h3>
+            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'">
+              <h3>Matricula</h3>
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.montoPago}} </mat-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'"> {{row.montoPago | number:'3.2-5'}} </mat-cell>
           </ng-container>
 
           <!-- Color Column -->

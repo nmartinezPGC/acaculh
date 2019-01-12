@@ -1,7 +1,16 @@
 BackendBundle\Entity\TblPlato:
     type: entity
     table: tbl_plato
-    id: {  }
+    id:
+        idPlato:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_plato
+            generator:
+                strategy: IDENTITY
     fields:
         codPlato:
             type: string
@@ -36,15 +45,4 @@ BackendBundle\Entity\TblPlato:
             options:
                 unsigned: false
                 default: '1'
-    oneToOne:
-        idPlato:
-            targetEntity: TblTipoPlato
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                id_plato:
-                    referencedColumnName: id_tipo_plato
-            orphanRemoval: false
     lifecycleCallbacks: {  }

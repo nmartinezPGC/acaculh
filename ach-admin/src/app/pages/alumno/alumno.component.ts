@@ -244,7 +244,7 @@ export class AlumnoComponent implements OnInit {
       null, null, '', 0, null, true, 0, '', // Generales 2
       '', null, '', '', null, '', '', null, '', null, // Padres
       '', null, '', null, // Encargados
-      '', '', '', 0, 1, 0, '', null, null, // Complentarios
+      '', '', '', 0, 7, 0, '', null, null, // Complentarios
       null, 0, '', // Matricula
     );
 

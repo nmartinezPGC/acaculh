@@ -93,8 +93,7 @@
                 <h3>Accion</h3>
               </mat-header-cell>
               <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass2'">
-                <button mat-icon-button matTooltip="Registrar Pago de Alumno" 
-                (click)="sendDataForm(row.idAlumno, row.codAlumno, row.nombres, row.apellidos, row.celular, row.email)">
+                <button mat-icon-button matTooltip="Registrar Pago de Alumno" (click)="sendDataForm(row.idAlumno, row.codAlumno, row.nombres, row.apellidos, row.celular, row.email)">
                   <mat-icon>account_balance_wallet</mat-icon>
                 </button>
               </mat-cell>
@@ -165,6 +164,18 @@
         </div>
       </div>
 
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <textarea matInput #message maxlength="250" [formControl]="descripcionPago" placeholder="Descripcion Pago"
+              name="descripcionPago" id="descripcionPago" ngControl="descripcionPago" [(ngModel)]="_registroPagosModel.descripcionPago"
+              autocomplete="false"></textarea>
+            <!-- <input matInput placeholder="Descripcion Pago" disabled>{{ descripcionPago }} -->
+          </mat-form-field>
+        </div>
+      </div>
+
+      <br>
       <mat-divider></mat-divider>
 
       <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
@@ -183,14 +194,7 @@
         </div>
       </div>
 
-      <!-- <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
-        <div fxFlex="100" fxLayout.lt-lg="100">
-          <mat-form-field>
-            <input matInput placeholder="Codigo" disabled>{{ codAlumnoSend }}
-          </mat-form-field>
-        </div>
-      </div>
-
+      <!-- 
       <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
         <div fxFlex="100" fxLayout.lt-lg="100">
           <mat-form-field>
@@ -198,7 +202,7 @@
           </mat-form-field>
         </div>
       </div> -->
-      
+
       <div class="loader2" *ngIf="showData2 == true">
         <!-- Loader de la Tabla -->
         Cargando... <br><br>
@@ -207,8 +211,8 @@
 
       <div fxFlex fxLayout="column" fxLayoutAlign="end stretch">
         <div fxLayout="row" fxLayoutAlign="space-between stretch">
-          <button mat-raised-button (click)="initForm()" >CANCEL</button>
-          <button mat-raised-button color="primary" (click)="nuevoPagoAlumno()" >SAVE</button>
+          <button mat-raised-button (click)="initForm()">CANCEL</button>
+          <button mat-raised-button color="primary" (click)="nuevoPagoAlumno()">SAVE</button>
         </div>
       </div>
     </div>

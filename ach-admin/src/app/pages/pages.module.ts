@@ -27,6 +27,7 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule,
+    MatGridListModule,
 } from '@angular/material';
 
 import { MatChipsModule } from '@angular/material/chips';
@@ -81,6 +82,7 @@ import { EvaluacionPracticaComponent } from './evaluaciones/evaluacion-practica/
         MatDialogModule,
         MatProgressSpinnerModule,
         MatTooltipModule,
+        MatGridListModule,
     ],
     declarations: [
         ContactComponent,

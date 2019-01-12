@@ -60,6 +60,10 @@ export class RegistroPagosComponent implements OnInit {
     // Validators.required,
   ]);
 
+  descripcionPago = new FormControl('', [
+    // Validators.required,
+  ]);
+
   /**
    * Constructor de la Clase
    * @param _listasComunes
@@ -96,7 +100,7 @@ export class RegistroPagosComponent implements OnInit {
   ngOnInit() {
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
     this._registroPagosModel = new RegistroPagosModel(
-      0, '', null, null, '', null, // Identificacion Pago
+      0, '', null, null, '', null, null, // Identificacion Pago
       0, '', '', '', '', '', null,// Identificacion Alumno
       3, '', 0, '', 0, '', 0 // Relaciones de Tablas
     );
@@ -338,13 +342,16 @@ export class RegistroPagosComponent implements OnInit {
       this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
       return 1;
     } else if ((this._registroPagosModel.montoPago == 0 || this._registroPagosModel.montoPago == null)) {
-      this.openSnackBar('Falta Ingresar los Nombres y Apellidos del Alumno', 'Error al ingresar nuevo Alumno');
+      this.openSnackBar('Falta Ingresar El Monto del Pago', 'Error al ingresar nuevo Alumno');
       return 1;
     } else if ((this._registroPagosModel.idTipoPago == 0 || this._registroPagosModel.idTipoPago == null)) {
       this.openSnackBar('Falta Ingresar el Tipo de Pago', 'Error al ingresar el Pago de Alumno');
       return 1;
     } else if ((this._registroPagosModel.idFormaPago == 0 || this._registroPagosModel.idFormaPago == null)) {
-      this.openSnackBar('Falta Ingresar la forma de Pago', 'Error al ingresar el Pago de Alumno');
+      this.openSnackBar('Falta Ingresar la Forma de Pago', 'Error al ingresar el Pago de Alumno');
+      return 1;
+    } else if ((this._registroPagosModel.descripcionPago == '' || this._registroPagosModel.descripcionPago == null)) {
+    this.openSnackBar('Falta Ingresar la Descripcion del Pago', 'Error al ingresar el Pago de Alumno');
       return 1;
     }
   } // FND-00005

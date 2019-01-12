@@ -64,7 +64,7 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #emai maxlength="20" placeholder="Email" [formControl]="email" [errorStateMatcher]="matcher"
+                    <input matInput #emai placeholder="Email" [formControl]="email" [errorStateMatcher]="matcher"
                       name="email" id="email" ngControl="email" [(ngModel)]="_registerUserModel.email">
                     <mat-error *ngIf="email.hasError('required')">
                       Email es: <strong>obligatorio</strong>
@@ -90,7 +90,7 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #pass maxlength="20" placeholder="Password Usuario" [formControl]="password"
+                    <input matInput type="password" #pass maxlength="20" placeholder="Password Usuario" [formControl]="password"
                       [errorStateMatcher]="matcher" autofocus name="password" id="password" ngControl="password"
                       [(ngModel)]="_registerUserModel.password">
                     <mat-error *ngIf="password.hasError('required')">
@@ -116,8 +116,19 @@
               </tr>
             </table>
 
+            <button mat-raised-button (click)="nuevoUsuario()" color="primary">Guardar Usuario</button>
+
           </form>
         </mat-step>
+
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Imagen del Usuario</ng-template>
+            Imagen del Usuario
+            <br><br>
+
+            </form>
+            </mat-step>
 
       </mat-horizontal-stepper>
 

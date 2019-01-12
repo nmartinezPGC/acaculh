@@ -20,7 +20,7 @@ export class RevertirPagosAlumnoModalComponent implements OnInit {
   public nombres;
 
   // Configuracion de las Columnas
-  displayedColumns = ['idPago', 'codDocumento', 'fechaPago', 'horaPago',
+  displayedColumns = ['idPago', 'codDocumento', 'fechaPago', 'horaPago', 'descripcionPago',
     'descFormaPago', 'descTipoPago', 'descripcionEstado', 'montoPago', 'actions'];
 
   // Componentes de la Datatable
@@ -253,5 +253,6 @@ export interface AlumnosPagosData {
   horaPago: Date;
   idPago: number;
   montoPago: number;
+  descripcionPago: string;
   // Accione
 }

@@ -15,8 +15,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ConsultaAlumnosComponent implements OnInit {
   // displayedColumns = ['id', 'name', 'progress', 'color', 'accion'];
-  displayedColumns = ['idAlumno', 'codAlumno', 'nombres', 'apellidos', 
-'celular', 'medioConoceAch', 'descTipoBeca', 'montoPago'];
+  displayedColumns = ['idAlumno', 'codAlumno', 'nombres', 'apellidos',
+    'celular', 'email', 'fechaIngreso', 'medioConoceAch', 'descTipoBeca', 'descripcionEstado', 'montoPago'];
+  // Recuros de los Dato con la Interface
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -140,6 +141,7 @@ export interface UserData {
   apellido2: string;
   nombre1: string;
   nombre2: string;
+  fechaIngreso: Date;
 
   celular: number;
   direccion: string;
@@ -147,4 +149,5 @@ export interface UserData {
   medioConoceAch: string;
   descTipoBeca: string;
   montoPago: number;
+  descripcionEstado: string;
 }

@@ -83,3 +83,24 @@
 		margin-left: 40%;
 		margin-top: 5%;
 	}
+
+	// tamaños de las columnas
+	// ID
+	.customWidthClass{
+		flex: 0 0 30px;
+	 }
+
+	 // Accion
+	.customWidthClass2{
+		flex: 0 0 50px;
+	 }
+
+	 // Celular
+	.customWidthClass3{
+		flex: 0 0 70px;
+	 }
+
+	 // Email
+	.customWidthClass4{
+		flex: 0 0 250px;
+	 }

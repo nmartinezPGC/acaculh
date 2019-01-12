@@ -35,7 +35,7 @@ export class RegisterUserService {
   *****************************************************/
   usuarioViewAll(token, user_to_view) {
     const json = JSON.stringify(user_to_view);
-    const params = 'json=' + json + '&authorization=' + token;
+    const params = 'json=' + json + '&authorization=' + this.getToken();
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this._http.post(this.url + '/usuarios/view-all-users', params, { headers: headers }).map(res => res.json());
@@ -46,16 +46,16 @@ export class RegisterUserService {
   * Funcion: FND-00002
   * Fecha: 04-01-2019
   * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API ( /usuarios/new-user ).
+  * a la API ( /usuario/usuario-new ).
   * Objetivo: Agregar nuevo Usuario
   *****************************************************/
-  registerNewUser(token, user_to_register) {
+  registerNewUser(user_to_register) {
     const json = JSON.stringify(user_to_register);
-    const params = 'json=' + json + '&authorization=' + token;
+    const params = 'json=' + json + '&authorization=' + this.getToken();
     // console.log(json);
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/usuarios/new-user', params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/usuario/usuario-new', params, { headers: headers }).map(res => res.json());
   }
 
 

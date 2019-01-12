@@ -132,7 +132,7 @@ class PagosController extends Controller {
 
                 if ($id_Alumno != 0 || $id_Alumno != null) {
                     $opt = 1;
-                    $dql = $em->createQuery('SELECT A.idPago, A.codDocumento, '
+                    $dql = $em->createQuery('SELECT A.idPago, A.codDocumento, A.descripcionPago, '
                                     . "DATE_SUB(A.fechaPago, 0, 'DAY') AS fechaPago, "
                                     . "DATE_SUB(A.horaPago, 0, 'DAY') AS horaPago, "
                                     . 'B.idTipoPago, B.descTipoPago, C.idFormaPago, C.descFormaPago, '
@@ -238,6 +238,7 @@ class PagosController extends Controller {
                 $id_forma_pago = ($params->idFormaPago != null) ? $params->idFormaPago : 0;
                 $id_tipo_pago = ($params->idTipoPago != null) ? $params->idTipoPago : 0;
                 $monto_pago = ($params->montoPago != null) ? $params->montoPago : 0;
+                $descripcion_pago = ($params->descripcionPago != null) ? $params->descripcionPago : null;
 
                 $fecha_ingreso = new \DateTime('now');
 
@@ -322,6 +323,7 @@ class PagosController extends Controller {
                         $pagoAlumnoSec->setHoraPago($hora_ingreso);
                         $pagoAlumnoSec->setConceptoPago('Pago de : ' . $tipoPagoAlumno->getDescTipoPago() .
                                 ' por valor de : ' . $monto_pago);
+                        $pagoAlumnoSec->setDescripcionPago($descripcion_pago);
                         $pagoAlumnoSec->setMontoPago($monto_pago);
 
                         // Realizar la Persistencia de los Datos y enviar a la BD                        
