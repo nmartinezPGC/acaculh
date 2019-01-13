@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/acaculh/symfony/src/AppBundle/Controller/Usuario/UsuarioController.php</file>
-            <file>file:/C:/wamp64/www/acaculh/symfony/src/AppBundle/Controller/Alumno/AlumnoController.php</file>
+            <file>file:/C:/wamp64/www/acaculh/symfony-copia/web/app_dev.php</file>
+            <file>file:/C:/wamp64/www/acaculh/symfony-copia/web/app.php</file>
+            <file>file:/C:/wamp64/www/acaculh/symfony-copia/src/AppBundle/Controller/Comun/ListasComunesController.php</file>
         </group>
     </open-files>
 </project-private>
