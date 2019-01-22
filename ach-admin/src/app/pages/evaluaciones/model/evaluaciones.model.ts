@@ -22,8 +22,8 @@ export class EvaluacionesModel {
     public telefono: number,
     public celular: number,
     public password: string,
-    public fechaCreacion: Date,
-    public horaCreacion: Date,
+    public fechaEvaluacion: Date,
+    public horaEvaluacion: Date,
     public activo: boolean,
     
     // Relaciones
@@ -31,6 +31,10 @@ export class EvaluacionesModel {
     public idEstado: number,
     public iniciales: string,
     public urlImagen: string,
+    
+    // Evaluaciones
+    public idPlato: number,
+    public descPlato: string,
 
     ) { }
 }

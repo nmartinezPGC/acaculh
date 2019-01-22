@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 
 // Importamos la Clase de las Propiedades del Sistema
 import { SystemPropertiesService } from '../../../shared/services/systemProperties.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class EvaluacionesService {
@@ -33,12 +34,12 @@ export class EvaluacionesService {
   * a la API (/usuarios/view-all-users).
   * Objetivo: Visualizar los Usuarios Registrados
   *****************************************************/
-  usuarioViewAll(token, user_to_view) {
+  usuarioViewAll(user_to_view) {
     const json = JSON.stringify(user_to_view);
-    const params = 'json=' + json + '&authorization=' + token;
+    const params = 'json=' + json + '&authorization=' + this.getToken().token;
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/usuarios/view-all-users', params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/listas/genero-all-list', params, { headers: headers }).map(res => res.json());
   }
 
 

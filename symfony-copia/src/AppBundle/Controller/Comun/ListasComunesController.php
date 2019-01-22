@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ListasComunesController extends Controller {
 
     /**
-     * @Route("/genero-all-list", name="genero-all-list")
+     * @Route("/genero-all-lists", name="genero-all-lists")
      * Creacion del Controlador: Genero
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
      * @since 1.0

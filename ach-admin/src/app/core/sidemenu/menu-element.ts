@@ -106,7 +106,7 @@ export const menus = [
                 'name': 'Evaluar Alumno',
                 'icon': 'description',
                 'open': false,
-                'link': 'pages/evaluaciones/evaluacion-practica',
+                'link': 'pages/evaluaciones/evaluacion-alumno',
                 'perfil': [1,3],
             }, /*{
                 'name': 'Revertir Pagos',

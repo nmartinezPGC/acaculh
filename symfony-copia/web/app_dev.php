@@ -22,7 +22,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+
 $method = $_SERVER["REQUEST_METHOD"];
+// var_dump("Datos de Enabezados ***********************************   " . $method );
 if($method == "OPTIONS"){
     die();   
 }
@@ -33,7 +35,7 @@ if($method == "OPTIONS"){
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
 
-$kernel = new AppKernel('dev', true);
+$kernel = new AppKernel('dev', false);
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);

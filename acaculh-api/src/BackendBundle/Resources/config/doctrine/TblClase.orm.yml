@@ -1,0 +1,68 @@
+BackendBundle\Entity\TblClase:
+    type: entity
+    table: tbl_clase
+    indexes:
+        fk_tbl_clase_1_idx:
+            columns:
+                - id_tipo_clase
+    id:
+        idClase:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_clase
+            generator:
+                strategy: IDENTITY
+    fields:
+        codClase:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: cod_clase
+        fechaClase:
+            type: date
+            nullable: true
+            column: fecha_clase
+        idInstructor:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: id_instructor
+        descripcionClase:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+            column: descripcion_clase
+        fechaInicio:
+            type: date
+            nullable: true
+            column: fecha_inicio
+        fechaFin:
+            type: date
+            nullable: true
+            column: fecha_fin
+        observaciones:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+    manyToOne:
+        idTipoClase:
+            targetEntity: TblTipoClase
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_clase:
+                    referencedColumnName: id_tipo_clase
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

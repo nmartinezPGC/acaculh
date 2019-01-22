@@ -1,0 +1,29 @@
+BackendBundle\Entity\TblMoneda:
+    type: entity
+    table: tbl_moneda
+    id:
+        idMoneda:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_moneda
+            generator:
+                strategy: IDENTITY
+    fields:
+        codMoneda:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: cod_moneda
+        descMoneda:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: desc_moneda
+    lifecycleCallbacks: {  }

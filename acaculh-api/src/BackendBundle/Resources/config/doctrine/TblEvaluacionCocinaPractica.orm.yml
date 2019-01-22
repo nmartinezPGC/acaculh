@@ -1,0 +1,214 @@
+BackendBundle\Entity\TblEvaluacionCocinaPractica:
+    type: entity
+    table: tbl_evaluacion_cocina_practica
+    indexes:
+        fk_tbl_evaluacion_cocina_practica_1_idx:
+            columns:
+                - id_plato
+        fk_tbl_evaluacion_cocina_practica_2_idx:
+            columns:
+                - id_instructor
+        fk_tbl_evaluacion_cocina_practica_3_idx:
+            columns:
+                - id_alumno
+    id:
+        idEvaluacionCocinaPractica:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_evaluacion_cocina_practica
+            generator:
+                strategy: IDENTITY
+    fields:
+        codEvalCocinaPractica:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: cod_eval_cocina_practica
+        higieneGeneralObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: higiene_general_obs
+        higieneGeneralNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: higiene_general_nota
+        correctoUniformeObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: correcto_uniforme_obs
+        correctoUniformeNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: correcto_uniforme_nota
+        horaEntregaObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: hora_entrega_obs
+        horaEntregaNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: hora_entrega_nota
+        flujoTrabajoObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: flujo_trabajo_obs
+        flujoTrabajoNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: flujo_trabajo_nota
+        saborObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: sabor_obs
+        saborNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: sabor_nota
+        texturaObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: textura_obs
+        texturaNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: textura_nota
+        tecnicaObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: tecnica_obs
+        tecnicaNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: tecnica_nota
+        limpiezaObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: limpieza_obs
+        limpiezaNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: limpieza_nota
+        armadoObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: armado_obs
+        armadoNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: armado_nota
+        fechaEvaluacion:
+            type: date
+            nullable: true
+            column: fecha_evaluacion
+        horaEvaluacion:
+            type: datetime
+            nullable: true
+            column: hora_evaluacion
+        notaFinal:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+            column: nota_final
+    manyToOne:
+        idPlato:
+            targetEntity: TblPlato
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_plato:
+                    referencedColumnName: id_plato
+            orphanRemoval: false
+        idInstructor:
+            targetEntity: TblInstructor
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_instructor:
+                    referencedColumnName: id_instructor
+            orphanRemoval: false
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

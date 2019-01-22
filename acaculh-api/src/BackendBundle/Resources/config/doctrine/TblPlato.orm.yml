@@ -1,0 +1,48 @@
+BackendBundle\Entity\TblPlato:
+    type: entity
+    table: tbl_plato
+    id:
+        idPlato:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_plato
+            generator:
+                strategy: IDENTITY
+    fields:
+        codPlato:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: cod_plato
+        nombrePlato:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: nombre_plato
+        descripcionPlato:
+            type: string
+            nullable: true
+            length: 400
+            options:
+                fixed: false
+            column: descripcion_plato
+        idTipoPlato:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: id_tipo_plato
+        estrellas:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '1'
+    lifecycleCallbacks: {  }

@@ -7,7 +7,7 @@
 listascomunes_generoList:
     path: /genero-all-list
     defaults: { _controller: "AppBundle:Comun/ListasComunes:GeneroAllList" }
-    methods: POST
+    methods: [ POST ]
     
 # Lista de Profesiones
 listascomunes_profesionesList:

@@ -32,6 +32,7 @@
     "angular-svg-round-progressbar": "^2.0.0",
     "angular2-chartjs": "^0.4.1",
     "angularfire2": "^5.0.0-rc.5-next",
+    "bootstrap": "^4.2.1",
     "chart.js": "^2.7.2",
     "core-js": "^2.5.7",
     "d3": "^4.13.0",

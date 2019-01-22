@@ -28,6 +28,7 @@ import {
     MatDialogModule,
     MatTooltipModule,
     MatGridListModule,
+    MatAutocompleteModule,
 } from '@angular/material';
 
 import { MatChipsModule } from '@angular/material/chips';
@@ -47,7 +48,11 @@ import { RegistroPagosComponent } from './pagos/registro-pagos/registro-pagos.co
 import { RevertirPagosComponent } from './pagos/revertir-pagos/revertir-pagos.component';
 import { RevertirPagosAlumnoModalComponent } from './pagos/revertir-pagos/revertir-pagos-alumno-modal.component';
 import { RegisterUserComponent } from './security/register-user/register-user.component';
-import { EvaluacionPracticaComponent } from './evaluaciones/evaluacion-practica/evaluacion-practica.component';
+import { EvaluacionAlumnoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-alumno.component';
+import { EvaluacionCocinaPracticaComponent } from './evaluaciones/evaluacion-alumno/evaluacion-cocina-practica/evaluacion-cocina-practica.component';
+import { EvaluacionCortesPrecisionComponent } from './evaluaciones/evaluacion-alumno/evaluacion-cortes-precision/evaluacion-cortes-precision.component';
+import { EvaluacionPlatoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-plato/evaluacion-plato.component';
+import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-queso/evaluacion-queso.component';
 
 @NgModule({
     imports: [
@@ -83,6 +88,7 @@ import { EvaluacionPracticaComponent } from './evaluaciones/evaluacion-practica/
         MatProgressSpinnerModule,
         MatTooltipModule,
         MatGridListModule,
+        MatAutocompleteModule,
     ],
     declarations: [
         ContactComponent,
@@ -95,7 +101,11 @@ import { EvaluacionPracticaComponent } from './evaluaciones/evaluacion-practica/
         RevertirPagosComponent,
         RevertirPagosAlumnoModalComponent,
         RegisterUserComponent,
-        EvaluacionPracticaComponent,
+        EvaluacionAlumnoComponent,
+        EvaluacionCocinaPracticaComponent,
+        EvaluacionCortesPrecisionComponent,
+        EvaluacionPlatoComponent,
+        EvaluacionQuesoComponent,
     ],
     entryComponents: [
         RevertirPagosAlumnoModalComponent
