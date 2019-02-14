@@ -6,35 +6,46 @@
  * @version 1.0.0
  */
 export class EvaluacionesModel {
-// Contructor de la clase
+  // Contructor de la clase
   constructor(
     // Identificacion
-    public idUsuario: number,
-    public codUsuario: string,
+    public idEvaluacionCocinaPractica: number,
+    public codEvalCocinaPractica: string,
 
-    // Generales
-    public nombre1: string,
-    public nombre2: string,
-    public apellido1: string,
-    public apellido2: string,
-    public email: string,
-
-    public telefono: number,
-    public celular: number,
-    public password: string,
-    public fechaEvaluacion: Date,
-    public horaEvaluacion: Date,
-    public activo: boolean,
-    
     // Relaciones
-    public idTipoUsuario: number,
-    public idEstado: number,
-    public iniciales: string,
-    public urlImagen: string,
-    
-    // Evaluaciones
     public idPlato: number,
     public descPlato: string,
+    public idInstructor: number,
+    public idAlumno: number,
 
-    ) { }
+    // Evaluaciones
+    public higieneGeneralObs: string, // Higiene
+    public higieneGeneralNota: number,
+    public correctoUniformeObs: string,
+    public correctoUniformenota: number,
+
+    public horaEntregaObs: string, // Organizacion 
+    public horaEntregaNota: number,
+    public flujoTrabajoObs: string,
+    public flujoTrabajoNota: number,
+    
+    public saborObs: string, // Preparacion
+    public saborNota: number,
+    public texturaObs: string,
+    public texturaNota: number,
+
+    public tecnicaObs: string, // Tecnica
+    public tecnicaNota: number,
+
+    public limpiezaObs: string, // Presentacion
+    public limpiezaNota: number,
+    public armadoObs: string,
+    public armadoNota: number,
+
+    // Auditoria
+    public fechaCreacion: Date,
+    public horaCreacion: Date,
+    public notaFinal: number,
+
+  ) { }
 }

@@ -17,16 +17,16 @@ export class SystemPropertiesService {
 
   // Varibles Gloables de Inicio del Systema
   // Entorno de Servidor | 1
-  public urlServerConfig:string = "http://172.17.0.250/sicdoc/symfony/web/app.php";
+  public urlServerConfig:string = "http://172.17.0.250/sicdoc/symfony/web/";
   public urlServerResourse:string = "http://172.17.0.250/sicdoc/symfony/web/";
 
   // Entorno de Servidor | 2
-  public urlServerLocalConfig:string = "http://172.17.0.128/sicdoc/symfony/web/app.php";
+  public urlServerLocalConfig:string = "http://172.17.0.128/sicdoc/symfony/web/";
   public urlServerLocalResourse:string = "http://172.17.0.128/sicdoc/symfony/web/";
 
   // Entorno Localhost | 3
-  public urlLocalConfig: string = "http://localhost/acaculh/symfony-copia/web/app_dev.php";
-  public urlLocalResourse: string = "http://localhost/acaculh/symfony-copia/web/";
+  public urlLocalConfig: string = "http://localhost/acaculh/symfony-copia/web";
+  public urlLocalResourse: string = "http://localhost/acaculh/symfony-copia/web";
 
   // Indicador del entorno a Copilar | 1 = Server | 2 = ServerLocal | 3 = Localhost
   public indicatorIPCompiler:number = 3;

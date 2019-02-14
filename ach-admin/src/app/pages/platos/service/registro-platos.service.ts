@@ -7,10 +7,11 @@ import 'rxjs/add/operator/map';
 
 // Importamos la Clase de las Propiedades del Sistema
 import { SystemPropertiesService } from '../../../shared/services/systemProperties.service';
-import { Observable } from 'rxjs';
 
-@Injectable()
-export class EvaluacionesService {
+@Injectable({
+  providedIn: 'root'
+})
+export class RegistroPlatosService {
   // Propiedades de la Clases
   // URL Base de la Clase, Referencia a la API | Symfony
   public url: string;
@@ -29,34 +30,65 @@ export class EvaluacionesService {
 
   /****************************************************
   * Funcion: FND-00001
-  * Fecha: 04-01-2019
+  * Fecha: 31-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/platos/all-list-tipo-platos).
+  * Objetivo: Visualizar los Tipos Platos Registrados
+  *****************************************************/
+  platosTipoViewAll(token, user_to_view) {
+    const json = JSON.stringify(user_to_view);
+    const params = 'json=' + json + '&authorization=' + this.getToken();
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this._http.post(this.url + '/platos/all-list-tipo-platos', params, { headers: headers }).map(res => res.json());
+  }
+
+  /****************************************************
+  * Funcion: FND-00001
+  * Fecha: 31-01-2019
   * Descripcion: Metodo Ajax, para Invocar el servicio
   * a la API (/platos/all-list-platos).
-  * Objetivo: Visualizar los Usuarios Registrados
+  * Objetivo: Visualizar los Tipos Platos Registrados
   *****************************************************/
   platosViewAll() {
     // const json = JSON.stringify(user_to_view);
-    // const params = 'json=' + json + '&authorization=' + this.getToken().token;
+    const params = 'authorization=' + this.getToken();
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/platos/all-list-platos', { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/platos/all-list-platos', params, { headers: headers }).map(res => res.json());
   }
 
 
   /****************************************************
   * Funcion: FND-00002
-  * Fecha: 04-01-2019
+  * Fecha: 31-01-2019
   * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API ( /usuarios/new-user ).
-  * Objetivo: Agregar nuevo Usuario
+  * a la API ( /platos/plato-new ).
+  * Objetivo: Agregar nuevo Plato
   *****************************************************/
-  registerEvaluacionCocinaPractia(user_to_register, token) {
-    const json = JSON.stringify(user_to_register);
-    const params = 'json=' + json + '&authorization=' + token;
+  registerNewPlato(plato_to_register) {
+    const json = JSON.stringify(plato_to_register);
+    const params = 'json=' + json + '&authorization=' + this.getToken();
     // console.log(json);
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/evaluaciones/new-evaluacion-cocina-practica', params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/platos/new-plato', params, { headers: headers }).map(res => res.json());
+  }
+
+  /****************************************************
+  * Funcion: FND-00002
+  * Fecha: 31-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API ( /platos/edit-plato ).
+  * Objetivo: Agregar nuevo Plato
+  *****************************************************/
+  editPlato(plato_to_register) {
+    const json = JSON.stringify(plato_to_register);
+    const params = 'json=' + json + '&authorization=' + this.getToken();
+    // console.log(json);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this._http.post(this.url + '/platos/edit-plato', params, { headers: headers }).map(res => res.json());
   }
 
 

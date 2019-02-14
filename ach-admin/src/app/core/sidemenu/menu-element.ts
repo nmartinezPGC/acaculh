@@ -95,26 +95,53 @@ export const menus = [
             }*/
         ]
     },
+    { // Menu de Platos
+        'name': 'Platos',
+        'icon': 'restaurant',
+        'open': false,
+        'link': false,
+        'perfil': [1, 3],
+        'sub': [
+            {
+                'name': 'Registro de Plato',
+                'icon': 'restaurant',
+                'open': false,
+                'link': 'pages/platos/registro-plato',
+                'perfil': [1, 3],
+            }, {
+                'name': 'Consulta de Platos',
+                'icon': 'list',
+                'open': false,
+                'link': 'pages/platos/consulta-platos',
+                'perfil': [1, 3],
+            }, /*{
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
     { // Menu de Evaluaciones
         'name': 'Evaluaciones',
         'icon': 'assignment',
         'open': false,
         'link': false,
-        'perfil': [1,3],
+        'perfil': [1, 3],
         'sub': [
             {
                 'name': 'Evaluar Alumno',
                 'icon': 'description',
                 'open': false,
                 'link': 'pages/evaluaciones/evaluacion-alumno',
-                'perfil': [1,3],
-            }, /*{
-                'name': 'Revertir Pagos',
+                'perfil': [1, 3],
+            }, {
+                'name': 'Consulta Evaluaciones Practicas',
                 'icon': 'redo',
                 'open': false,
-                'link': 'pages/pagos/revertir-pago-alumno',
-                'perfil': [1,3],
-            }, {
+                'link': 'pages/evaluaciones/evaluacion-consulta-practica',
+                'perfil': [1, 3],
+            }, /*{
                 'name': 'Contact',
                 'icon': 'directions',
                 'open': false,

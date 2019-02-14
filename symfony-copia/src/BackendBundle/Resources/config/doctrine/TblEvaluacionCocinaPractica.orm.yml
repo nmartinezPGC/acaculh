@@ -11,6 +11,9 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         fk_tbl_evaluacion_cocina_practica_3_idx:
             columns:
                 - id_alumno
+        fk_estado_evaluacion_cocina_practica_idx:
+            columns:
+                - id_estado
     id:
         idEvaluacionCocinaPractica:
             type: integer
@@ -32,7 +35,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         higieneGeneralObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: higiene_general_obs
@@ -47,7 +50,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         correctoUniformeObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: correcto_uniforme_obs
@@ -62,7 +65,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         horaEntregaObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: hora_entrega_obs
@@ -77,7 +80,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         flujoTrabajoObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: flujo_trabajo_obs
@@ -92,7 +95,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         saborObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: sabor_obs
@@ -107,7 +110,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         texturaObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: textura_obs
@@ -122,7 +125,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         tecnicaObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: tecnica_obs
@@ -137,7 +140,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         limpiezaObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: limpieza_obs
@@ -152,7 +155,7 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
         armadoObs:
             type: string
             nullable: true
-            length: 200
+            length: 250
             options:
                 fixed: false
             column: armado_obs
@@ -180,7 +183,24 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
             options:
                 default: '0'
             column: nota_final
+        chefNotaFinalObs:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: chef_nota_final_obs
     manyToOne:
+        idEstado:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado:
+                    referencedColumnName: id_estado
+            orphanRemoval: false
         idPlato:
             targetEntity: TblPlato
             cascade: {  }
@@ -192,14 +212,14 @@ BackendBundle\Entity\TblEvaluacionCocinaPractica:
                     referencedColumnName: id_plato
             orphanRemoval: false
         idInstructor:
-            targetEntity: TblInstructor
+            targetEntity: TblUsuario
             cascade: {  }
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
                 id_instructor:
-                    referencedColumnName: id_instructor
+                    referencedColumnName: id_usuario
             orphanRemoval: false
         idAlumno:
             targetEntity: TblAlumno

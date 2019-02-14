@@ -15,7 +15,7 @@
 					<form class="example-form">
 						<mat-form-field class="width">
 							<input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
-							<mat-autocomplete #auto="matAutocomplete">
+							<mat-autocomplete #auto="matAutocomplete" (optionSelected)='hola()' >
 								<mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
 								<img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
 								<span >{{ state.name }}</span> 

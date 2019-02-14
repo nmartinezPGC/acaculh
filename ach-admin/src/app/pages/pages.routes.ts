@@ -15,6 +15,9 @@ import { EvaluacionCocinaPracticaComponent } from './evaluaciones/evaluacion-alu
 import { EvaluacionCortesPrecisionComponent } from './evaluaciones/evaluacion-alumno/evaluacion-cortes-precision/evaluacion-cortes-precision.component';
 import { EvaluacionPlatoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-plato/evaluacion-plato.component';
 import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-queso/evaluacion-queso.component';
+import { RegistroPlatosComponent } from './platos/registro-platos/registro-platos.component';
+import { ConsultaPlatosComponent } from './platos/consulta-platos/consulta-platos.component';
+import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/evaluacion-consulta.component';
 
 const pagesRoutes: Routes = [
   { path: 'contact', component: ContactComponent, data: { animation: 'contact' } },
@@ -37,9 +40,14 @@ const pagesRoutes: Routes = [
   { path: 'evaluaciones/evaluacion-alumno/evaluacion-cortes-precision', component: EvaluacionCortesPrecisionComponent, data: { animation: 'evaluaciones' } },
   { path: 'evaluaciones/evaluacion-alumno/evaluacion-platos', component: EvaluacionPlatoComponent, data: { animation: 'evaluaciones' } },
   { path: 'evaluaciones/evaluacion-alumno/evaluacion-quesos', component: EvaluacionQuesoComponent, data: { animation: 'evaluaciones' } },
+  { path: 'evaluaciones/evaluacion-consulta-practica', component: EvaluacionConsultaComponent, data: { animation: 'evaluaciones' } },
 
   // Modulo de Security
   { path: 'security/register-user', component: RegisterUserComponent, data: { animation: 'security' } },
+  
+  // Modulo de Platos
+  { path: 'platos/registro-plato', component: RegistroPlatosComponent, data: { animation: 'platos' } },
+  { path: 'platos/consulta-platos', component: ConsultaPlatosComponent, data: { animation: 'platos' } },
 ];
 
 @NgModule({

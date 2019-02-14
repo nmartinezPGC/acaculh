@@ -54,6 +54,13 @@ import { EvaluacionCortesPrecisionComponent } from './evaluaciones/evaluacion-al
 import { EvaluacionPlatoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-plato/evaluacion-plato.component';
 import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evaluacion-queso/evaluacion-queso.component';
 
+import {NgAutoCompleteModule} from "ng-auto-complete";
+
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { RegistroPlatosComponent } from './platos/registro-platos/registro-platos.component';
+import { ConsultaPlatosComponent } from './platos/consulta-platos/consulta-platos.component';
+import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/evaluacion-consulta.component';
+
 @NgModule({
     imports: [
         FormsModule,
@@ -89,6 +96,8 @@ import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evalu
         MatTooltipModule,
         MatGridListModule,
         MatAutocompleteModule,
+        NgAutoCompleteModule,
+        AngularMultiSelectModule,
     ],
     declarations: [
         ContactComponent,
@@ -106,6 +115,9 @@ import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evalu
         EvaluacionCortesPrecisionComponent,
         EvaluacionPlatoComponent,
         EvaluacionQuesoComponent,
+        RegistroPlatosComponent,
+        ConsultaPlatosComponent,
+        EvaluacionConsultaComponent,
     ],
     entryComponents: [
         RevertirPagosAlumnoModalComponent

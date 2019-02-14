@@ -22,3 +22,13 @@ app_alumno:
 app_pagos:
     resource: "@AppBundle/Resources/config/routing/pagoAlumno.yml"
     prefix: /pagos
+    
+## Redireccionamiento de las Ruta por Defecto | Modulo de Platos
+app_platos:
+    resource: "@AppBundle/Resources/config/routing/platos.yml"
+    prefix: /platos
+
+## Redireccionamiento de las Ruta por Defecto | Modulo de Evaluaciones
+app_evaluaciones:
+    resource: "@AppBundle/Resources/config/routing/evaluaciones.yml"
+    prefix: /evaluaciones

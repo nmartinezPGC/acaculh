@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
+import { SystemPropertiesService } from '../../../shared/services/systemProperties.service';
 
 // Clases nesesarias para el envio via Ajax
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-// Importamos la Clase de las Propiedades del Sistema
-import { SystemPropertiesService } from '../../../shared/services/systemProperties.service';
-import { Observable } from 'rxjs';
-
-@Injectable()
-export class EvaluacionesService {
+@Injectable({
+  providedIn: 'root'
+})
+export class EvaluacionConsultaService {
   // Propiedades de la Clases
   // URL Base de la Clase, Referencia a la API | Symfony
   public url: string;
@@ -34,29 +33,11 @@ export class EvaluacionesService {
   * a la API (/platos/all-list-platos).
   * Objetivo: Visualizar los Usuarios Registrados
   *****************************************************/
-  platosViewAll() {
+  evaluacionesViewAll(token: any) {
     // const json = JSON.stringify(user_to_view);
-    // const params = 'json=' + json + '&authorization=' + this.getToken().token;
+    const params = 'authorization=' + token;
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this._http.post(this.url + '/platos/all-list-platos', { headers: headers }).map(res => res.json());
-  }
-
-
-  /****************************************************
-  * Funcion: FND-00002
-  * Fecha: 04-01-2019
-  * Descripcion: Metodo Ajax, para Invocar el servicio
-  * a la API ( /usuarios/new-user ).
-  * Objetivo: Agregar nuevo Usuario
-  *****************************************************/
-  registerEvaluacionCocinaPractia(user_to_register, token) {
-    const json = JSON.stringify(user_to_register);
-    const params = 'json=' + json + '&authorization=' + token;
-    // console.log(json);
-    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this._http.post(this.url + '/evaluaciones/new-evaluacion-cocina-practica', params, { headers: headers }).map(res => res.json());
+    return this._http.post(this.url + '/evaluaciones/all-list-evaluaciones', params, { headers: headers }).map(res => res.json());
   }
 
 

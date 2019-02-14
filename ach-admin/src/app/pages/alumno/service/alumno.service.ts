@@ -39,7 +39,7 @@ export class AlumnoService {
     const params = 'json=' + json;
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    return this._http.post(this.url + '/login', params, { headers: headers }).map(res => res.json());
+    return this._http.get(this.url + '/alumno/all-list-alumnos', { headers: headers }).map(res => res.json());
   }
 
 

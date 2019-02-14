@@ -123,12 +123,17 @@ class TblEvaluacionCocinaPractica
     private $notaFinal = '0';
 
     /**
+     * @var \BackendBundle\Entity\TblEstado
+     */
+    private $idEstado;
+
+    /**
      * @var \BackendBundle\Entity\TblPlato
      */
     private $idPlato;
 
     /**
-     * @var \BackendBundle\Entity\TblInstructor
+     * @var \BackendBundle\Entity\TblUsuario
      */
     private $idInstructor;
 
@@ -677,6 +682,30 @@ class TblEvaluacionCocinaPractica
     }
 
     /**
+     * Set idEstado
+     *
+     * @param \BackendBundle\Entity\TblEstado $idEstado
+     *
+     * @return TblEvaluacionCocinaPractica
+     */
+    public function setIdEstado(\BackendBundle\Entity\TblEstado $idEstado = null)
+    {
+        $this->idEstado = $idEstado;
+
+        return $this;
+    }
+
+    /**
+     * Get idEstado
+     *
+     * @return \BackendBundle\Entity\TblEstado
+     */
+    public function getIdEstado()
+    {
+        return $this->idEstado;
+    }
+
+    /**
      * Set idPlato
      *
      * @param \BackendBundle\Entity\TblPlato $idPlato
@@ -703,11 +732,11 @@ class TblEvaluacionCocinaPractica
     /**
      * Set idInstructor
      *
-     * @param \BackendBundle\Entity\TblInstructor $idInstructor
+     * @param \BackendBundle\Entity\TblUsuario $idInstructor
      *
      * @return TblEvaluacionCocinaPractica
      */
-    public function setIdInstructor(\BackendBundle\Entity\TblInstructor $idInstructor = null)
+    public function setIdInstructor(\BackendBundle\Entity\TblUsuario $idInstructor = null)
     {
         $this->idInstructor = $idInstructor;
 
@@ -717,7 +746,7 @@ class TblEvaluacionCocinaPractica
     /**
      * Get idInstructor
      *
-     * @return \BackendBundle\Entity\TblInstructor
+     * @return \BackendBundle\Entity\TblUsuario
      */
     public function getIdInstructor()
     {
@@ -746,5 +775,34 @@ class TblEvaluacionCocinaPractica
     public function getIdAlumno()
     {
         return $this->idAlumno;
+    }
+    /**
+     * @var string
+     */
+    private $chefNotaFinalObs;
+
+
+    /**
+     * Set chefNotaFinalObs
+     *
+     * @param string $chefNotaFinalObs
+     *
+     * @return TblEvaluacionCocinaPractica
+     */
+    public function setChefNotaFinalObs($chefNotaFinalObs)
+    {
+        $this->chefNotaFinalObs = $chefNotaFinalObs;
+
+        return $this;
+    }
+
+    /**
+     * Get chefNotaFinalObs
+     *
+     * @return string
+     */
+    public function getChefNotaFinalObs()
+    {
+        return $this->chefNotaFinalObs;
     }
 }

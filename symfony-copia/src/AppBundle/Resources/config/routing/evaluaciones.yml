@@ -1,0 +1,18 @@
+## Rutas Todos los Evaluaciones.
+evaluaciones_listAllEvaluaciones:
+    path: /all-list-evaluaciones
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionAlumno:EvaluacionAllList" }
+    methods: POST
+
+## Ruta para Agregar Nuevo Evaluaciones
+evaluaciones_newEvaluacion:
+    path: /new-evaluacion-cocina-practica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionAlumno:NewEvaluacionCocinaPractica" }
+    methods: POST
+    
+## Ruta para Anualar Plato
+evaluaciones_revertPlato:
+    path: /revert-plato
+    defaults: { _controller: "AppBundle:Platos/Platos:RevertPlato" }
+    methods: POST
+ 

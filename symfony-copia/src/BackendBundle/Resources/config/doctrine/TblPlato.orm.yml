@@ -1,6 +1,10 @@
 BackendBundle\Entity\TblPlato:
     type: entity
     table: tbl_plato
+    indexes:
+        fk_1_idx:
+            columns:
+                - id_tipo_plato
     id:
         idPlato:
             type: integer
@@ -33,16 +37,21 @@ BackendBundle\Entity\TblPlato:
             options:
                 fixed: false
             column: descripcion_plato
-        idTipoPlato:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: id_tipo_plato
         estrellas:
             type: integer
             nullable: true
             options:
                 unsigned: false
                 default: '1'
+    manyToOne:
+        idTipoPlato:
+            targetEntity: TblTipoPlato
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_tipo_plato:
+                    referencedColumnName: id_tipo_plato
+            orphanRemoval: false
     lifecycleCallbacks: {  }

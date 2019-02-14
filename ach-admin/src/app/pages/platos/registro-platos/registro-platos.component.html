@@ -1,0 +1,96 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Datos Generales del Plato</ng-template>
+            Datos Generales del Plato
+            <br><br>
+
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput #name1 maxlength="20" placeholder="Nombre Plato" [formControl]="nombrePlato"
+                      [errorStateMatcher]="matcher" autofocus name="nombrePlato" id="nombrePlato" ngControl="nombrePlato"
+                      [(ngModel)]="_registroPlatosModel.nombrePlato">
+                    <mat-error *ngIf="nombrePlato.hasError('required')">
+                      Nombre es: <strong>obligatorio</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput #message maxlength="250" [formControl]="descripcionPlato" placeholder="Descripcion del Plato"
+                      name="descripcionPlato" id="descripcionPlato" ngControl="descripcionPlato" [(ngModel)]="_registroPlatosModel.descripcionPlato"
+                      autocomplete="false"></textarea>
+                    <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="Tipo Plato" [formControl]="idTipoPlato" [errorStateMatcher]="matcher" name="idTipoPlato"
+                      id="idTipoPlato" ngControl="idTipoPlato" [(ngModel)]="_registroPlatosModel.idTipoPlato" required>
+                      <mat-option *ngFor="let tipoPlato of JsonOutgetlistaTipoPlatos" [value]="tipoPlato.idTipoPlato">
+                        {{ tipoPlato.descripcionTipoPlato }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="idTipoPlato.hasError('required')">
+                      Tipo Plato es: <strong>obligatoria</strong>
+                    </mat-error>
+                    <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint> -->
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <!-- <input matInput type="password" #pass maxlength="20" placeholder="Password Usuario" [formControl]="password"
+                      [errorStateMatcher]="matcher" name="password" id="password" ngControl="password" [(ngModel)]="_registroPlatosModel.estrellas"> -->
+
+                    <mat-select placeholder="Calificacion del Plato" [formControl]="calificacionPlato"
+                      [errorStateMatcher]="matcher" name="calificacionPlato" id="calificacionPlato" ngControl="calificacionPlato"
+                      [(ngModel)]="_registroPlatosModel.calificacionPlato" required>
+                      <mat-option value="1">1 Estrella</mat-option>
+                      <mat-option value="2">2 Estrellas</mat-option>
+                      <mat-option value="3">3 Estrellas</mat-option>
+                      <mat-option value="4">4 Estrellas</mat-option>
+                      <mat-option value="5">5 Estrellas</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="calificacionPlato.hasError('required')">
+                      Calificacion es: <strong>obligatoria</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+
+            <button mat-raised-button (click)="nuevoPlato()" color="primary">Guardar Plato</button>
+            <button mat-raised-button (click)="limpiar()" color="warn">Limpiar</button>
+
+          </form>
+        </mat-step>
+
+        <!-- <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Imagen del Usuario</ng-template>
+            Imagen del Usuario
+            <br><br>
+
+          </form>
+        </mat-step> -->
+
+      </mat-horizontal-stepper>
+
+    </div>
+  </div>
+</div>

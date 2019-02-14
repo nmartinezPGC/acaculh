@@ -52,5 +52,9 @@ export class AutocompleteComponent implements OnInit {
     }
   ];
 
+  hola() {
+    alert('Hola');
+  }
+
   autocompleteHelpers: any = AUTOCOMPLETE_HELPERS;
 }

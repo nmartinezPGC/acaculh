@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use BackendBundle\Entity\TblEvaluacionCocinaPractica;
 
 /**
  * Description of EvaluacionAlumnoController
@@ -15,7 +16,79 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EvaluacionAlumnoController extends Controller {
 
-    //put your code here
+    /**
+     * @Route("/evaluaciones/all-list-evaluaciones", name="/evaluaciones/all-list-evaluaciones")
+     * Creacion del Controlador: Listado de todas las Evaluaciones Registradas
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00001
+     */
+    public function EvaluacionAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        //Recogemos el Hash y la Autorizacion del Mismo        
+        $hash = $request->get("authorization", null);
+        //Se Chekea el Token
+        $checkToken = $helpers->authCheck($hash);
+
+        //Evalua que el Token sea True
+        if ($checkToken == true) {
+            $identity = $helpers->authCheck($hash, true);
+
+            $em = $this->getDoctrine()->getManager();
+            
+            $dql = $em->createQuery('SELECT DISTINCT B.idAlumno, B.codAlumno, '
+                    . 'B.celular, B.email, '
+                    . "CONCAT( B.nombre1, ' ', B.nombre2) as nombres, "
+                    . "CONCAT( B.apellido1, ' ', B.apellido2) as apellidos, "
+                    . "A.notaFinal as EvaluacionCocinaPractica, "
+                    . "C.notaFinal as EvaluacionCortePrecision "                    
+                    . 'FROM BackendBundle:TblEvaluacionCocinaPractica A '
+                    . 'LEFT JOIN BackendBundle:TblAlumno B WITH B.idAlumno = A.idAlumno '
+                    . 'LEFT JOIN BackendBundle:TblEvaluacionCortePrecision C WITH C.idAlumno = B.idAlumno '
+                    // . 'WHERE A.idAlumno = B.idAlumno '
+                    // . 'AND A.idEstadoPago IN (3, 5, 6 ) '
+                    // . 'GROUP BY A.idAlumno '
+                    . 'ORDER BY A.idAlumno ');
+
+            // Ejecucion del Query
+            $evaluacionesAllList = $dql->getResult();
+            
+            // Total de Alumnos
+            $countEvaluaciones = count($evaluacionesAllList);
+
+            // Condicion de la Busqueda
+            if ($countEvaluaciones >= 1) {
+                $data = array(
+                    "status" => "success",
+                    "code" => 200,
+                    "totalRecord" => $countEvaluaciones,
+                    "msg" => "Detalle de todas las Evaluaciones Practicas de los Alumnos",
+                    "data" => $evaluacionesAllList
+                );
+            } else {
+                $data = array(
+                    "status" => "error",
+                    "code" => 400,
+                    "msg" => "No existe Datos en la Tabla de Evaluaciones !!"
+                );
+            }
+        } else {
+            $data = array(
+                "status" => "error",
+                "desc" => "El Token, es invalido",
+                "code" => 400,
+                "msg" => "Autorizacion de Token no valida, tu sesion ha expirado, cierra y vuelve a iniciar. !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+// FIN | FND00001
+
     /**
      * @Route("/evaluaciones/evaluacion-cocina-practica", name="/evaluaciones/evaluacion-cocina-practica")
      * Creacion del Controlador: Listado de todas las Evaluaciones Registradas
@@ -23,7 +96,7 @@ class EvaluacionAlumnoController extends Controller {
      * @since 1.0
      * Funcion: FND00001.1
      */
-    public function EvaluacionCocinaPracticaAllListListAction(Request $request) {
+    public function EvaluacionCocinaPracticaListAlumnoAction(Request $request) {
         date_default_timezone_set('America/Tegucigalpa');
         //Instanciamos el Servicio Helpers y Jwt
         $helpers = $this->get("app.helpers");
@@ -103,131 +176,156 @@ class EvaluacionAlumnoController extends Controller {
         //Instanciamos el Servicio Helpers y Jwt
         $helpers = $this->get("app.helpers");
 
-        // Recogemos el Hash y la Autorizacion del Mismo        
+        //Recoger el Hash
+        //Recogemos el Hash y la Autorizacion del Mismo        
         $hash = $request->get("authorization", null);
         //Se Chekea el Token
         $checkToken = $helpers->authCheck($hash);
 
-        // Evalua que el Token sea True
+        //Convertimos los Parametros POSt a Json
+        $json = $request->get("json", null);
+
+        //Array de Mensajes
+        $data = array(
+            "status" => "success",
+            "code" => 200,
+            "msg" => "No se ha podido ingresar la Evaluacion, presenta problemas",
+            "validToken" => $checkToken,
+            "json" => $json
+        );
+
+        //Evalua que el Token sea True
         if ($checkToken == true) {
             $identity = $helpers->authCheck($hash, true);
 
-            //Convertimos los Parametros POSt a Json
-            $json = $request->get("json", null);
-
-            // Comprobamos que Json no es Null
+            //Comprobamos que Json no es Null
             if ($json != null) {
                 //Decodificamos el Json
                 $params = json_decode($json);
 
                 //Parametros a Convertir                           
-                //Datos generales de la Tabla                
-                $id_alumno = ($params->idAlumno != null) ? $params->idAlumno : 0;
-                $cod_alumno = ($params->codAlumno != null) ? $params->codAlumno : null;
-                $nombre1 = ($params->nombres != null) ? $params->nombres : null;
-                $apellido1 = ($params->apellidos != null) ? $params->apellidos : null;
-                $email_alumno = ($params->email != null) ? $params->email : null;
-                $celular_alumno = ($params->celular != null) ? $params->celular : null;
+                //Datos generales de la Tabla                             
+                $codEval_cocina_practica = ($params->codEvalCocinaPractica != null) ? $params->codEvalCocinaPractica : null;
 
-                // Datos Relaciones
-                $id_usuario_pago = ($params->idUsuarioPago != null) ? $params->idUsuarioPago : 0;
-                $id_estado = ($params->idEstado != null) ? $params->idEstado : 0;
+                // Datos Generales
+                $id_Plato = ($params->idPlato != null) ? $params->idPlato : null;
+                $id_Instructor = ($params->idInstructor != null) ? $params->idInstructor : null;
+                $id_Alumno = ($params->idAlumno != null) ? $params->idAlumno : null;
 
-                $id_forma_pago = ($params->idFormaPago != null) ? $params->idFormaPago : 0;
-                $id_tipo_pago = ($params->idTipoPago != null) ? $params->idTipoPago : 0;
-                $monto_pago = ($params->montoPago != null) ? $params->montoPago : 0;
-                $descripcion_pago = ($params->descripcionPago != null) ? $params->descripcionPago : null;
+                // Evaluaciones
+                $higiene_GeneralObs = ($params->higieneGeneralObs != null) ? $params->higieneGeneralObs : null;
+                $higiene_GeneralNota = ($params->higieneGeneralNota != null) ? $params->higieneGeneralNota : null;
+                $correcto_UniformeObs = ($params->correctoUniformeObs != null) ? $params->correctoUniformeObs : null;
+                $correcto_Uniformenota = ($params->correctoUniformenota != null) ? $params->correctoUniformenota : null;
+                $hora_EntregaObs = ($params->horaEntregaObs != null) ? $params->horaEntregaObs : null;
+                $hora_EntregaNota = ($params->horaEntregaNota != null) ? $params->horaEntregaNota : null;
+                $flujo_TrabajoObs = ($params->flujoTrabajoObs != null) ? $params->flujoTrabajoObs : null;
+                $flujo_TrabajoNota = ($params->flujoTrabajoNota != null) ? $params->flujoTrabajoNota : null;
+                $sabor_Obs = ($params->saborObs != null) ? $params->saborObs : null;
+                $sabor_Nota = ($params->saborNota != null) ? $params->saborNota : null;
+                $textura_Obs = ($params->texturaObs != null) ? $params->texturaObs : null;
+                $textura_Nota = ($params->texturaNota != null) ? $params->texturaNota : null;
+                $tecnica_Obs = ($params->tecnicaObs != null) ? $params->tecnicaObs : null;
+                $tecnica_nota = ($params->tecnicaNota != null) ? $params->tecnicaNota : null;
+                $limpieza_Obs = ($params->limpiezaObs != null) ? $params->limpiezaObs : null;
+                $limpieza_Nota = ($params->limpiezaNota != null) ? $params->limpiezaNota : null;
+                $armado_Obs = ($params->armadoObs != null) ? $params->armadoObs : null;
+                $armado_Nota = ($params->armadoNota != null) ? $params->armadoNota : null;
+                $nota_Final = ($params->notaFinal != null) ? $params->notaFinal : null;
 
                 $fecha_ingreso = new \DateTime('now');
 
                 $hora_ingreso = new \DateTime('now');
                 $hora_ingreso->format('H:i');
 
-                // Evaluamos que el Codigo del Alumno no se vacio
-                if ($id_alumno != NULL && $monto_pago != 0) {
+                // Evaluamos que el Codigo de la Evaluacion no se vacio
+                if ($id_Alumno != NULL && $id_Instructor != NULL) {
                     // Instanciamos el Objeto Doctrine                    
                     $em = $this->getDoctrine()->getManager();
 
-                    // Ejecutamos la Consulta por Cod Alumno, para validar si el Alumno existe
-                    $isset_cod_alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                    // Instanciamos de la Clase TblSecuenciales | Evaluacion
+                    $secuenciaUsar = 'SEC-EVCP';
+
+                    $secuenciaEvaluacionAlumno = $em->getRepository("BackendBundle:TblSecuenciales")->findOneBy(
                             array(
-                                "idAlumno" => $id_alumno
+                                "codSecuencia" => $secuenciaUsar
+                    ));
+                    $codEval_cocina_practica = $secuenciaUsar . $secuenciaEvaluacionAlumno->getValor1();
+
+                    // Ejecutamos la Consulta por Cod Evaluacion, para validar si existe
+                    $isset_cod_evaluacion = $em->getRepository("BackendBundle:TblEvaluacionCocinaPractica")->findOneBy(
+                            array(
+                                // "codEvalCocinaPractica" => $codEval_cocina_practica
+                                "idAlumno" => $id_Alumno
                     ));
 
                     // Verificamos que el retorno de la Funcion sea = 0 ********* 
-                    if (($isset_cod_alumno != NULL)) {
+                    if ($isset_cod_evaluacion == NULL) {
+                        // Seteo de Datos Generales de la tabla: TblEvaluacionCocinaPractica
+                        $ingresoEvaluacionNew = new TblEvaluacionCocinaPractica();
 
-                        // *****************************************************
-                        // Ingreso del Pago del Alumno en la Tabla: TblPago                 
-                        // Seteo de Datos Generales de la tabla: TblPago
-                        $pagoAlumnoSec = new TblPago();
-
-                        // Ejecutamos la Consulta por Id Usuario, para ingresar el Pago de la Matricula
-                        $pagoUsuario = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
-                                array(
-                                    "idUsuario" => $id_usuario_pago
-                        ));
-                        $pagoAlumnoSec->setIdUsuario($pagoUsuario);
-
-                        // Ejecutamos la Consulta por Cod Alumno, para ingresar el Pago de la Matricula
-                        $pagoAlumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
-                                array(
-                                    "idAlumno" => $id_alumno
-                        ));
-                        $pagoAlumnoSec->setIdAlumno($pagoAlumno);
-
-                        // Instanciamos de la Clase TblEstado
-                        $estadoPagoAlumno = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
-                                array(
-                                    "idEstado" => 3 // Recibido
-                        ));
-                        $pagoAlumnoSec->setIdEstadoPago($estadoPagoAlumno);
-
-                        // Instanciamos de la Clase TblFormaPago
-                        $formaPagoAlumno = $em->getRepository("BackendBundle:TblFormaPago")->findOneBy(
-                                array(
-                                    "idFormaPago" => $id_forma_pago
-                        ));
-                        $pagoAlumnoSec->setIdFormaPago($formaPagoAlumno);
-
-                        // Instanciamos de la Clase TblTipoPago
-                        $tipoPagoAlumno = $em->getRepository("BackendBundle:TblTipoPago")->findOneBy(
-                                array(
-                                    "idTipoPago" => $id_tipo_pago
-                        ));
-                        $pagoAlumnoSec->setIdTipoPago($tipoPagoAlumno);
-
-                        // Condicionamos el Secuencial a usar
-                        $secuenciaUsar = null;
-
-                        if ($tipoPagoAlumno->getDescTipoPago() == "Matricula") {
-                            $secuenciaUsar = 'SEC-PAMA';
-                        } else if ($tipoPagoAlumno->getDescTipoPago() == "Mensualidad") {
-                            $secuenciaUsar = 'SEC-PAME';
-                        } else {
-                            $secuenciaUsar = 'SEC-POTR';
-                        }
-
-                        // Instanciamos de la Clase TblSecuenciales | Pago de Matricula
-                        $secuenciaPagoAlumno = $em->getRepository("BackendBundle:TblSecuenciales")->findOneBy(
-                                array(
-                                    "codSecuencia" => $secuenciaUsar
-                        ));
-                        $pagoAlumnoSec->setCodDocumento($secuenciaUsar . $secuenciaPagoAlumno->getValor1());
+                        // Codigo de la Evaluacion
+                        $ingresoEvaluacionNew->setCodEvalCocinaPractica($codEval_cocina_practica);
                         // Aumentamos el Valor de l Secuencia
-                        $secuenciaPagoAlumno->setValor1($secuenciaPagoAlumno->getValor1() + 1);
+                        $secuenciaEvaluacionAlumno->setValor1($secuenciaEvaluacionAlumno->getValor1() + 1);
 
-                        $pagoAlumnoSec->setFechaPago($fecha_ingreso);
-                        $pagoAlumnoSec->setHoraPago($hora_ingreso);
-                        $pagoAlumnoSec->setConceptoPago('Pago de : ' . $tipoPagoAlumno->getDescTipoPago() .
-                                ' por valor de : ' . $monto_pago);
-                        $pagoAlumnoSec->setDescripcionPago($descripcion_pago);
-                        $pagoAlumnoSec->setMontoPago($monto_pago);
+                        // Buscamos el Id de la Secuencia y Generamos el Codigo
+                        // Datos Evaluacion
+                        $ingresoEvaluacionNew->setHigieneGeneralObs($higiene_GeneralObs);
+                        $ingresoEvaluacionNew->setHigieneGeneralNota($higiene_GeneralNota);
+                        $ingresoEvaluacionNew->setCorrectoUniformeObs($correcto_UniformeObs);
+                        $ingresoEvaluacionNew->setCorrectoUniformeNota($correcto_Uniformenota);
+                        $ingresoEvaluacionNew->setHoraEntregaObs($hora_EntregaObs);
+                        $ingresoEvaluacionNew->setHoraEntregaNota($hora_EntregaNota);
+                        $ingresoEvaluacionNew->setFlujoTrabajoObs($flujo_TrabajoObs);
+                        $ingresoEvaluacionNew->setFlujoTrabajoNota($flujo_TrabajoNota);
+                        $ingresoEvaluacionNew->setSaborObs($sabor_Obs);
+                        $ingresoEvaluacionNew->setSaborNota($sabor_Nota);
+                        $ingresoEvaluacionNew->setTexturaObs($textura_Obs);
+                        $ingresoEvaluacionNew->setTexturaNota($textura_Nota);
+                        $ingresoEvaluacionNew->setTecnicaObs($tecnica_Obs);
+                        $ingresoEvaluacionNew->setTexturaNota($tecnica_nota);
+                        $ingresoEvaluacionNew->setLimpiezaObs($limpieza_Obs);
+                        $ingresoEvaluacionNew->setLimpiezaNota($limpieza_Nota);
+                        $ingresoEvaluacionNew->setArmadoObs($armado_Obs);
+                        $ingresoEvaluacionNew->setArmadoNota($armado_Nota);
 
-                        // Realizar la Persistencia de los Datos y enviar a la BD                        
-                        $em->persist($pagoAlumnoSec);
+                        $ingresoEvaluacionNew->setNotaFinal($nota_Final);
+
+                        // Variables de Otras Tablas, las Buscamos para saber si hay Integridad                
+                        $platoEvaluacion = $em->getRepository("BackendBundle:TblPlato")->findOneBy(
+                                array(
+                                    "idPlato" => $id_Plato
+                        ));
+                        $ingresoEvaluacionNew->setIdPlato($platoEvaluacion);
+
+                        $instructorEvaluacion = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
+                                array(
+                                    "idUsuario" => $id_Instructor
+                        ));
+                        $ingresoEvaluacionNew->setIdInstructor($instructorEvaluacion); // Set Entidad de Instructor                      
+
+                        $alumnoEvaluacion = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "idAlumno" => $id_Alumno
+                        ));
+                        $ingresoEvaluacionNew->setIdAlumno($alumnoEvaluacion); // Set Entidad de Alumno
+                        // Instanciamos de la Clase TblEstado
+                        $estadoEvaluacion = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
+                                array(
+                                    "idEstado" => 12
+                        ));
+                        $ingresoEvaluacionNew->setIdEstado($estadoEvaluacion);
+
+                        // Datos de Bitacora
+                        $ingresoEvaluacionNew->setFechaEvaluacion($fecha_ingreso);
+                        $ingresoEvaluacionNew->setHoraEvaluacion($hora_ingreso);
+
+                        // Realizar la Persistencia de los Datos y enviar a la BD
+                        $em->persist($ingresoEvaluacionNew);
                         // Realizar la actualizacion en el storage de la BD
                         $em->flush();
+
 
                         // Envio de Correo despues de la Grabacion de Datos
                         // *****************************************************
@@ -235,7 +333,12 @@ class EvaluacionAlumnoController extends Controller {
                         // los Datos de envio de Mail **************************
                         $usuario_asignado_send = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
                                 array(
-                                    "idUsuario" => $id_usuario_pago
+                                    "idUsuario" => $id_Instructor
+                        ));
+
+                        $alumno_asignado_send = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "idAlumno" => $id_Alumno
                         ));
 
                         // Parametros de Salida                        
@@ -261,44 +364,53 @@ class EvaluacionAlumnoController extends Controller {
 
                         //Creamos el mensaje
                         $mail = \Swift_Message::newInstance()
-                                ->setSubject('Notificación de Pago de: ' . $tipoPagoAlumno->getDescTipoPago() . 'de Alumno | ACACULH')
+                                ->setSubject('Notificación de Ingreso de Evaluacion | ACACULH')
                                 ->setFrom(array("nahum.sreci@gmail.com" => "Academia Culinaria Hondureña | ACACULH"))
-                                ->setTo($email_alumno)
+                                ->setTo($alumno_asignado_send->getEmail())
+                                //->addCc([ $setTo_array_convertIn ])
                                 ->setBody(
                                 $this->renderView(
-                                        'Emails/sendMailPago.html.twig', array('nombresAlumno' => $nombre1, 'apellidosAlumno' => $apellido1,
-                                    'codAlumno' => $cod_alumno, 'fechaCreacion' => date_format($fecha_ingreso, "Y-m-d"),
-                                    'celularAlumno' => $celular_alumno,
-                                    'formaPago' => $formaPagoAlumno->getDescFormaPago(),
-                                    'tipoPago' => $tipoPagoAlumno->getDescTipoPago(),
-                                    'montoPago' => $monto_pago,
+                                        'Emails/sendMailEvaluacionPractica.html.twig', array('nombreAlumno' => $alumno_asignado_send->getNombre1(),
+                                    'apellidoAlumno' => $alumno_asignado_send->getApellido1(),
+                                    'obsHigieneGeneral' => $higiene_GeneralObs, 'notaHigieneGeneral' => $higiene_GeneralNota,
+                                    'obsUniformeCorrecto' => $correcto_UniformeObs, 'notaUniformeCorrecto' => $correcto_Uniformenota,
+                                    'obsHoraEntrega' => $hora_EntregaObs, 'notaHoraEntrega' => $hora_EntregaNota,
+                                    'obsFlujoTrabajo' => $flujo_TrabajoObs, 'notaFlujoTrabajo' => $flujo_TrabajoNota,
+                                    'obsSabor' => $sabor_Obs, 'notaSabor' => $sabor_Nota,
+                                    'obsTextura' => $textura_Obs, 'notaTextura' => $textura_Nota,
+                                    'obsTecnica' => $tecnica_Obs, 'notaTecnica' => $tecnica_nota,
+                                    'obsLimpieza' => $limpieza_Obs, 'notaLimpieza' => $limpieza_Nota,
+                                    'obsArmado' => $armado_Obs, 'notaArmado' => $armado_Nota,
+                                    'obsNotaFinal' => "Sumatoria de Calificaciones / 9", 'notaNotaFinal' => $nota_Final,
                                         )
                                 ), 'text/html');
+
                         // Envia el Correo con todos los Parametros
-                        // 
                         $resuly = $mailer->send($mail);
-                        //Consulta de el Alumno recien Ingresado *******************
-                        $alumnoPagoConsulta = $em->getRepository("BackendBundle:TblPago")->findOneBy(
+                        // ***** Fin de Envio de Correo ****************************
+                        // 
+                        // 
+                        //Consulta de la Evaluacion recien Ingresado *******************
+                        $evaluacionConsulta = $em->getRepository("BackendBundle:TblEvaluacionCocinaPractica")->findOneBy(
                                 array(
-                                    "idAlumno" => $id_alumno
+                                    "codEvalCocinaPractica" => $codEval_cocina_practica
                         ));
 
                         //Array de Mensajes
                         $data = array(
                             "status" => "success",
                             "code" => 200,
-                            "msg" => "Se ha ingresado un Pago del Alumno con el Codigo: " . $cod_alumno .
-                            " pronto recibira una notificación vía correo. Gracias",
-                            "data" => $alumnoPagoConsulta
+                            "msg" => "Se ha ingresado la Evaluacion con el Codigo: " . $codEval_cocina_practica
+                            . " con una Nota Final de: " . $nota_Final,
+                            "data" => $evaluacionConsulta
                         );
                     } else {
                         //Array de Mensajes
                         $data = array(
                             "status" => "error",
                             "code" => 400,
-                            "msg" => "Lo sentimos, No existe un Alumno con este Codigo: " . $cod_alumno . " o Correo: "
-                            . $email_alumno . ",ingresa uno distinto para continuar",
-                            "data" => $isset_cod_alumno
+                            "msg" => "Lo sentimos, ya existe una Evaluacion de Cocina Practica para este Alumno",
+                            "data" => $isset_cod_evaluacion
                         );
                     }
                 }
@@ -308,7 +420,7 @@ class EvaluacionAlumnoController extends Controller {
                     "status" => "error",
                     "desc" => "Eror al enviar la informacion serializada, el Json no ha sido enviado",
                     "code" => 400,
-                    "msg" => "Alumno no creado, falta ingresar los parametros !!"
+                    "msg" => "Evaluacion de Cocina Practica no creada, falta ingresar los parametros !!"
                 );
             }
         } else {
@@ -326,117 +438,251 @@ class EvaluacionAlumnoController extends Controller {
 // FIN | FND00002
 
     /**
-     * @Route("/revert-pago-alumno", name="revert-pago-alumno")
-     * Creacion del Controlador: Revertir Pago de Alumno
+     * @Route("/evaluaciones/edit-evaluacion-cocina-practica", name="/evaluaciones/edit-evaluacion-cocina-practica")
+     * Creacion del Controlador: Nuevo Pago de Evaluacion Cocina Practica
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
      * @since 1.0
      * Funcion: FND00003
      */
-    public function RevertPagoAlumnoAction(Request $request) {
+    public function EditEvaluacionCocinaPracticaAction(Request $request) {
         date_default_timezone_set('America/Tegucigalpa');
-        // Instanciamos el Servicio Helpers y Jwt
+        //Instanciamos el Servicio Helpers y Jwt
         $helpers = $this->get("app.helpers");
 
-        // Recogemos el Hash y la Autorizacion del Mismo        
+        //Recoger el Hash
+        //Recogemos el Hash y la Autorizacion del Mismo        
         $hash = $request->get("authorization", null);
-        // Se Chekea el Token
+        //Se Chekea el Token
         $checkToken = $helpers->authCheck($hash);
 
-        // Evalua que el Token sea True
+        //Convertimos los Parametros POSt a Json
+        $json = $request->get("json", null);
+
+        //Array de Mensajes
+        $data = array(
+            "status" => "success",
+            "code" => 200,
+            "msg" => "No se ha podido ingresar la Evaluacion, presenta problemas",
+            "validToken" => $checkToken,
+            "json" => $json
+        );
+
+        //Evalua que el Token sea True
         if ($checkToken == true) {
             $identity = $helpers->authCheck($hash, true);
 
-            //Convertimos los Parametros POSt a Json
-            $json = $request->get("json", null);
-
-            // Comprobamos que Json no es Null
+            //Comprobamos que Json no es Null
             if ($json != null) {
-                // Decodificamos el Json
+                //Decodificamos el Json
                 $params = json_decode($json);
 
-                // Parametros a Convertir                           
-                // Datos generales de la Tabla                
-                $id_alumno = ($params->idAlumno != null) ? $params->idAlumno : 0;
-                $id_pago = ($params->idPagoAlumno != null) ? $params->idPagoAlumno : 0;
-                $monto_pago = ($params->montoPago != null) ? $params->montoPago : 0;
-                $id_tipo_pago = ($params->idTipoPago != null) ? $params->idTipoPago : 0;
+                //Parametros a Convertir                           
+                //Datos generales de la Tabla                             
+                $codEval_cocina_practica = ($params->codEvalCocinaPractica != null) ? $params->codEvalCocinaPractica : null;
 
-                $email_alumno = ($params->email != null) ? $params->email : null;
-                $cod_alumno = ($params->codAlumno != null) ? $params->codAlumno : null;
-                $nombres = ($params->nombres != null) ? $params->nombres : null;
-                $apellidos = ($params->apellidos != null) ? $params->apellidos : null;
-                $celular_alumno = ($params->celular != null) ? $params->celular : null;
+                // Datos Generales
+                $id_Plato = ($params->idPlato != null) ? $params->idPlato : null;
+                $id_Instructor = ($params->idInstructor != null) ? $params->idInstructor : null;
+                $id_Alumno = ($params->idAlumno != null) ? $params->idAlumno : null;
 
-                $fecha_modificacion = new \DateTime('now');
+                // Evaluaciones
+                $higiene_GeneralObs = ($params->higieneGeneralObs != null) ? $params->higieneGeneralObs : null;
+                $higiene_GeneralNota = ($params->higieneGeneralNota != null) ? $params->higieneGeneralNota : null;
+                $correcto_UniformeObs = ($params->correctoUniformeObs != null) ? $params->correctoUniformeObs : null;
+                $correcto_Uniformenota = ($params->correctoUniformenota != null) ? $params->correctoUniformenota : null;
+                $hora_EntregaObs = ($params->horaEntregaObs != null) ? $params->horaEntregaObs : null;
+                $hora_EntregaNota = ($params->horaEntregaNota != null) ? $params->horaEntregaNota : null;
+                $flujo_TrabajoObs = ($params->flujoTrabajoObs != null) ? $params->flujoTrabajoObs : null;
+                $flujo_TrabajoNota = ($params->flujoTrabajoNota != null) ? $params->flujoTrabajoNota : null;
+                $sabor_Obs = ($params->saborObs != null) ? $params->saborObs : null;
+                $sabor_Nota = ($params->saborNota != null) ? $params->saborNota : null;
+                $textura_Obs = ($params->texturaObs != null) ? $params->texturaObs : null;
+                $textura_Nota = ($params->texturaNota != null) ? $params->texturaNota : null;
+                $tecnica_Obs = ($params->tecnicaObs != null) ? $params->tecnicaObs : null;
+                $tecnica_nota = ($params->tecnicaNota != null) ? $params->tecnicaNota : null;
+                $limpieza_Obs = ($params->limpiezaObs != null) ? $params->limpiezaObs : null;
+                $limpieza_Nota = ($params->limpiezaNota != null) ? $params->limpiezaNota : null;
+                $armado_Obs = ($params->armadoObs != null) ? $params->armadoObs : null;
+                $armado_Nota = ($params->armadoNota != null) ? $params->armadoNota : null;
+                $nota_Final = ($params->notaFinal != null) ? $params->notaFinal : null;
 
-                $hora_modificacion = new \DateTime('now');
-                $hora_modificacion->format('H:i');
+                $fecha_ingreso = new \DateTime('now');
 
-                // Evaluamos que el Codigo del Alumno no se vacio
-                if ($id_alumno != NULL && $monto_pago != 0) {
+                $hora_ingreso = new \DateTime('now');
+                $hora_ingreso->format('H:i');
+
+                // Evaluamos que el Codigo de la Evaluacion no se vacio
+                if ($id_Alumno != NULL && $id_Instructor != NULL) {
                     // Instanciamos el Objeto Doctrine                    
                     $em = $this->getDoctrine()->getManager();
 
-                    // Ejecutamos la Consulta por Id Pago, para validar si el Pago existe
-                    $isset_id_pago = $em->getRepository("BackendBundle:TblPago")->findOneBy(
+                    // Instanciamos de la Clase TblSecuenciales | Evaluacion
+                    $secuenciaUsar = 'SEC-EVCP';
+
+                    $secuenciaEvaluacionAlumno = $em->getRepository("BackendBundle:TblSecuenciales")->findOneBy(
                             array(
-                                "idPago" => $id_pago
+                                "codSecuencia" => $secuenciaUsar
+                    ));
+                    $codEval_cocina_practica = $secuenciaUsar . $secuenciaEvaluacionAlumno->getValor1();
+
+                    // Ejecutamos la Consulta por Cod Evaluacion, para validar si existe
+                    $isset_cod_evaluacion = $em->getRepository("BackendBundle:TblEvaluacionCocinaPractica")->findOneBy(
+                            array(
+                                "codEvalCocinaPractica" => $codEval_cocina_practica
                     ));
 
                     // Verificamos que el retorno de la Funcion sea = 0 ********* 
-                    if (($isset_id_pago != NULL)) {
+                    if ($isset_cod_evaluacion == NULL) {
+                        // Seteo de Datos Generales de la tabla: TblEvaluacionCocinaPractica
+                        $ingresoEvaluacionNew = new TblEvaluacionCocinaPractica();
 
-                        // *****************************************************
-                        // Actualizamos el Estado del Pago del Alumno en la Tabla: TblPago                 
-                        // Seteo de Datos de la tabla: TblPago
-                        $pagoAlumnoSec = $em->getRepository("BackendBundle:TblPago")->findOneBy(
+                        // Codigo de la Evaluacion
+                        $ingresoEvaluacionNew->setCodEvalCocinaPractica($codEval_cocina_practica);
+                        // Aumentamos el Valor de l Secuencia
+                        $secuenciaEvaluacionAlumno->setValor1($secuenciaEvaluacionAlumno->getValor1() + 1);
+
+                        // Buscamos el Id de la Secuencia y Generamos el Codigo
+                        // Datos Evaluacion
+                        $ingresoEvaluacionNew->setHigieneGeneralObs($higiene_GeneralObs);
+                        $ingresoEvaluacionNew->setHigieneGeneralNota($higiene_GeneralNota);
+                        $ingresoEvaluacionNew->setCorrectoUniformeObs($correcto_UniformeObs);
+                        $ingresoEvaluacionNew->setCorrectoUniformeNota($correcto_Uniformenota);
+                        $ingresoEvaluacionNew->setHoraEntregaObs($hora_EntregaObs);
+                        $ingresoEvaluacionNew->setHoraEntregaNota($hora_EntregaNota);
+                        $ingresoEvaluacionNew->setFlujoTrabajoObs($flujo_TrabajoObs);
+                        $ingresoEvaluacionNew->setFlujoTrabajoNota($flujo_TrabajoNota);
+                        $ingresoEvaluacionNew->setSaborObs($sabor_Obs);
+                        $ingresoEvaluacionNew->setSaborNota($sabor_Nota);
+                        $ingresoEvaluacionNew->setTexturaObs($textura_Obs);
+                        $ingresoEvaluacionNew->setTexturaNota($textura_Nota);
+                        $ingresoEvaluacionNew->setTecnicaObs($tecnica_Obs);
+                        $ingresoEvaluacionNew->setTexturaNota($tecnica_nota);
+                        $ingresoEvaluacionNew->setLimpiezaObs($limpieza_Obs);
+                        $ingresoEvaluacionNew->setLimpiezaNota($limpieza_Nota);
+                        $ingresoEvaluacionNew->setArmadoObs($armado_Obs);
+                        $ingresoEvaluacionNew->setArmadoNota($armado_Nota);
+
+                        $ingresoEvaluacionNew->setNotaFinal($nota_Final);
+
+                        // Variables de Otras Tablas, las Buscamos para saber si hay Integridad                
+                        $platoEvaluacion = $em->getRepository("BackendBundle:TblPlato")->findOneBy(
                                 array(
-                                    "idPago" => $id_pago
+                                    "idPlato" => $id_Plato
                         ));
+                        $ingresoEvaluacionNew->setIdPlato($platoEvaluacion);
 
+                        $instructorEvaluacion = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
+                                array(
+                                    "idUsuario" => $id_Instructor
+                        ));
+                        $ingresoEvaluacionNew->setIdInstructor($instructorEvaluacion); // Set Entidad de Instructor                      
+
+                        $alumnoEvaluacion = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "idAlumno" => $id_Alumno
+                        ));
+                        $ingresoEvaluacionNew->setIdAlumno($alumnoEvaluacion); // Set Entidad de Alumno
                         // Instanciamos de la Clase TblEstado
-                        $estadoPagoAlumno = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
+                        $estadoEvaluacion = $em->getRepository("BackendBundle:TblEstado")->findOneBy(
                                 array(
-                                    "idEstado" => 4 // Anulado
+                                    "idEstado" => 12
                         ));
-                        $pagoAlumnoSec->setIdEstadoPago($estadoPagoAlumno);
+                        $ingresoEvaluacionNew->setIdEstado($estadoEvaluacion);
 
-                        // Instanciamos de la Clase TblTipoPago
-                        $tipoPagoAlumno = $em->getRepository("BackendBundle:TblTipoPago")->findOneBy(
-                                array(
-                                    "idTipoPago" => $id_tipo_pago
-                        ));
+                        // Datos de Bitacora
+                        $ingresoEvaluacionNew->setFechaEvaluacion($fecha_ingreso);
+                        $ingresoEvaluacionNew->setHoraEvaluacion($hora_ingreso);
 
-                        $pagoAlumnoSec->setFechaModificacion($fecha_modificacion);
-                        $pagoAlumnoSec->setHoraModificacion($hora_modificacion);
-                        $pagoAlumnoSec->setConceptoPago('Reverción de Pago del Alumno : ' . $tipoPagoAlumno->getDescTipoPago() .
-                                ' por valor de : ' . $monto_pago);
-
-                        // Realizar la Persistencia de los Datos y enviar a la BD                        
-                        $em->persist($pagoAlumnoSec);
+                        // Realizar la Persistencia de los Datos y enviar a la BD
+                        $em->persist($ingresoEvaluacionNew);
                         // Realizar la actualizacion en el storage de la BD
                         $em->flush();
 
-                        //Consulta de el Alumno recien Ingresado *******************
-                        $alumnoPagoRevertConsulta = $em->getRepository("BackendBundle:TblPago")->findOneBy(
+
+                        // Envio de Correo despues de la Grabacion de Datos
+                        // *****************************************************
+                        //Instanciamos de la Clase TblUsuario, para Obtener
+                        // los Datos de envio de Mail **************************
+                        $usuario_asignado_send = $em->getRepository("BackendBundle:TblUsuario")->findOneBy(
                                 array(
-                                    "idPago" => $id_pago
+                                    "idUsuario" => $id_Instructor
+                        ));
+
+                        $alumno_asignado_send = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                                array(
+                                    "idAlumno" => $id_Alumno
+                        ));
+
+                        // Parametros de Salida                        
+                        //Creamos la instancia con la configuración
+                        $transport = \Swift_SmtpTransport::newInstance()
+                                ->setHost('smtp.gmail.com')
+                                ->setPort(587)
+                                ->setEncryption('tls')
+                                ->setStreamOptions(array(
+                                    'ssl' => array(
+                                        'allow_self_signed' => true,
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false
+                                    )
+                                        )
+                                )
+                                ->setUsername("nahum.sreci@gmail.com")
+                                ->setPassword('1897Juve')
+                                ->setTimeout(180);
+                        //echo "Paso 1";
+                        //Creamos la instancia del envío
+                        $mailer = \Swift_Mailer::newInstance($transport);
+
+                        //Creamos el mensaje
+                        $mail = \Swift_Message::newInstance()
+                                ->setSubject('Notificación de Ingreso de Evaluacion | ACACULH')
+                                ->setFrom(array("nahum.sreci@gmail.com" => "Academia Culinaria Hondureña | ACACULH"))
+                                ->setTo($alumno_asignado_send->getEmail())
+                                //->addCc([ $setTo_array_convertIn ])
+                                ->setBody(
+                                $this->renderView(
+                                        'Emails/sendMailEvaluacionPractica.html.twig', array('nombreAlumno' => $alumno_asignado_send->getNombre1(),
+                                    'apellidoAlumno' => $alumno_asignado_send->getApellido1(),
+                                    'obsHigieneGeneral' => $higiene_GeneralObs, 'notaHigieneGeneral' => $higiene_GeneralNota,
+                                    'obsUniformeCorrecto' => $correcto_UniformeObs, 'notaUniformeCorrecto' => $correcto_Uniformenota,
+                                    'obsHoraEntrega' => $hora_EntregaObs, 'notaHoraEntrega' => $hora_EntregaNota,
+                                    'obsFlujoTrabajo' => $flujo_TrabajoObs, 'notaFlujoTrabajo' => $flujo_TrabajoNota,
+                                    'obsSabor' => $sabor_Obs, 'notaSabor' => $sabor_Nota,
+                                    'obsTextura' => $textura_Obs, 'notaTextura' => $textura_Nota,
+                                    'obsTecnica' => $tecnica_Obs, 'notaTecnica' => $tecnica_nota,
+                                    'obsLimpieza' => $limpieza_Obs, 'notaLimpieza' => $limpieza_Nota,
+                                    'obsArmado' => $armado_Obs, 'notaArmado' => $armado_Nota,
+                                    'obsNotaFinal' => "Sumatoria de Calificaciones / 9", 'notaNotaFinal' => $nota_Final,
+                                        )
+                                ), 'text/html');
+
+                        // Envia el Correo con todos los Parametros
+                        $resuly = $mailer->send($mail);
+                        // ***** Fin de Envio de Correo ****************************
+                        // 
+                        // 
+                        //Consulta de la Evaluacion recien Ingresado *******************
+                        $evaluacionConsulta = $em->getRepository("BackendBundle:TblEvaluacionCocinaPractica")->findOneBy(
+                                array(
+                                    "codEvalCocinaPractica" => $codEval_cocina_practica
                         ));
 
                         //Array de Mensajes
                         $data = array(
                             "status" => "success",
                             "code" => 200,
-                            "msg" => "Se ha registrado la Anulación de un Pago del Alumno",
-                            "data" => $alumnoPagoRevertConsulta
+                            "msg" => "Se ha ingresado la Evaluacion con el Codigo: " . $codEval_cocina_practica
+                            . " con una Nota Final de: " . $nota_Final,
+                            "data" => $evaluacionConsulta
                         );
                     } else {
                         //Array de Mensajes
                         $data = array(
                             "status" => "error",
                             "code" => 400,
-                            "msg" => "Lo sentimos, No existe un pago asociado a este Alumno con este Codigo, ingresa uno distinto para continuar",
-                            "data" => $isset_id_alumno
+                            "msg" => "Lo sentimos, ya existe una Evaluacion de Cocina Practica con este Codigo: " . $codEval_cocina_practica,
+                            "data" => $isset_cod_evaluacion
                         );
                     }
                 }
@@ -446,7 +692,7 @@ class EvaluacionAlumnoController extends Controller {
                     "status" => "error",
                     "desc" => "Eror al enviar la informacion serializada, el Json no ha sido enviado",
                     "code" => 400,
-                    "msg" => "Pago no Anulado, falta ingresar los parametros !!"
+                    "msg" => "Evaluacion de Cocina Practica no creada, falta ingresar los parametros !!"
                 );
             }
         } else {

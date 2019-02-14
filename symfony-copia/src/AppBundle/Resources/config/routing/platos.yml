@@ -1,0 +1,28 @@
+## Rutas Todos los Platos.
+platos_listAllPlatos:
+    path: /all-list-platos
+    defaults: { _controller: "AppBundle:Platos/Platos:ActiveAllPlatosList" }
+    methods: POST
+    
+platos_listPlato:
+    path: /list-plato
+    defaults: { _controller: "AppBundle:Platos/Platos:ActivePlato" }
+    methods: POST
+    
+platos_listAllTipoPlatos:
+    path: /all-list-tipo-platos
+    defaults: { _controller: "AppBundle:Platos/Platos:ActiveAllTiposPlatosList" }
+    methods: POST
+
+## Ruta para Agregar Nuevo Plato
+platos_newPlato:
+    path: /new-plato
+    defaults: { _controller: "AppBundle:Platos/Platos:NewPlato" }
+    methods: POST
+    
+## Ruta para Anualar Plato
+platos_editPlato:
+    path: /edit-plato
+    defaults: { _controller: "AppBundle:Platos/Platos:EditPlato" }
+    methods: POST
+ 
