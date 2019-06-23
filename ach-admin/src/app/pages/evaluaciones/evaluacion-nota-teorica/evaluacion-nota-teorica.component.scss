@@ -1,0 +1,81 @@
+.full {
+	width: 100%;
+}
+.contact-list-container {
+	background-color: white;
+	padding: 10px;
+	overflow: auto;
+
+	.contact-list {
+		height: 400px;
+		overflow: auto;
+		div {
+			margin: 0;
+		}
+		h3 {
+			margin: 0;
+		}
+		p {
+			margin: 0;
+		}
+		.avatar {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+	}
+	
+	.contact-list-header {
+		background-color: #eee;
+		padding: 10px;
+		div {
+			margin: auto;
+		}
+		
+	}
+}
+.contact-add {
+		padding: 10px;
+		background: white;
+		.avatar {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+		}
+		h3 {
+			margin: auto;
+		}
+	}
+
+	// estilo el loader
+	.loader {
+		margin-left: 40%;
+		margin-top: 5%;
+	}
+
+	.loader2 {
+		margin-left: 30%;
+		margin-top: 8%;
+	}
+	
+
+	// tamaños de las columnas
+	// ID
+	.customWidthClass{
+		flex: 0 0 30px;
+	 }
+
+	 // Accion
+	.customWidthClass2{
+		flex: 0 0 50px;
+	 }
+
+	 // Celular
+	.customWidthClass3{
+		flex: 0 0 70px;
+	 }
+
+	 // Email
+	.customWidthClass4{
+		flex: 0 0 250px;
+	 }

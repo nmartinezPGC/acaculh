@@ -64,6 +64,10 @@ export class RegistroPagosComponent implements OnInit {
     // Validators.required,
   ]);
 
+  urlDocumento = new FormControl('', [
+    // Validators.required,
+  ]);
+
   /**
    * Constructor de la Clase
    * @param _listasComunes
@@ -100,7 +104,7 @@ export class RegistroPagosComponent implements OnInit {
   ngOnInit() {
     // Definicion de la Insercion de los Datos de Nueva Comunicacion
     this._registroPagosModel = new RegistroPagosModel(
-      0, '', null, null, '', null, null, // Identificacion Pago
+      0, '', null, null, '', null, null, null, // Identificacion Pago
       0, '', '', '', '', '', null,// Identificacion Alumno
       3, '', 0, '', 0, '', 0 // Relaciones de Tablas
     );
@@ -351,7 +355,7 @@ export class RegistroPagosComponent implements OnInit {
       this.openSnackBar('Falta Ingresar la Forma de Pago', 'Error al ingresar el Pago de Alumno');
       return 1;
     } else if ((this._registroPagosModel.descripcionPago == '' || this._registroPagosModel.descripcionPago == null)) {
-    this.openSnackBar('Falta Ingresar la Descripcion del Pago', 'Error al ingresar el Pago de Alumno');
+      this.openSnackBar('Falta Ingresar la Descripcion del Pago', 'Error al ingresar el Pago de Alumno');
       return 1;
     }
   } // FND-00005
@@ -375,8 +379,53 @@ export class RegistroPagosComponent implements OnInit {
     this.celularSend = null;
   }
 
-} // FIN Clase RegistroPagosComponent
 
+  /*****************************************************
+    * Funcion: FND-00006
+    * Fecha: 22-12-2018
+    * Descripcion: Cargar Imagen
+    * Objetivo: Cargar Imagen
+    ******************************************************/
+  public respuestaImagenEnviada;
+  public resultadoCarga;
+
+  public cargandoImagen(files: FileList) {
+    const nombreFile: string = files[0].name;
+    this._registroPagosModel.url_documento = nombreFile;
+
+    // console.log(nombreFile);
+    // Valida que el Codigo del Alumno se ha Oingresado y Granbado
+    // if (this._alumnoModel.codAlumno === null) {
+    //   this.openSnackBar('Error al cargar el Archivo', 'Debes de Ingresar los Datos del Alumno');
+    //   return -1;
+    // }
+    const token1 = this._registroPagosService.getToken();
+
+    this._registroPagosService.postFileImagen(token1, files[0]).subscribe(
+
+      response => {
+        this.respuestaImagenEnviada = response;
+        if (this.respuestaImagenEnviada <= 1) {
+          console.log("Error en el servidor");
+        } else {
+
+          if (this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success") {
+            this.resultadoCarga = 1;
+            this.openSnackBar('Arhivo cargado exitosamente', this.respuestaImagenEnviada.msg);
+          } else {
+            this.resultadoCarga = 2;
+            this.openSnackBar('Error al cargar el Archivo', this.respuestaImagenEnviada.msg);
+            return 1;
+          }
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );//FIN DE METODO SUBSCRIBE
+  }
+
+} // FIN Clase RegistroPagosComponent
 
 /**
  * Definicion de la Interface de los Datos

@@ -45,8 +45,9 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Primer Apellido" [formControl]="apellido1" [errorStateMatcher]="matcher"
-                      name="apellido1" id="apellido1" ngControl="apellido1" [(ngModel)]="_alumnoModel.apellido1">
+                    <input matInput placeholder="Primer Apellido" [formControl]="apellido1"
+                      [errorStateMatcher]="matcher" name="apellido1" id="apellido1" ngControl="apellido1"
+                      [(ngModel)]="_alumnoModel.apellido1">
                     <mat-error *ngIf="apellido1.hasError('required')">
                       Primer Apellido es: <strong>obligatorio</strong>
                     </mat-error>
@@ -54,8 +55,8 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Segundo Apellido" [formControl]="apellido2" name="apellido2" id="apellido2"
-                      ngControl="apellido2" [(ngModel)]="_alumnoModel.apellido2">
+                    <input matInput placeholder="Segundo Apellido" [formControl]="apellido2" name="apellido2"
+                      id="apellido2" ngControl="apellido2" [(ngModel)]="_alumnoModel.apellido2">
                   </mat-form-field>
                 </td>
               </tr>
@@ -76,7 +77,8 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <input type="number" maxlength="8" matInput placeholder="Telefono" [formControl]="telAlumno"
-                      [errorStateMatcher]="matcher" name="telAlumno" id="telAlumno" ngControl="telefono" [(ngModel)]="_alumnoModel.telefono">
+                      [errorStateMatcher]="matcher" name="telAlumno" id="telAlumno" ngControl="telefono"
+                      [(ngModel)]="_alumnoModel.telefono">
                     <mat-error *ngIf="telAlumno.hasError('required')">
                       No. Telefono es: <strong>obligatorio</strong>
                     </mat-error>
@@ -85,8 +87,8 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <input type="number" #cel maxlength="8" matInput placeholder="Celular" [formControl]="celularAlumno"
-                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular" [(ngModel)]="_alumnoModel.celular"
-                      required>
+                      [errorStateMatcher]="matcher" name="celular" id="celular" ngControl="celular"
+                      [(ngModel)]="_alumnoModel.celular" required>
                     <mat-error *ngIf="celularAlumno.hasError('celular') && !celularAlumno.hasError('required')">
                       Por favor ingresa el Celular
                     </mat-error>
@@ -97,8 +99,9 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Genero" [formControl]="idGeneroAlumno" [errorStateMatcher]="matcher" name="idGeneroAlumno"
-                      id="idGeneroAlumno" ngControl="idGeneroAlumno" [(ngModel)]="_alumnoModel.idGenero" required>
+                    <mat-select placeholder="Genero" [formControl]="idGeneroAlumno" [errorStateMatcher]="matcher"
+                      name="idGeneroAlumno" id="idGeneroAlumno" ngControl="idGeneroAlumno"
+                      [(ngModel)]="_alumnoModel.idGenero" required>
                       <mat-option *ngFor="let genero of JsonOutgetlistaGeneroAll" [value]="genero.idGenero">
                         {{ genero.descripcionGenero }}
                       </mat-option>
@@ -117,17 +120,18 @@
                     <!-- <input matInput #message maxlength="250" [formControl]="direccionAlumno" placeholder="Direccion de Alumno"
                       name="direccion" id="direccion" ngControl="direccion" [(ngModel)]="_alumnoModel.direccion"> -->
 
-                    <textarea matInput #message maxlength="250" [formControl]="direccionAlumno" placeholder="Direccion de Alumno"
-                      name="direccion" id="direccion" ngControl="direccion" [(ngModel)]="_alumnoModel.direccion"
-                      autocomplete="false"></textarea>
+                    <textarea matInput #message maxlength="250" [formControl]="direccionAlumno"
+                      placeholder="Direccion de Alumno" name="direccion" id="direccion" ngControl="direccion"
+                      [(ngModel)]="_alumnoModel.direccion" autocomplete="false"></textarea>
                     <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
 
                 <td colspan="2">
                   <mat-form-field class="example-full-width">
-                    <textarea matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl" id="referenciaAl"
-                      [formControl]="referenciaAl" ngControl="referencia" [(ngModel)]="_alumnoModel.referencia"></textarea>
+                    <textarea matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl"
+                      id="referenciaAl" [formControl]="referenciaAl" ngControl="referencia"
+                      [(ngModel)]="_alumnoModel.referencia"></textarea>
                     <!-- <input matInput #refer maxlength="250" placeholder="Referencia" name="referenciaAl" id="referenciaAl"
                       [formControl]="referenciaAl" ngControl="referencia" [(ngModel)]="_alumnoModel.referencia"> -->
                     <!-- <mat-hint align="end">{{referencia.value.length}} / 250</mat-hint> -->
@@ -138,8 +142,9 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput [matDatepicker]="picker" [formControl]="fechaNacimiento" placeholder="Fecha de Nacimiento"
-                      name="fechaNacimiento" id="fechaNacimiento" ngControl="fechaNacimiento" [(ngModel)]="_alumnoModel.fechaNacimiento">
+                    <input matInput [matDatepicker]="picker" [formControl]="fechaNacimiento"
+                      placeholder="Fecha de Nacimiento" name="fechaNacimiento" id="fechaNacimiento"
+                      ngControl="fechaNacimiento" [(ngModel)]="_alumnoModel.fechaNacimiento">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -147,11 +152,11 @@
 
                 <td colspan="2">
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Profesion Alumno" [formControl]="profesionAlumno" [errorStateMatcher]="matcher"
-                      name="idProfesion" id="idProfesion" ngControl="idProfesion" [(ngModel)]="_alumnoModel.idProfesion"
-                      required>
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno" [value]="profesion.idProfesion"
-                        (click)="profesionDesc(profesion.descripcionProfesion, 1)">
+                    <mat-select placeholder="Profesion Alumno" [formControl]="profesionAlumno"
+                      [errorStateMatcher]="matcher" name="idProfesion" id="idProfesion" ngControl="idProfesion"
+                      [(ngModel)]="_alumnoModel.idProfesion" required>
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesAlumno"
+                        [value]="profesion.idProfesion" (click)="profesionDesc(profesion.descripcionProfesion, 1)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -162,8 +167,8 @@
                   </mat-form-field>
                 </td>
                 <td>
-                  Es Hondureño ? <mat-checkbox name="hondureno" id="hondureno" [formControl]="hondureno" ngControl="hondureno"
-                    [(ngModel)]="_alumnoModel.hondureno">
+                  Es Hondureño ? <mat-checkbox name="hondureno" id="hondureno" [formControl]="hondureno"
+                    ngControl="hondureno" [(ngModel)]="_alumnoModel.hondureno">
                   </mat-checkbox>
                 </td>
               </tr>
@@ -189,16 +194,17 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Nombres de Padre" name="nombrePadre" id="nombrePadre" [formControl]="nombrePadre"
-                      ngControl="nombrePadre" [(ngModel)]="_alumnoModel.nombrePadre">
+                    <input matInput placeholder="Nombres de Padre" name="nombrePadre" id="nombrePadre"
+                      [formControl]="nombrePadre" ngControl="nombrePadre" [(ngModel)]="_alumnoModel.nombrePadre">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
                     <mat-select placeholder="Profesion Padre" name="idProfesionPadre" id="idProfesionPadre"
-                      [formControl]="idProfesionPadre" ngControl="idProfesionPadre" [(ngModel)]="_alumnoModel.idProfesionPadre">
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesPadre" [value]="profesion.idProfesion"
-                        (click)="profesionDesc(profesion.descripcionProfesion, 2)">
+                      [formControl]="idProfesionPadre" ngControl="idProfesionPadre"
+                      [(ngModel)]="_alumnoModel.idProfesionPadre">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesPadre"
+                        [value]="profesion.idProfesion" (click)="profesionDesc(profesion.descripcionProfesion, 2)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -207,16 +213,17 @@
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Nombres de Madre" name="nombreMadre" id="nombreMadre" [formControl]="nombreMadre"
-                      ngControl="nombreMadre" [(ngModel)]="_alumnoModel.nombreMadre">
+                    <input matInput placeholder="Nombres de Madre" name="nombreMadre" id="nombreMadre"
+                      [formControl]="nombreMadre" ngControl="nombreMadre" [(ngModel)]="_alumnoModel.nombreMadre">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field>
                     <mat-select placeholder="Profesion Madre" name="idProfesionPadre" id="idProfesionMadre"
-                      [formControl]="idProfesionMadre" ngControl="idProfesionMadre" [(ngModel)]="_alumnoModel.idProfesionMadre">
-                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesMadre" [value]="profesion.idProfesion"
-                        (click)="profesionDesc(profesion.descripcionProfesion, 3)">
+                      [formControl]="idProfesionMadre" ngControl="idProfesionMadre"
+                      [(ngModel)]="_alumnoModel.idProfesionMadre">
+                      <mat-option *ngFor="let profesion of JsonOutgetlistaProfesionesMadre"
+                        [value]="profesion.idProfesion" (click)="profesionDesc(profesion.descripcionProfesion, 3)">
                         {{ profesion.descripcionProfesion }}
                       </mat-option>
                     </mat-select>
@@ -227,29 +234,29 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Trabajo de Padre" name="trabajoPadre" id="trabajoPadre" [formControl]="trabajoPadre"
-                      ngControl="trabajoPadre" [(ngModel)]="_alumnoModel.trabajoPadre">
+                    <input matInput placeholder="Trabajo de Padre" name="trabajoPadre" id="trabajoPadre"
+                      [formControl]="trabajoPadre" ngControl="trabajoPadre" [(ngModel)]="_alumnoModel.trabajoPadre">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #postalCode maxlength="8" placeholder="Telefono Padre" type="number" name="telefonoTrabajoPadre"
-                      id="telefonoTrabajoPadre" [formControl]="telefonoTrabajoPadre" ngControl="telefonoTrabajoPadre"
-                      [(ngModel)]="_alumnoModel.telefonoTrabajoPadre">
+                    <input matInput #postalCode maxlength="8" placeholder="Telefono Padre" type="number"
+                      name="telefonoTrabajoPadre" id="telefonoTrabajoPadre" [formControl]="telefonoTrabajoPadre"
+                      ngControl="telefonoTrabajoPadre" [(ngModel)]="_alumnoModel.telefonoTrabajoPadre">
                     <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Trabajo de Madre" name="trabajoMadre" id="trabajoMadre" [formControl]="trabajoMadre"
-                      ngControl="trabajoMadre" [(ngModel)]="_alumnoModel.trabajoMadre">
+                    <input matInput placeholder="Trabajo de Madre" name="trabajoMadre" id="trabajoMadre"
+                      [formControl]="trabajoMadre" ngControl="trabajoMadre" [(ngModel)]="_alumnoModel.trabajoMadre">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <input matInput #postalCode maxlength="8" placeholder="Telefono Madre" type="number" name="telefonoTrabajoMadre"
-                      id="telefonoTrabajoMadre" [formControl]="telefonoTrabajoMadre" ngControl="telefonoTrabajoMadre"
-                      [(ngModel)]="_alumnoModel.telefonoTrabajoMadre">
+                    <input matInput #postalCode maxlength="8" placeholder="Telefono Madre" type="number"
+                      name="telefonoTrabajoMadre" id="telefonoTrabajoMadre" [formControl]="telefonoTrabajoMadre"
+                      ngControl="telefonoTrabajoMadre" [(ngModel)]="_alumnoModel.telefonoTrabajoMadre">
                     <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
                   </mat-form-field>
                 </td>
@@ -264,26 +271,30 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Nombres de Encargado" name="nameEncargado" id="nameEncargado"
-                      [formControl]="nameEncargado" ngControl="nombreEncargado" [(ngModel)]="_alumnoModel.nombreEncargado">
+                      [formControl]="nameEncargado" ngControl="nombreEncargado"
+                      [(ngModel)]="_alumnoModel.nombreEncargado">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Telefono Encargado" name="telefonoEncargado" id="telefonoEncargado"
-                      [formControl]="telEncargado" ngControl="telefonoEncargado" [(ngModel)]="_alumnoModel.telefonoEncargado">
+                      [formControl]="telEncargado" ngControl="telefonoEncargado"
+                      [(ngModel)]="_alumnoModel.telefonoEncargado">
                   </mat-form-field>
                   <!-- <mat-hint align="end">{{telEncargado.value.length}} / 8</mat-hint> -->
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput placeholder="Nombres de Emergencia" name="nameEmergencia" id="nameEmergencia"
-                      [formControl]="nameEmergencia" ngControl="nombreEmergencia" [(ngModel)]="_alumnoModel.nombreEmergencia">
+                      [formControl]="nameEmergencia" ngControl="nombreEmergencia"
+                      [(ngModel)]="_alumnoModel.nombreEmergencia">
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
                     <input matInput maxlength="8" placeholder="Telefono Emergencia" type="number" name="telEmergencia"
-                      id="telEmergencia" [formControl]="telEmergencia" ngControl="telefonoEmergencia" [(ngModel)]="_alumnoModel.telefonoEmergencia">
+                      id="telEmergencia" [formControl]="telEmergencia" ngControl="telefonoEmergencia"
+                      [(ngModel)]="_alumnoModel.telefonoEmergencia">
                     <!-- <mat-hint align="end">{{telEmergencia.value.length}} / 8</mat-hint> -->
                   </mat-form-field>
                 </td>
@@ -317,10 +328,11 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                    <mat-select placeholder="Medio Conoce ACACULH" [formControl]="medioConoceAch" [errorStateMatcher]="matcher"
-                      name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch" [(ngModel)]="_alumnoModel.medioConoceAch"
-                      required>
-                      <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll" [value]="medioConoceAchJson.descripcionMedioConoceAch">
+                    <mat-select placeholder="Medio Conoce ACACULH" [formControl]="medioConoceAch"
+                      [errorStateMatcher]="matcher" name="medioConoceAch" id="medioConoceAch" ngControl="medioConoceAch"
+                      [(ngModel)]="_alumnoModel.medioConoceAch" required>
+                      <mat-option *ngFor="let medioConoceAchJson of JsonOutgetlistaMediosACHAll"
+                        [value]="medioConoceAchJson.descripcionMedioConoceAch">
                         {{ medioConoceAchJson.descripcionMedioConoceAch }}
                       </mat-option>
                     </mat-select>
@@ -354,9 +366,9 @@
               <tr>
                 <td colspan="2">
                   <mat-form-field>
-                    <input matInput placeholder="Monto de Matricula" type="number" class="example-right-align" name="montoMatricula"
-                      id="montoMatricula" [formControl]="montoMatricula" ngControl="montoMatricula" [(ngModel)]="_alumnoModel.montoMatricula"
-                      required>
+                    <input matInput placeholder="Monto de Matricula" type="number" class="example-right-align"
+                      name="montoMatricula" id="montoMatricula" [formControl]="montoMatricula"
+                      ngControl="montoMatricula" [(ngModel)]="_alumnoModel.montoMatricula" required>
                     <span matPrefix>L&nbsp;</span>
                     <!-- <span matSuffix>.00</span> -->
                   </mat-form-field>
@@ -370,11 +382,30 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-select placeholder="Horario de Clase" [formControl]="idHorario" [errorStateMatcher]="matcher"
+                      ngControl="idHorario" [(ngModel)]="_alumnoModel.idHorario" required>
+                      <mat-option *ngFor="let Horario of JsonOutgetlistaHorarios" [value]="Horario.idHorarioClase"
+                        (click)="profesionDesc(Horario.descHorarioClase, 5)">
+                        {{ Horario.descHorarioClase }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <!-- <mat-form-field> -->
+                  <!-- <input-file fileAccept="image/*" fileLimit="1" (change)="cargandoImagen($event)" [(ngModel)]="_alumnoModel.foto_alumno" [linkEnabled]="false"
+                      placeholder="Selecciona la imagen"></input-file> -->
+                  <input type="file" name="" (change)="cargandoImagen($event.target.files)">
+                  <!-- </mat-form-field> -->
                 </td>
               </tr>
             </table>
+            <br>
 
-            
             <div class="loader2" *ngIf="showData2 == true">
               <!-- Loader de la Tabla -->
               Cargando... <br><br>

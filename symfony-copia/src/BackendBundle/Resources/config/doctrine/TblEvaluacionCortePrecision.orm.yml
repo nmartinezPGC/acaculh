@@ -11,6 +11,9 @@ BackendBundle\Entity\TblEvaluacionCortePrecision:
         fk_tbl_evaluacion_corte_precision_3_idx:
             columns:
                 - id_alumno
+        fk_3_idx:
+            columns:
+                - id_estado
     id:
         idEvaluacionCortePrecision:
             type: integer
@@ -104,13 +107,13 @@ BackendBundle\Entity\TblEvaluacionCortePrecision:
             options:
                 default: '0'
             column: tecnica_cuchillo_nota
-        pesoDeCorteObs:
+        pesoCorteObs:
             type: string
             nullable: true
             length: 200
             options:
                 fixed: false
-            column: peso_de_corte_obs
+            column: peso_corte_obs
         pesoCorteNota:
             type: float
             nullable: true
@@ -135,7 +138,37 @@ BackendBundle\Entity\TblEvaluacionCortePrecision:
             options:
                 default: '0'
             column: nota_final
+        medidasCortesObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: medidas_cortes_obs
+        medidasCortesNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: medidas_cortes_nota
+        chefNotaFinalObs:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: chef_nota_final_obs
     manyToOne:
+        idEstado:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado:
+                    referencedColumnName: id_estado
+            orphanRemoval: false
         idPlato:
             targetEntity: TblPlato
             cascade: {  }
@@ -147,14 +180,14 @@ BackendBundle\Entity\TblEvaluacionCortePrecision:
                     referencedColumnName: id_plato
             orphanRemoval: false
         idInstructor:
-            targetEntity: TblInstructor
+            targetEntity: TblUsuario
             cascade: {  }
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
                 id_instructor:
-                    referencedColumnName: id_instructor
+                    referencedColumnName: id_usuario
             orphanRemoval: false
         idAlumno:
             targetEntity: TblAlumno

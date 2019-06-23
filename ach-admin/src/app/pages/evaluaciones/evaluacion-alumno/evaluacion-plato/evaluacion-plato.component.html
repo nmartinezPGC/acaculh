@@ -1,3 +1,163 @@
-<p>
-  evaluacion-plato works!
-</p>
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+      <!-- Datos Complemetarios -->
+      <br>
+      <mat-card>
+        <mat-toolbar class="icon-header">
+          <strong>
+            <h1 class="mat-headline center-align" style="margin-left: 10px">Evaluación de Plato | </h1>
+          </strong>
+          <strong>
+            <h1 class="mat-headline left-align" style="margin-left: 10px">Chef Evaluador: </h1>
+          </strong>
+          <h2 class="mat-headline center-align" style="margin-left: 10px">{{ chefEvaluador }}</h2>
+        </mat-toolbar>
+
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <!-- <td>Nombre de Plato</td> -->
+            <td class="example-full-width">
+              <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"></angular2-multiselect>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <angular2-multiselect [data]="dropdownListAlumno" [(ngModel)]="selectedItemsAlumno"
+                [settings]="dropdownSettingsAlumno" (onSelect)="onItemSelectAlumno($event)"></angular2-multiselect>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+
+      <!-- Tarjeta de las Tablas de Evaluacion -->
+      <mat-card>
+
+        <table class="mat-table">
+          <!-- Datos de Higiene -->
+          <thead>
+            <th style="width: 20%">Presentacion</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Presentacion </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="presentacionObs" placeholder="Presentacion"
+                  name="presentacionObs" id="presentacionObs" ngControl="presentacionObs"
+                  [(ngModel)]="_evaluacionPlatoModel.presentacionObs" autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="text" maxlength="3" value="0"
+                  [formControl]="presentacionNota" [errorStateMatcher]="matcher" required
+                  ngControl="presentacionNota" [(ngModel)]="_evaluacionPlatoModel.presentacionNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+      <!-- <hr> -->
+
+      <mat-card>
+        <table class="mat-table">
+          <!-- Datos de Organización -->
+          <thead>
+            <th style="width: 20%">Sabor</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Sabor </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="correctoUniformeObs"
+                  placeholder="Sabor Obs" name="saborObs" id="saborObs"
+                  ngControl="saborObs" [(ngModel)]="_evaluacionPlatoModel.saborObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="saborNota" [errorStateMatcher]="matcher" ngControl="saborNota"
+                  [(ngModel)]="_evaluacionPlatoModel.saborNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+      <!-- <hr> -->
+      <div class="loader" *ngIf="showData == true">
+        <!-- Loader de la Tabla -->
+        Registrando... <br><br>
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <mat-card>
+        <table>
+          <!-- Datos de Uso del Cuchillo -->
+          <thead>
+            <th style="width: 20%">Otros</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Otros </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="otrosObs"
+                  placeholder="Otros Obs" name="otrosObs" id="otrosObs"
+                  ngControl="otrosObs" [(ngModel)]="_evaluacionPlatoModel.otrosObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="otrosNota" [errorStateMatcher]="matcher" ngControl="otrosNota"
+                  [(ngModel)]="_evaluacionPlatoModel.otrosNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+
+      <mat-card>
+
+        <!-- Botones de la Ventana -->
+        <div class="example-button-row">
+          <button mat-raised-button color="primary" (click)="newEvaluacionCocinaPractica()">Guardar Cambios</button>
+          <button mat-raised-button color="accent" (click)="limpiarForma()">Limpiar</button>
+          <a mat-raised-button routerLink="../">Regresar</a>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+</div>

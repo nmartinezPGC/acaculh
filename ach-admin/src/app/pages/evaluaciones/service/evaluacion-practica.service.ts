@@ -10,7 +10,7 @@ import { SystemPropertiesService } from '../../../shared/services/systemProperti
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class EvaluacionesService {
+export class EvaluacionPracticaService {
   // Propiedades de la Clases
   // URL Base de la Clase, Referencia a la API | Symfony
   public url: string;
@@ -59,6 +59,21 @@ export class EvaluacionesService {
     return this._http.post(this.url + '/evaluaciones/new-evaluacion-cocina-practica', params, { headers: headers }).map(res => res.json());
   }
 
+  /****************************************************
+  * Funcion: FND-00002
+  * Fecha: 04-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API ( /evaulaciones/list-evaluacion-practica ).
+  * Objetivo: Listar las Evaluaciones Practicas, por Alumno
+  *****************************************************/
+  getEvaluacionCocinaPractiaByAlumno(alumno_to_find, token) {
+    const json = JSON.stringify(alumno_to_find);
+    const params = 'json=' + json + '&authorization=' + token;
+    // console.log(json);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this._http.post(this.url + '/evaluaciones/list-evaluacion-practica', params, { headers: headers }).map(res => res.json());
+  }
 
   /****************************************************
   * Funcion: FND-00003

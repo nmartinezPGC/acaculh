@@ -776,5 +776,33 @@ class TblEvaluacionCocinaPractica
     {
         return $this->idAlumno;
     }
-}
+    /**
+     * @var string
+     */
+    private $chefNotaFinalObs;
 
+
+    /**
+     * Set chefNotaFinalObs
+     *
+     * @param string $chefNotaFinalObs
+     *
+     * @return TblEvaluacionCocinaPractica
+     */
+    public function setChefNotaFinalObs($chefNotaFinalObs)
+    {
+        $this->chefNotaFinalObs = $chefNotaFinalObs;
+
+        return $this;
+    }
+
+    /**
+     * Get chefNotaFinalObs
+     *
+     * @return string
+     */
+    public function getChefNotaFinalObs()
+    {
+        return $this->chefNotaFinalObs;
+    }
+}

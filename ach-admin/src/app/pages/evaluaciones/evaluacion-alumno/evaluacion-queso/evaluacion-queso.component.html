@@ -1,3 +1,232 @@
-<p>
-  evaluacion-queso works!
-</p>
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+      <!-- Datos Complemetarios -->
+      <br>
+      <mat-card>
+        <mat-toolbar class="icon-header">
+          <strong>
+            <h1 class="mat-headline center-align" style="margin-left: 10px">Evaluación de Queso | </h1>
+          </strong>
+          <strong>
+            <h1 class="mat-headline left-align" style="margin-left: 10px">Chef Evaluador: </h1>
+          </strong>
+          <h2 class="mat-headline center-align" style="margin-left: 10px">{{ chefEvaluador }}</h2>
+        </mat-toolbar>
+
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <!-- <td>Nombre de Plato</td> -->
+            <td class="example-full-width">
+              <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"></angular2-multiselect>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <angular2-multiselect [data]="dropdownListAlumno" [(ngModel)]="selectedItemsAlumno"
+                [settings]="dropdownSettingsAlumno" (onSelect)="onItemSelectAlumno($event)"></angular2-multiselect>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+
+      <!-- Tarjeta de las Tablas de Evaluacion -->
+      <mat-card>
+
+        <table class="mat-table">
+          <!-- Datos de Higiene -->
+          <thead>
+            <th style="width: 20%">Conocimiento del Tema</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Conocimiento del Tema </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="conocimientoTemaObs" placeholder="Conocimiento del Tema"
+                  name="conocimientoTemaObs" id="conocimientoTemaObs" ngControl="conocimientoTemaObs"
+                  [(ngModel)]="_evaluacionQuesoModel.conocimientoTemaObs" autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="text" maxlength="3" value="0"
+                  [formControl]="conocimientoTemaNota" [errorStateMatcher]="matcher" required
+                  ngControl="conocimientoTemaNota" [(ngModel)]="_evaluacionQuesoModel.conocimientoTemaNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+      <!-- <hr> -->
+
+      <mat-card>
+        <table class="mat-table">
+          <!-- Datos de Organización -->
+          <thead>
+            <th style="width: 20%">Presentacion</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Presentacion </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="presentacionObs"
+                  placeholder="Presentacion Obs" name="presentacionObs" id="presentacionObs"
+                  ngControl="presentacionObs" [(ngModel)]="_evaluacionQuesoModel.presentacionObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="presentacionNota" [errorStateMatcher]="matcher" ngControl="presentacionNota"
+                  [(ngModel)]="_evaluacionQuesoModel.presentacionNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+      <!-- <hr> -->
+      <div class="loader" *ngIf="showData == true">
+        <!-- Loader de la Tabla -->
+        Registrando... <br><br>
+        <mat-spinner></mat-spinner>
+      </div>
+      <br>
+      <mat-card>
+        <table>
+          <!-- Datos de Uso del Cuchillo -->
+          <thead>
+            <th style="width: 20%">Reporte Escrito</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Reporte Escrito </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="reporteEscritoObs"
+                  placeholder="Reporte Escrito Obs" name="reporteEscritoObs" id="reporteEscritoObs"
+                  ngControl="reporteEscritoObs" [(ngModel)]="_evaluacionQuesoModel.reporteEscritoObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="reporteEscritoNota" [errorStateMatcher]="matcher" ngControl="reporteEscritoNota"
+                  [(ngModel)]="_evaluacionQuesoModel.reporteEscritoNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+      <br>
+      <mat-card>
+        <table>
+          <!-- Datos de Uso del Cuchillo -->
+          <thead>
+            <th style="width: 20%">Uniforme</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Uniforme </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="uniformeObs"
+                  placeholder="Uniforme Obs" name="uniformeObs" id="uniformeObs"
+                  ngControl="uniformeObs" [(ngModel)]="_evaluacionQuesoModel.uniformeObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="uniformeNota" [errorStateMatcher]="matcher" ngControl="uniformeNota"
+                  [(ngModel)]="_evaluacionQuesoModel.uniformeNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+
+      <br>
+      <mat-card>
+        <table>
+          <!-- Datos de Uso del Cuchillo -->
+          <thead>
+            <th style="width: 20%">Degustacion</th>
+            <th [style.width.%]="100">Observaciones</th>
+            <th>Nota</th>
+          </thead>
+          <tr>
+            <td>
+              <strong> Degustacion </strong>
+            </td>
+            <td>
+              <mat-form-field>
+                <textarea matInput #message maxlength="250" [formControl]="degustacionObs"
+                  placeholder="Degustacion Obs" name="degustacionObs" id="degustacionObs"
+                  ngControl="degustacionObs" [(ngModel)]="_evaluacionQuesoModel.degustacionObs"
+                  autocomplete="false"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field style="text-align: right" [style.width.px]="50">
+                <input matInput placeholder="Nota" type="number" maxlength="3" value="0"
+                  [formControl]="degustacionNota" [errorStateMatcher]="matcher" ngControl="degustacionNota"
+                  [(ngModel)]="_evaluacionQuesoModel.degustacionNota">
+                <!-- <span matPrefix>L&nbsp;</span> -->
+                <span matSuffix>%</span>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+
+      <br>
+
+      <mat-card>
+        <!-- Botones de la Ventana -->
+        <div class="example-button-row">
+          <button mat-raised-button color="primary" (click)="newEvaluacionCocinaPractica()">Guardar Cambios</button>
+          <button mat-raised-button color="accent" (click)="limpiarForma()">Limpiar</button>
+          <a mat-raised-button routerLink="../">Regresar</a>
+        </div>
+
+      </mat-card>
+    </div>  
+  </div>
+</div>

@@ -1,0 +1,77 @@
+BackendBundle\Entity\TblExamenPractico:
+    type: entity
+    table: tbl_examen_practico
+    indexes:
+        fk_ep_1_idx:
+            columns:
+                - id_alumno
+        fk_ep_2_idx:
+            columns:
+                - id_instructor
+    id:
+        idExamen:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_examen
+            generator:
+                strategy: IDENTITY
+    fields:
+        codExamen:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            column: cod_examen
+        fechaEvaluacion:
+            type: date
+            nullable: true
+            column: fecha_evaluacion
+        horaEvaluacion:
+            type: datetime
+            nullable: false
+            column: hora_evaluacion
+        notaExamen:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: nota_examen
+        observaciones:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+        urlExamenTeorico:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+            column: url_examen_teorico
+    manyToOne:
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+        idInstructor:
+            targetEntity: TblUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_instructor:
+                    referencedColumnName: id_usuario
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

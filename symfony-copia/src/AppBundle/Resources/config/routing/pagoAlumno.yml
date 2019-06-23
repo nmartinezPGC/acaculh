@@ -21,3 +21,9 @@ pagos_listPagosAlumno:
     path: /all-list-alumno-pagos
     defaults: { _controller: "AppBundle:Pagos/Pagos:ActiveAllAlumnoPagosList" }
     methods: POST
+    
+## Ruta para cargar el documento de Pago
+pagos_uploadDocPago:
+    path: /upload-doc-pago
+    defaults: { _controller: "AppBundle:Pagos/Pagos:UploadDocumentoPago" }
+    methods: POST

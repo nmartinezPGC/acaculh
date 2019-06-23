@@ -1038,4 +1038,62 @@ class TblAlumno
     {
         return $this->idMedioConoceAch;
     }
+    /**
+     * @var string
+     */
+    private $fotoAlumno = 'noavatar.png';
+
+
+    /**
+     * Set fotoAlumno
+     *
+     * @param string $fotoAlumno
+     *
+     * @return TblAlumno
+     */
+    public function setFotoAlumno($fotoAlumno)
+    {
+        $this->fotoAlumno = $fotoAlumno;
+
+        return $this;
+    }
+
+    /**
+     * Get fotoAlumno
+     *
+     * @return string
+     */
+    public function getFotoAlumno()
+    {
+        return $this->fotoAlumno;
+    }
+    /**
+     * @var \BackendBundle\Entity\TblHorarioClase
+     */
+    private $idHorario;
+
+
+    /**
+     * Set idHorario
+     *
+     * @param \BackendBundle\Entity\TblHorarioClase $idHorario
+     *
+     * @return TblAlumno
+     */
+    public function setIdHorario(\BackendBundle\Entity\TblHorarioClase $idHorario = null)
+    {
+        $this->idHorario = $idHorario;
+
+        return $this;
+    }
+
+    /**
+     * Get idHorario
+     *
+     * @return \BackendBundle\Entity\TblHorarioClase
+     */
+    public function getIdHorario()
+    {
+        return $this->idHorario;
+    }
 }

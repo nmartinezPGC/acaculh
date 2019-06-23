@@ -245,6 +245,8 @@ class PagosController extends Controller {
                 $hora_ingreso = new \DateTime('now');
                 $hora_ingreso->format('H:i');
 
+                $url_documento = ($params->url_documento != null) ? $params->url_documento : null;
+
                 // Evaluamos que el Codigo del Alumno no se vacio
                 if ($id_alumno != NULL && $monto_pago != 0) {
                     // Instanciamos el Objeto Doctrine                    
@@ -324,6 +326,7 @@ class PagosController extends Controller {
                         $pagoAlumnoSec->setConceptoPago('Pago de : ' . $tipoPagoAlumno->getDescTipoPago() .
                                 ' por valor de : ' . $monto_pago);
                         $pagoAlumnoSec->setDescripcionPago($descripcion_pago);
+                        $pagoAlumnoSec->setUrlDocumento($url_documento);
                         $pagoAlumnoSec->setMontoPago($monto_pago);
 
                         // Realizar la Persistencia de los Datos y enviar a la BD                        
@@ -363,9 +366,10 @@ class PagosController extends Controller {
 
                         //Creamos el mensaje
                         $mail = \Swift_Message::newInstance()
-                                ->setSubject('Notificación de Pago de: ' . $tipoPagoAlumno->getDescTipoPago() . 'de Alumno | ACACULH')
+                                ->setSubject('Notificación de Pago de: ' . $tipoPagoAlumno->getDescTipoPago() . ' de Alumno | ACACULH')
                                 ->setFrom(array("nahum.sreci@gmail.com" => "Academia Culinaria Hondureña | ACACULH"))
                                 ->setTo($email_alumno)
+                                ->setCc("nahum.sreci@gmail.com")
                                 ->setBody(
                                 $this->renderView(
                                         'Emails/sendMailPago.html.twig', array('nombresAlumno' => $nombre1, 'apellidosAlumno' => $apellido1,
@@ -373,7 +377,7 @@ class PagosController extends Controller {
                                     'celularAlumno' => $celular_alumno,
                                     'formaPago' => $formaPagoAlumno->getDescFormaPago(),
                                     'tipoPago' => $tipoPagoAlumno->getDescTipoPago(),
-                                    'montoPago' => $monto_pago,
+                                    'montoPago' => $monto_pago, 'descPago' => $descripcion_pago,
                                         )
                                 ), 'text/html');
                         // Envia el Correo con todos los Parametros
@@ -443,19 +447,19 @@ class PagosController extends Controller {
         $hash = $request->get("authorization", null);
         // Se Chekea el Token
         $checkToken = $helpers->authCheck($hash);
-        
+
         // Evalua que el Token sea True
         if ($checkToken == true) {
             $identity = $helpers->authCheck($hash, true);
 
             //Convertimos los Parametros POSt a Json
             $json = $request->get("json", null);
-            
+
             // Comprobamos que Json no es Null
-            if ($json != null) {           
+            if ($json != null) {
                 // Decodificamos el Json
                 $params = json_decode($json);
-                
+
                 // Parametros a Convertir                           
                 // Datos generales de la Tabla                
                 $id_alumno = ($params->idAlumno != null) ? $params->idAlumno : 0;
@@ -473,7 +477,7 @@ class PagosController extends Controller {
 
                 $hora_modificacion = new \DateTime('now');
                 $hora_modificacion->format('H:i');
-                
+
                 // Evaluamos que el Codigo del Alumno no se vacio
                 if ($id_alumno != NULL && $monto_pago != 0) {
                     // Instanciamos el Objeto Doctrine                    
@@ -607,4 +611,86 @@ class PagosController extends Controller {
     }
 
 // FIN | FND00003
+
+    /**
+     * @Route("/upload-doc-pago", name="upload-doc-pago")
+     * Creacion del Controlador: Pago
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00004
+     */
+    public function UploadDocumentoPagoAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers
+        $helpers = $this->get("app.helpers");
+        //Recoger el Hash
+        //Recogemos el Hash y la Autrizacion del Mismo
+        $hash = $request->get("authorization", null);
+        //Se Chekea el Token
+        $checkToken = $helpers->authCheck($hash);
+        //Evaluamos la Autoriuzacion del Token
+        if ($checkToken == true) {
+            //Ejecutamos todo el Codigo restante
+            $identity = $helpers->authCheck($hash, true);
+            $em = $this->getDoctrine()->getManager();
+            //Buscamos el registro por el Id de Usaurio
+            /* $alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+              array(
+              "codAlumno" => $request->get("cod_alumno")
+              ));
+             * 
+             */
+            //Recoger el Fichero que viene por el POST y lo guardamos el HD
+            $file = $request->files->get("url_documento");
+            $name_file = $request->get("name_url_documento");
+
+            //Se verifica que el fichero no venga Null
+            if (!empty($file) && $file != null) {
+                //Obtenemos la extencion del Fichero
+                $ext = $file->guessExtension();
+                //Comprobamos que la Extencion sea Aceptada
+                if ($ext == "jpeg" || $ext == "jpg" || $ext == "png" || $ext == "gif" || $ext == "pdf" || $ext == "doc") {
+                    // Concatenmos al Nombre del Fichero la Fecha y la Extencion
+                    // $file_name = $name_file . "." . $ext;
+                    $file_name = $name_file;
+                    //Movemos el Fichero
+                    $file->move("uploads/pagos", $file_name);
+
+                    //Seteamos el valor de la Imagen dentro de la Tabla:Tblusuarios+
+                    // $alumno->setFotoAlumno($file_name);
+                    // $em->persist($alumno);
+                    // $em->flush();
+                    // Devolvemos el Mensaje de Array
+                    $data = array(
+                        "status" => "success",
+                        "code" => 200,
+                        "msg" => "Documento de Soporte de Pago, subida exitosamente !!"
+                    );
+                } else {
+                    // Devolvemos el Mensaje de Array, cuando la Imagen no sea valida
+                    $data = array(
+                        "status" => "error",
+                        "code" => 400,
+                        "msg" => "File not valid !!"
+                    );
+                }
+            } else {
+                $data = array(
+                    "status" => "error",
+                    "code" => 400,
+                    "msg" => "Imagen not upload !! "
+                );
+            }
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "Autorización no valida !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+// FIN FND00004
 }

@@ -28,7 +28,7 @@ export class EvaluacionesModel {
     public horaEntregaNota: number,
     public flujoTrabajoObs: string,
     public flujoTrabajoNota: number,
-    
+
     public saborObs: string, // Preparacion
     public saborNota: number,
     public texturaObs: string,

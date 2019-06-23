@@ -1,0 +1,166 @@
+<h2 mat-dialog-title><strong>Evaluacion de Queso | Instructor: </strong> {{ nombreInstructor }} <strong>| Nota Final:
+</strong>{{ notaFinal }} %</h2>
+<!-- <mat-divider></mat-divider> -->
+<hr>
+<mat-dialog-content class="mat-typography">
+<div>
+
+  <table class="table" id="content" #content>
+    <!-- <img src='../../../../../assets/images/avatars/chef-antonio-600.png' width="120" height="100" alt="ACACULH"> -->
+    <tr>
+      <td>
+        <h2> <strong>Codigo:</strong> {{ data.codAlumno }} </h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Nombres:</strong> {{data.nombres}} </h2>
+      </td>
+      <td>
+        <h2> <strong> Apellidos:</strong> {{data.apellidos}}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong> Email:</strong> {{ data.email }} </h2>
+      </td>
+      <td>
+        <h2><strong>Telefono :</strong> {{ data.telefono }} </h2>
+      </td>
+      <td>
+        <h2><strong>Celular :</strong> {{ data.celular }} </h2>
+      </td>
+    </tr>
+    <!-- </table> -->
+
+    <tr>
+      <td colspan="3">
+        <hr>
+      </td>
+    </tr>
+
+    <!-- Tabla de creterios a Evlaluar -->
+    <!-- <table class="table"> -->
+    <tr>
+      <td>
+        <h2> <strong> No:</strong> {{ codEvaluacionPlato }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Plato:</strong> {{ descripcionPlato }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Fecha:</strong> {{ fechaEvaluacion * 1000 | date }} </h2>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <hr>
+      </td>
+    </tr>
+
+    <!-- Conocimiento -->
+    <tr>
+      <td colspan="3" align="center" style="background: #195FCA; ">
+        <h2> <strong> Conocimiento del Tema</strong></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Conocimiento del Tema</strong> </h2>
+      </td>
+      <td>
+        <h2> <strong> Observaciones:</strong> {{ conocimientoTemaObs }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Nota:</strong> {{ conocimientoTemaNota }} %</h2>
+      </td>
+    </tr>
+
+
+    <!-- Presentacion -->
+    <tr>
+      <td colspan="3" align="center" style="background: #195FCA; ">
+        <h2> <strong> Presentacion</strong></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Presentacion</strong> </h2>
+      </td>
+      <td>
+        <h2> <strong> Observaciones:</strong> {{ presentacionObs }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Nota:</strong> {{ presentacionNota }} %</h2>
+      </td>
+    </tr>
+    
+    <!-- Reporte Escrito -->
+    <tr>
+      <td colspan="3" align="center" style="background: #195FCA; ">
+        <h2> <strong> Reporte Escrito</strong></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Reporte Escrito</strong></h2>
+      </td>
+      <td>
+        <h2> <strong> Observaciones:</strong> {{ reporteEscritoObs }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Nota:</strong> {{ reporteEscritoNota }} %</h2>
+      </td>
+    </tr>
+
+    <!-- Uniforme -->
+    <tr>
+      <td colspan="3" align="center" style="background: #195FCA; ">
+        <h2> <strong> Uniforme</strong></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Uniforme</strong> </h2>
+      </td>
+      <td>
+        <h2> <strong> Observaciones:</strong> {{ uniformeObs }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Nota:</strong> {{ uniformeNota }} %</h2>
+      </td>
+    </tr>
+
+    <!-- Degustacion -->
+    <tr>
+      <td colspan="3" align="center" style="background: #195FCA; ">
+        <h2> <strong> Degustacion</strong></h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2> <strong>Degustacion</strong> </h2>
+      </td>
+      <td>
+        <h2> <strong> Observaciones:</strong> {{ degustacionObs }} </h2>
+      </td>
+      <td>
+        <h2> <strong> Nota:</strong> {{ degustacionNota }} %</h2>
+      </td>
+    </tr>
+    
+  </table>
+</div>
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+<button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+<button mat-raised-button color="primary" (click)="download()">Imprimir</button>
+<button mat-raised-button color="primary" (click)="captureScreen()">Imprimir 2</button>
+<!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

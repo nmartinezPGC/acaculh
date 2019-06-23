@@ -1,18 +1,155 @@
 ## Rutas Todos los Evaluaciones.
 evaluaciones_listAllEvaluaciones:
     path: /all-list-evaluaciones
-    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionAlumno:EvaluacionAllList" }
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCocinaPractica:EvaluacionAllList" }
     methods: POST
 
 ## Ruta para Agregar Nuevo Evaluaciones
 evaluaciones_newEvaluacion:
     path: /new-evaluacion-cocina-practica
-    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionAlumno:NewEvaluacionCocinaPractica" }
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCocinaPractica:NewEvaluacionCocinaPractica" }
     methods: POST
     
-## Ruta para Anualar Plato
-evaluaciones_revertPlato:
-    path: /revert-plato
-    defaults: { _controller: "AppBundle:Platos/Platos:RevertPlato" }
+## Ruta para Aprobar Evaluacion Practica
+evaluaciones_aprobarEvaluacion:
+    path: /aprobar-evaluacion-cocina-practica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCocinaPractica:AprobarEvaluacionCocinaPractica" }
     methods: POST
- 
+    
+## Ruta para Anular Evaluacion Practica
+evaluaciones_anularEvaluacion:
+    path: /anular-evaluacion-cocina-practica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCocinaPractica:AnularEvaluacionCocinaPractica" }
+    methods: POST
+    
+## Ruta para listar la Evaluacion Practica del Alumno
+evaluaciones_listEvaluacionPractica:
+    path: /list-evaluacion-practica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCocinaPractica:EvaluacionPracticaByAlumnoList" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Evaluaciones
+evaluaciones_newEvaluacionCortes:
+    path: /new-evaluacion-cortes-precision
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCortesPrecision:NewEvaluacionCortesPrecision" }
+    methods: POST
+    
+## Ruta para Aprobar Evaluacion Cortes Precision
+evaluaciones_aprobarEvaluacionCortes:
+    path: /aprobar-evaluacion-cortes-precision
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCortesPrecision:AprobarEvaluacionCortesPrecision" }
+    methods: POST
+    
+## Ruta para Anular Evaluacion Cortes Precision
+evaluaciones_anularEvaluacionCortes:
+    path: /anular-evaluacion-cortes-precision   
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCortesPrecision:AnularEvaluacionCortesPrecision" }
+    methods: POST
+    
+## Ruta para listar la Evaluacion Cortes Precision del Alumno
+evaluaciones_listEvaluacionCortePrecision:
+    path: /list-evaluacion-corte-precision
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionCortesPrecision:EvaluacionCortePrecisionByAlumnoList" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Evaluaciones Plato
+evaluaciones_newEvaluacionPlatos:
+    path: /new-evaluacion-plato
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionPlato:NewEvaluacionPlato" }
+    methods: POST
+    
+## Ruta para Aprobar Evaluacion Platos
+evaluaciones_aprobarEvaluacionPlatos:
+    path: /aprobar-evaluacion-plato
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionPlato:AprobarEvaluacionPlato" }
+    methods: POST
+    
+## Ruta para Anular Evaluacion Platos
+evaluaciones_anularEvaluacionPlatos:
+    path: /anular-evaluacion-plato
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionPlato:AnularEvaluacionPlato" }
+    methods: POST
+    
+## Ruta para listar la Evaluacion Plato del Alumno
+evaluaciones_listEvaluacionPlato:
+    path: /list-evaluacion-plato
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionPlato:EvaluacionPlatoByAlumnoList" }
+    methods: POST
+
+## Ruta para Agregar Nuevo Evaluaciones Queso
+evaluaciones_newEvaluacionQueso:
+    path: /new-evaluacion-queso
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionQueso:NewEvaluacionQueso" }
+    methods: POST
+    
+## Ruta para Aprobar Evaluacion Queso
+evaluaciones_aprobarEvaluacionQueso:
+    path: /aprobar-evaluacion-queso
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionQueso:AprobarEvaluacionQueso" }
+    methods: POST
+    
+## Ruta para Anular Evaluacion Queso
+evaluaciones_anularEvaluacionQueso:
+    path: /anular-evaluacion-queso
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionQueso:AnularEvaluacionQueso" }
+    methods: POST
+    
+## Ruta para listar la Evaluacion Queso del Alumno
+evaluaciones_listEvaluacionQueso:
+    path: /list-evaluacion-queso
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionQueso:EvaluacionQuesoByAlumnoList" }
+    methods: POST
+    
+## Ruta para listar la Evaluacion Nota Teorica
+evaluaciones_listEvaluacionNotaTeorica:
+    path: /list-evaluacion-nota-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionNotaTeorica:EvaluacionNotaTeoricaList" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Evaluaciones Nota Teorica
+evaluaciones_newEvaluacionNotaTeorica:
+    path: /new-evaluacion-nota-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionNotaTeorica:NewEvaluacionNotaTeorica" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Archivo Evaluaciones Nota Teorica
+evaluaciones_uploadImgNotaTeorica:
+    path: /upload-nota-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/EvaluacionNotaTeorica:UploadImageNotaTeorica" }
+    methods: POST
+    
+## Ruta para listar la Examen Teorica
+evaluaciones_listExamenTeorica:
+    path: /list-examen-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenTeorica:ExamenTeoricaList" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Evaluaciones Nota Teorica
+evaluaciones_newExamenTeorica:
+    path: /new-examen-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenTeorica:NewExamenTeorica" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Archivo Evaluaciones Nota Teorica
+evaluaciones_uploadImgExamenTeorica:
+    path: /upload-examen-teorica
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenTeorica:UploadExamenTeorica" }
+    methods: POST
+    
+## Ruta para listar la Examen Practico
+evaluaciones_listExamenPractico:
+    path: /list-examen-practico
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenPractica:ExamenPracticoList" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Evaluaciones Nota Teorica
+evaluaciones_newExamenPractico:
+    path: /new-examen-practico
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenPractica:NewExamenPractico" }
+    methods: POST
+    
+## Ruta para Agregar Nuevo Archivo Evaluaciones Nota Teorica
+evaluaciones_uploadImgExamenPractico:
+    path: /upload-examen-practico
+    defaults: { _controller: "AppBundle:Evaluaciones/ExamenPractica:UploadImageExamenPractico" }
+    methods: POST

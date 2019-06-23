@@ -42,6 +42,141 @@ export class EvaluacionConsultaService {
 
 
   /****************************************************
+  * Funcion: FND-00002
+  * Fecha: 04-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/aprobar-evaluacion-cocina-practica).
+  * Objetivo: Aprobar Evaluacion Practica
+  *****************************************************/
+  aprobarEvaluacionPractica(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/aprobar-evaluacion-cocina-practica', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+  * Funcion: FND-00003
+  * Fecha: 04-01-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/anular-evaluacion-cocina-practica).
+  * Objetivo: Anular Evaluacion Practica
+  *****************************************************/
+  anularEvaluacionPractica(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/anular-evaluacion-cocina-practica', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+  * Funcion: FND-00004
+  * Fecha: 30-03-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/aprobar-evaluacion-cortes-precision).
+  * Objetivo: Aprobar Evaluacion Cortes de Precison
+  *****************************************************/
+  aprobarEvaluacionCortePrecison(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/aprobar-evaluacion-cortes-precision', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+  * Funcion: FND-00005
+  * Fecha: 30-03-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/anular-evaluacion-cortes-precision).
+  * Objetivo: Anular Evaluacion Cortes de Precison
+  *****************************************************/
+  anularEvaluacionCortePrecison(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/anular-evaluacion-cortes-precision', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+  /****************************************************
+  * Funcion: FND-00004
+  * Fecha: 30-03-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/aprobar-evaluacion-plato).
+  * Objetivo: Aprobar Evaluacion Plato
+  *****************************************************/
+  aprobarEvaluacionPlato(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/aprobar-evaluacion-plato', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+  * Funcion: FND-00005
+  * Fecha: 30-03-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/anular-evaluacion-plato).
+  * Objetivo: Anular Evaluacion Plato
+  *****************************************************/
+  anularEvaluacionPlato(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/anular-evaluacion-plato', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+    * Funcion: FND-00004
+    * Fecha: 30-03-2019
+    * Descripcion: Metodo Ajax, para Invocar el servicio
+    * a la API (/evaluaciones/aprobar-evaluacion-plato).
+    * Objetivo: Aprobar Evaluacion Queso
+    *****************************************************/
+  aprobarEvaluacionQueso(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/aprobar-evaluacion-queso', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
+  * Funcion: FND-00005
+  * Fecha: 30-03-2019
+  * Descripcion: Metodo Ajax, para Invocar el servicio
+  * a la API (/evaluaciones/anular-evaluacion-plato).
+  * Objetivo: Anular Evaluacion Queso
+  *****************************************************/
+  anularEvaluacionQueso(token: any, json: any) {
+    // const json = JSON.stringify(user_to_view);
+    const params = 'json=' + JSON.stringify(json) + '&authorization=' + token;
+    console.log(params);
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this._http.post(this.url + '/evaluaciones/anular-evaluacion-queso', params,
+      { headers: headers }).map(res => res.json());
+  }
+
+
+  /****************************************************
   * Funcion: FND-00003
   * Fecha: 04-01-2019
   * Descripcion: Metodo para obtener los Datos de la

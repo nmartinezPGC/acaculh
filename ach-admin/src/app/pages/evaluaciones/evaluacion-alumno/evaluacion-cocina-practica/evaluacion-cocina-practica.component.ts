@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { EvaluacionesService } from '../../service/evaluacion-practica.service';
+import { EvaluacionPracticaService } from '../../service/evaluacion-practica.service';
 import { ErrorStateMatcher, MatSnackBar } from '@angular/material';
 import { EvaluacionesModel } from '../../model/evaluaciones.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -26,7 +26,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-evaluacion-cocina-practica',
   templateUrl: './evaluacion-cocina-practica.component.html',
   styleUrls: ['./evaluacion-cocina-practica.component.scss'],
-  providers: [EvaluacionesService, ListasComunesService]
+  providers: [EvaluacionPracticaService, ListasComunesService]
 })
 export class EvaluacionCocinaPracticaComponent implements OnInit {
   stateCtrl = new FormControl();
@@ -160,7 +160,7 @@ export class EvaluacionCocinaPracticaComponent implements OnInit {
    * Constructor de la Clase
    * @param _evaluacionesService 
    */
-  constructor(public _evaluacionesService: EvaluacionesService,
+  constructor(public _evaluacionesService: EvaluacionPracticaService,
     public _listasComunesService: ListasComunesService,
     public _alumnoService: AlumnoService,
     public snackBar: MatSnackBar) {

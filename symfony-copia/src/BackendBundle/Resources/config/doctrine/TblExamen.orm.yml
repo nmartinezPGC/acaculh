@@ -8,9 +8,6 @@ BackendBundle\Entity\TblExamen:
         fk_new_table_2_idx:
             columns:
                 - id_instructor
-        fk_new_table_3_idx:
-            columns:
-                - id_clase
     id:
         idExamen:
             type: integer
@@ -29,14 +26,33 @@ BackendBundle\Entity\TblExamen:
             options:
                 fixed: false
             column: cod_examen
+        fechaEvaluacion:
+            type: date
+            nullable: true
+            column: fecha_evaluacion
+        horaEvaluacion:
+            type: datetime
+            nullable: false
+            column: hora_evaluacion
         notaExamen:
             type: float
-            nullable: false
+            nullable: true
             precision: 10
             scale: 0
-            options:
-                default: '0'
             column: nota_examen
+        observaciones:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+        urlExamenTeorico:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+            column: url_examen_teorico
     manyToOne:
         idAlumno:
             targetEntity: TblAlumno
@@ -57,15 +73,5 @@ BackendBundle\Entity\TblExamen:
             joinColumns:
                 id_instructor:
                     referencedColumnName: id_instructor
-            orphanRemoval: false
-        idClase:
-            targetEntity: TblClase
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                id_clase:
-                    referencedColumnName: id_clase
             orphanRemoval: false
     lifecycleCallbacks: {  }

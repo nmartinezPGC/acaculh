@@ -1,0 +1,200 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+    <div fxFlex="80" fxLayout="column" class="mat-elevation-z2 contact-list-container">
+
+      <div fxFlex="10" fxLayoutAlign="start center" fxLayout="row">
+
+        <h3 class="mat-headline">Registro de Examen Practico </h3>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="loader" *ngIf="showData == true">
+        <!-- Loader de la Tabla -->
+        Cargando... <br><br>
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between stretch">
+
+        <div fxflex="50" class="full">
+          <mat-form-field class="full">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alumno">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div fxFlex="70" fxLayout="column" fxLayoutAlign="space-between stretch" class="contact-list-container">
+        <div class="example-container mat-elevation-z8">
+
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- ID Column -->
+            <ng-container matColumnDef="idAlumno">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                <h3>ID</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'"> {{row.idAlumno}} </mat-cell>
+            </ng-container>
+
+            <!-- Codigo Column -->
+            <ng-container matColumnDef="codAlumno">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Codigo</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.codAlumno}} </mat-cell>
+            </ng-container>
+
+            <!-- Nombres Column -->
+            <ng-container matColumnDef="nombres">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Nombres</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.nombres}}</mat-cell>
+            </ng-container>
+
+            <!-- Apellidos Column -->
+            <ng-container matColumnDef="apellidos">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <h3>Apellidos</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.apellidos}} </mat-cell>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass4'">
+                <h3>Email</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass4'"> {{row.email}} </mat-cell>
+            </ng-container>
+
+            <!-- Celular Column -->
+            <ng-container matColumnDef="celular">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'">
+                <h3>Celular</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'"> {{row.celular}} </mat-cell>
+            </ng-container>
+
+            <!-- Accion Column -->
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass2'">
+                <h3>Accion</h3>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass2'">
+                <button mat-icon-button matTooltip="Registrar Pago de Alumno"
+                  (click)="sendDataForm(row.idAlumno, row.codAlumno, row.nombres, row.apellidos, row.celular, row.email)">
+                  <mat-icon>account_balance_wallet</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+        <mat-divider></mat-divider>
+
+      </div>
+
+    </div>
+
+    <!-- Seccion de Ingresar el Pago segun el Alumno seleccionado -->
+    <div fxFlex="20" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+      <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <h4 class="mat-headline" fxFlex="100">Ingresa la Nota</h4>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+          <button mat-icon-button>
+            <mat-icon>home</mat-icon>
+          </button>
+        </div>
+
+      </div>
+      <mat-divider></mat-divider>
+      <br>
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <mat-select placeholder="Instructor" [formControl]="idInstructor" [errorStateMatcher]="matcher"
+              ngControl="idInstructor" [(ngModel)]="_evaluacionNotaTeoricaModel.idUsuario" required style="width: 95%">
+              <mat-option *ngFor="let instructor of JsonOutgetlistaInstructor" [value]="instructor.idUsuario">
+                {{ instructor.nombre1 }} {{ instructor.apellido1 }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <input matInput type="number" name="" style="width: 95%"
+              [(ngModel)]="_evaluacionNotaTeoricaModel.notaExamen">
+          </mat-form-field>
+        </div>
+      </div>
+      <br>
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <!-- <div fxFlex="100" fxLayout.lt-lg="100"> -->
+        <!-- <mat-form-field> -->
+        <input type="file" name="" (change)="cargandoImagen($event.target.files)" style="width: 95%">
+        <!-- </mat-form-field> -->
+        <!-- </div> -->
+      </div>
+      <!-- <br> -->
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <textarea matInput #message maxlength="250" [formControl]="observaciones" placeholder="Observaciones"
+              name="observaciones" id="observaciones" ngControl="observaciones" style="width: 95%"
+              [(ngModel)]="_evaluacionNotaTeoricaModel.observaciones" autocomplete="false"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <br>
+      <mat-divider></mat-divider>
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <input matInput placeholder="Nombres" disabled style="width: 95%">{{ nombresSend }}
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxFlex="10" fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+        <div fxFlex="100" fxLayout.lt-lg="100">
+          <mat-form-field>
+            <input matInput placeholder="Apellidos" disabled style="width: 95%">{{ apellidosSend }}
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="loader2" *ngIf="showData2 == true">
+        <!-- Loader de la Tabla -->
+        Cargando... <br><br>
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div fxFlex fxLayout="column" fxLayoutAlign="end stretch">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+          <button mat-raised-button (click)="initForm()">CANCEL</button>
+          <button mat-raised-button color="primary" (click)="saveNotaTeorica()">SAVE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

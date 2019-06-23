@@ -1,9 +1,17 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { DialogData } from '../../pagos/revertir-pagos/revertir-pagos.component';
 import { EvaluacionesModel } from '../model/evaluaciones.model';
 import { EvaluacionConsultaService } from '../service/evaluacion-consulta.service';
+import { EvaluacionAlumnoModalComponent } from './evaluacion-alumno-modal.component';
+
+import * as jsPDF from 'jspdf';
+import { EvaluacionPracticaPrintComponent } from '../evaluacion-print/evaluacion-practica-print/evaluacion-practica-print.component';
+import { EvaluacionCortesPrecisionPrintComponent } from '../evaluacion-print/evaluacion-cortes-precision-print/evaluacion-cortes-precision-print.component';
+import { EvaluacionPlatoPrintComponent } from '../evaluacion-print/evaluacion-plato-print/evaluacion-plato-print.component';
+import { EvaluacionQuesoPrintComponent } from '../evaluacion-print/evaluacion-queso-print/evaluacion-queso-print.component';
+import { EvaluacionAlumnoModalAnularComponent } from './evaluacion-alumno-modal-anular/evaluacion-alumno-modal-anular.component';
 
 @Component({
   selector: 'app-evaluacion-consulta',
@@ -14,17 +22,20 @@ import { EvaluacionConsultaService } from '../service/evaluacion-consulta.servic
 export class EvaluacionConsultaComponent implements OnInit {
   // Propiedades de la Clase
   public nombres;
+  public notasValidas: boolean = false;
 
   // Configuracion de las Columnas
   displayedColumns = ['idAlumno', 'codAlumno', 'nombres',
     'apellidos', 'email', 'celular', 'EvaluacionCocinaPractica', 'EvaluacionCortePrecision',
-    'EvaluacionQuesos', 'Evaluacion', 'actions'];
+    'EvaluacionPlato', 'EvaluacionQueso', 'actions'];
 
   // Componentes de la Datatable
   dataSource: MatTableDataSource<AlumnosPagosData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  @ViewChild('content') content: ElementRef;
 
   // Variables para Listas Comunes
   // Json de Listas Comunes
@@ -60,7 +71,8 @@ export class EvaluacionConsultaComponent implements OnInit {
     // public dialogRef: MatDialogRef<RevertirPagosAlumnoModalComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public _evaluacionConsultaService: EvaluacionConsultaService,
-    public _snackBar: MatSnackBar, ) {
+    public _snackBar: MatSnackBar,
+    public dialog: MatDialog) {
     // Iniciamos las Listas Comunes
     // this.getAllListPagosAlumno();
 
@@ -92,6 +104,253 @@ export class EvaluacionConsultaComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de todos los pagos que han realizado.
+   */
+  openDialog(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number,
+    codEvalCocinaPracticaIn: string, idEvalCocinaPracticaIn: number,
+    codEvalCortePrecisionIn: string, idEvalCortePrecisionIn: number,
+    codEvalPlatoIn: string, idEvalPlatoIn: number,
+    codEvalQuesoIn: string, idEvalQuesoIn: number,
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionAlumnoModalComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn,
+        EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn,
+        EvaluacionQueso: EvaluacionQuesoIn,
+        codEvalCocinaPractica: codEvalCocinaPracticaIn,
+        idEvaluacionCocinaPractica: idEvalCocinaPracticaIn,
+        codEvalCortePrecision: codEvalCortePrecisionIn,
+        idEvalCortePrecision: idEvalCortePrecisionIn,
+        idEvalPlato: idEvalPlatoIn,
+        codEvalPlato: codEvalPlatoIn,
+        idEvalQueso: idEvalQuesoIn,
+        codEvalQueso: codEvalQuesoIn,
+      },
+      width: '70%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
+  }
+
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de todos los pagos que han realizado.
+   */
+  openDialogPrint1(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, telefonoIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionPracticaPrintComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn, telefono: telefonoIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn, EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn, EvaluacionQueso: EvaluacionQuesoIn,
+
+      },
+      width: '80%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
+  }
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de detalle de la Eval. Cortes que han realizado.
+   */
+  openDialogPrint2(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, telefonoIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionCortesPrecisionPrintComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn, telefono: telefonoIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn, EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn, EvaluacionQueso: EvaluacionQuesoIn,
+
+      },
+      width: '80%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
+  }
+
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de detalle de la Eval. Plato que han realizado.
+   */
+  openDialogPrint3(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, telefonoIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionPlatoPrintComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn, telefono: telefonoIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn, EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn, EvaluacionQueso: EvaluacionQuesoIn,
+
+      },
+      width: '80%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
+  }
+
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de detalle de la Eval. Plato que han realizado.
+   */
+  openDialogPrint4(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, telefonoIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionQuesoPrintComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn, telefono: telefonoIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn, EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn, EvaluacionQueso: EvaluacionQuesoIn,
+
+      },
+      width: '80%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
+  }
+
+
+  /**
+   * Metodo para usar la ventana Modal de los Datos
+   * de todos los pagos que han realizado.
+   */
+  openDialog5(idAlumnoIn: number, nombresIn: string, apellidosIn: string,
+    codAlumnoIn: string, emailIn: string, celularIn: number, EvaluacionCocinaPracticaIn: number,
+    EvaluacionCortePrecisionIn: number, EvaluacionPlatoIn: number, EvaluacionQuesoIn: number,
+    codEvalCocinaPracticaIn: string, idEvalCocinaPracticaIn: number,
+    codEvalCortePrecisionIn: string, idEvalCortePrecisionIn: number,
+    codEvalPlatoIn: string, idEvalPlatoIn: number,
+    codEvalQuesoIn: string, idEvalQuesoIn: number,
+  ) {
+    const dialogRef = this.dialog.open(EvaluacionAlumnoModalAnularComponent, {
+      data: {
+        idAlumno: idAlumnoIn, nombres: nombresIn, apellidos: apellidosIn,
+        codAlumno: codAlumnoIn, email: emailIn, celular: celularIn,
+        EvaluacionCocinaPractica: EvaluacionCocinaPracticaIn,
+        EvaluacionCortePrecision: EvaluacionCortePrecisionIn,
+        EvaluacionPlato: EvaluacionPlatoIn,
+        EvaluacionQueso: EvaluacionQuesoIn,
+        codEvalCocinaPractica: codEvalCocinaPracticaIn,
+        idEvaluacionCocinaPractica: idEvalCocinaPracticaIn,
+        codEvalCortePrecision: codEvalCortePrecisionIn,
+        idEvalCortePrecision: idEvalCortePrecisionIn,
+        idEvalPlato: idEvalPlatoIn,
+        codEvalPlato: codEvalPlatoIn,
+        idEvalQueso: idEvalQuesoIn,
+        codEvalQueso: codEvalQuesoIn,
+      },
+      width: '70%',
+    });
+
+    // Cuando se cierra la ventana Modal
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      // Cargamos la ventana con las Consultas Actualizadas
+      this.getAllListEvaluacionesAlumno();
+    });
+
+    // Cuando se abre la ventana Modal
+    dialogRef.afterOpen().subscribe(result => {
+      console.log('Dialog result: ' + name);
+    });
+
+    // Inhabilitar que la ventana no se cierre por error
+    dialogRef.disableClose = true;
   }
 
 
@@ -149,7 +408,7 @@ export class EvaluacionConsultaComponent implements OnInit {
           this.showData2 = false;
         } else {
           this.JsonOutgetAllListEvaluaciones = response.data;
-          console.log(this.JsonOutgetAllListEvaluaciones);
+          // console.log(this.JsonOutgetAllListEvaluaciones);
           this.dataSource = new MatTableDataSource(this.JsonOutgetAllListEvaluaciones);
 
           // Paginador de la Tabla
@@ -170,8 +429,38 @@ export class EvaluacionConsultaComponent implements OnInit {
       });
   } // FIN : FND-00001
 
-}
 
+  /**
+   * Funcion de Imprirmir Documentos
+   * Linbreria jspdf
+   */
+  download() {
+    const doc = new jsPDF();
+
+    /* doc.text(20, 20, 'Hello world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+    doc.addPage();
+    doc.text(20, 20, 'Do you like that?'); */
+    let print = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': print
+    });
+
+    doc.save('test.pdf');
+
+    // Save the PDF
+    // doc.save('Test.pdf');
+  } // Find de jspdf
+
+} // Fin de la Clas de la Evalacuiones
 
 /**
 * Definicion de la Interface de los Datos
@@ -187,7 +476,7 @@ export interface AlumnosPagosData {
   apellidos: string;
   EvaluacionCocinaPractica: number;
   EvaluacionCortePrecision: number;
-  EvaluacionQuesos: number;
-  Evaluacion: number;
+  EvaluacionPlato: number;
+  EvaluacionQueso: number;
   // Accione
 }

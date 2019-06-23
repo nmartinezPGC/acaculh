@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './services/login.service';
 
-import { NgForm }    from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -174,68 +174,68 @@ export class LoginComponent implements OnInit {
 
     //Llamar al metodo, de Login para Obtener la Identidad
     this._loginService.signUp(this.user).subscribe(
-        response => {
-          // login successful so redirect to return url
-          if(response.status == "error"){
-            //Mensaje de alerta del error en cuestion            
-            alert('Error en el Servidor Paso 1 ' + response.data);
-            // this.loading = 'hide';
-          }else if (response.status == "success" ){
-            //LocalStorage
-            let identity = response.data;
-            this.identity = identity;
-            
-            if(this.identity.length <= 1 ){
-                alert('Error en el Servidor Paso 2 ');
-            }else{
-              if(!identity.status){
-                localStorage.setItem('identity', JSON.stringify(identity));                
-                //Volvemos a llamar el Servicio Ajax, para obtener el Token
-                this.user.gethash = "true";
-                this._loginService.signUp(this.user).subscribe(
-                    response => {
-                        let token = response.data;
-                        this.token = token;
+      response => {
+        // login successful so redirect to return url
+        if (response.status == "error") {
+          //Mensaje de alerta del error en cuestion
+          alert('Error en el Servidor Paso 1 ' + response.data);
+          // this.loading = 'hide';
+        } else if (response.status == "success") {
+          //LocalStorage
+          let identity = response.data;
+          this.identity = identity;
 
-                        if(this.token.length <= 0){
-                            alert("Error en el servidor Paso 3");                            
-                        }else{
-                          if(!this.token.status){
-                            localStorage.setItem( 'token', token );                            
-                            //Se ejecuta la Funcion de Inicio del Componente de
-                            // AppComponent, para actualizar el Menu
-                            // this._appComponent.ngOnInit();
-                            //Redirecciona a la Pagina Oficial
-                            // this.loading = 'hide';
-                            this._router.navigateByUrl('/');
-                          }
-                        }
-                    },
-                    error => {
-                        //Regisra cualquier Error de la Llamada a la API
-                        this.errorMessage = <any>error;                        
-                        //Evaluar el error
-                        if(this.errorMessage != null){
-                          console.log(this.errorMessage);
-                          alert(response);
-                          alert("Error en la Petición !! " + this.errorMessage);
-                        }
+          if (this.identity.length <= 1) {
+            alert('Error en el Servidor Paso 2 ');
+          } else {
+            if (!identity.status) {
+              localStorage.setItem('identity', JSON.stringify(identity));
+              //Volvemos a llamar el Servicio Ajax, para obtener el Token
+              this.user.gethash = "true";
+              this._loginService.signUp(this.user).subscribe(
+                response => {
+                  let token = response.data;
+                  this.token = token;
+
+                  if (this.token.length <= 0) {
+                    alert("Error en el servidor Paso 3");
+                  } else {
+                    if (!this.token.status) {
+                      localStorage.setItem('token', token);
+                      //Se ejecuta la Funcion de Inicio del Componente de
+                      // AppComponent, para actualizar el Menu
+                      // this._appComponent.ngOnInit();
+                      //Redirecciona a la Pagina Oficial
+                      // this.loading = 'hide';
+                      this._router.navigateByUrl('/');
                     }
+                  }
+                },
+                error => {
+                  //Regisra cualquier Error de la Llamada a la API
+                  this.errorMessage = <any>error;
+                  //Evaluar el error
+                  if (this.errorMessage != null) {
+                    console.log(this.errorMessage);
+                    alert(response);
+                    alert("Error en la Petición !! " + this.errorMessage);
+                  }
+                }
               );
             } // identity status
           } //identity <= 0
         } // status = success
 
-        },
-        error => {
-            //Regisra cualquier Error de la Llamada a la API
-            this.errorMessage = <any>error;            
-            //Evaluar el error
-            if(this.errorMessage != null){
-              console.log(this.errorMessage);
-              alert("Error en la Petición !! " + this.errorMessage);
-            }
+      },
+      error => {
+        //Regisra cualquier Error de la Llamada a la API
+        this.errorMessage = <any>error;
+        //Evaluar el error
+        if (this.errorMessage != null) {
+          console.log(this.errorMessage);
+          alert("Error en la Petición !! " + this.errorMessage);
         }
+      }
     );
   }
 }// FIN | Clase Componente: LoginComponent

@@ -60,6 +60,21 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RegistroPlatosComponent } from './platos/registro-platos/registro-platos.component';
 import { ConsultaPlatosComponent } from './platos/consulta-platos/consulta-platos.component';
 import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/evaluacion-consulta.component';
+import { EvaluacionAlumnoModalComponent } from './evaluaciones/evaluacion-consulta/evaluacion-alumno-modal.component';
+import { EvaluacionPracticaPrintComponent } from './evaluaciones/evaluacion-print/evaluacion-practica-print/evaluacion-practica-print.component';
+import { EvaluacionCortesPrecisionPrintComponent } from './evaluaciones/evaluacion-print/evaluacion-cortes-precision-print/evaluacion-cortes-precision-print.component';
+import { EvaluacionPlatoPrintComponent } from './evaluaciones/evaluacion-print/evaluacion-plato-print/evaluacion-plato-print.component';
+import { EvaluacionQuesoPrintComponent } from './evaluaciones/evaluacion-print/evaluacion-queso-print/evaluacion-queso-print.component';
+import { EvaluacionAlumnoModalAnularComponent } from './evaluaciones/evaluacion-consulta/evaluacion-alumno-modal-anular/evaluacion-alumno-modal-anular.component';
+
+import { InputFileConfig, InputFileModule } from 'ngx-input-file';
+import { EvaluacionNotaTeoricaComponent } from './evaluaciones/evaluacion-nota-teorica/evaluacion-nota-teorica.component';
+import { ExamenTeoricoComponent } from './evaluaciones/examen-teorico/examen-teorico.component';
+import { ExamenPracticoComponent } from './evaluaciones/examen-practico/examen-practico.component';
+import { ReportePagosComponent } from './reportes/reporte-pagos/reporte-pagos.component';
+import { ReportePagosModalComponent } from './reportes/reporte-pagos/reporte-pagos-modal/reporte-pagos-modal.component';
+
+const config: InputFileConfig = {};
 
 @NgModule({
     imports: [
@@ -98,6 +113,7 @@ import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/
         MatAutocompleteModule,
         NgAutoCompleteModule,
         AngularMultiSelectModule,
+        InputFileModule.forRoot(config),
     ],
     declarations: [
         ContactComponent,
@@ -118,9 +134,28 @@ import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/
         RegistroPlatosComponent,
         ConsultaPlatosComponent,
         EvaluacionConsultaComponent,
+        EvaluacionAlumnoModalComponent,
+        EvaluacionPracticaPrintComponent,
+        EvaluacionCortesPrecisionPrintComponent,
+        EvaluacionPlatoPrintComponent,
+        EvaluacionQuesoPrintComponent,
+        EvaluacionPlatoPrintComponent,
+        EvaluacionAlumnoModalAnularComponent,
+        EvaluacionNotaTeoricaComponent,
+        ExamenTeoricoComponent,
+        ExamenPracticoComponent,
+        ReportePagosComponent,
+        ReportePagosModalComponent,
     ],
     entryComponents: [
-        RevertirPagosAlumnoModalComponent
+        RevertirPagosAlumnoModalComponent,
+        EvaluacionAlumnoModalComponent,
+        EvaluacionPracticaPrintComponent,
+        EvaluacionCortesPrecisionPrintComponent,
+        EvaluacionPlatoPrintComponent,
+        EvaluacionQuesoPrintComponent,
+        EvaluacionAlumnoModalAnularComponent,
+        ReportePagosModalComponent,
     ],
     exports: [
     ],

@@ -1,7 +1,3 @@
-<!-- <mat-toolbar color="primary">
-  Angular Material Dialog Demo
-</mat-toolbar> -->
-
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
 
   <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
@@ -14,8 +10,8 @@
         <mat-spinner></mat-spinner>
       </div>
 
-      <div fxFlex="10" fxLayoutAlign="start center" fxLayout="row">
-        <h3 class="mat-headline">Consulta de Evaluaciones </h3>
+      <div fxFlex="10" fxLayoutAlign="start center" fxLayout="row" id="content" #content>
+        <h3 class="mat-headline">Consulta de Evaluaciones Practicas </h3>
         <!-- <h3 class="mat-headline"> | </h3> -->
         <!-- <h6 class="mat-title"> Pagos</h6> -->
       </div>
@@ -45,10 +41,10 @@
 
             <!-- Codigo Column -->
             <ng-container matColumnDef="codAlumno">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'">
                 <h3>Codigo Alumno</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.codAlumno}} </mat-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.codAlumno}} </mat-cell>
             </ng-container>
 
             <!-- Nombres Column -->
@@ -77,19 +73,24 @@
 
             <!-- Celular Column -->
             <ng-container matColumnDef="celular">
-              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'" >
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'">
                 <h3>Celular</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'" > {{row.celular}} </mat-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'"> {{row.celular}} </mat-cell>
             </ng-container>
 
             <!-- EvaluacionCocinaPractica Column -->
             <ng-container matColumnDef="EvaluacionCocinaPractica">
-              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'"
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass3'"
                 matTooltip="Evaluacion Cocina Practica">
                 <h3>ECPA</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionCocinaPractica}}
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass3'">
+                {{row.EvaluacionCocinaPractica | number: '1.0-2' }}
+                <button mat-icon-button matTooltip="Ver detalle de Evaluacion Practica" (click)="openDialogPrint1(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular, row.telefono,
+                  row.EvaluacionCocinaPracticaIn, row.EvaluacionCortePrecision)">
+                  <mat-icon>assignment</mat-icon>
+                </button>
               </mat-cell>
             </ng-container>
 
@@ -100,53 +101,76 @@
                 <h3>ECPE</h3>
               </mat-header-cell>
               <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionCortePrecision}}
+                <button mat-icon-button matTooltip="Ver detalle de Evaluacion Corte Precision"
+                  (click)="openDialogPrint2(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular, row.telefono,
+                  row.EvaluacionCocinaPracticaIn, row.EvaluacionCortePrecision, row.EvaluacionPlato, row.EvaluacionQueso)">
+                  <mat-icon>assignment</mat-icon>
+                </button>
               </mat-cell>
             </ng-container>
 
             <!-- EvaluacionQuesos Column -->
-            <ng-container matColumnDef="EvaluacionQuesos">
-              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'">
-                <h3>ECPE</h3>
+            <ng-container matColumnDef="EvaluacionPlato">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'"
+                matTooltip="Evaluacion Cocina Plato">
+                <h3>ECPL</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionCortePrecision}}
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionPlato}}
+                <button mat-icon-button matTooltip="Ver detalle de Evaluacion Plato"
+                  (click)="openDialogPrint3(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular, row.telefono,
+                  row.EvaluacionCocinaPracticaIn, row.EvaluacionCortePrecision, row.EvaluacionPlato, row.EvaluacionQueso)">
+                  <mat-icon>assignment</mat-icon>
+                </button>
               </mat-cell>
             </ng-container>
 
             <!-- Evaluacion Column -->
-            <ng-container matColumnDef="Evaluacion">
+            <ng-container matColumnDef="EvaluacionQueso">
               <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'"
-                matTooltip="Evaluacion">
-                <h3>ECPE</h3>
+                matTooltip="Evaluacion Queso">
+                <h3>ECQE</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionCortePrecision}}
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.EvaluacionQueso}}
+                <button mat-icon-button matTooltip="Ver detalle de Evaluacion Queso"
+                  (click)="openDialogPrint4(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular, row.telefono,
+                  row.EvaluacionCocinaPracticaIn, row.EvaluacionCortePrecision, row.EvaluacionPlato, row.EvaluacionQueso)">
+                  <mat-icon>assignment</mat-icon>
+                </button>
               </mat-cell>
             </ng-container>
 
-            <!-- noPagos Column -->
-            <!-- <ng-container matColumnDef="noPagos">
-                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'">
-                  <h3>No. Pagos</h3>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'"> {{row.NoPagos}} </mat-cell>
-              </ng-container> -->
-
-            <!-- totalPagos Column -->
-            <!-- <ng-container matColumnDef="totalPagos">
-                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass6'">
-                  <h3>Total Pagos</h3>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass6'" > {{row.TotalPagos | number:'3.2-5' }} </mat-cell>
-              </ng-container> -->
-
             <!-- Accion Column -->
             <ng-container matColumnDef="actions">
-              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass2'">
-                <h3>Accion</h3>
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass5'">
+                <h3 align="center">Accion</h3>
               </mat-header-cell>
-              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass2'">
-                <button mat-icon-button matTooltip="Ver todas las Evaluaciones del Alumno"
-                  (click)="openDialog(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular)">
-                  <mat-icon>assignment</mat-icon>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass5'">
+                <!-- Boton de ver todas la Evaluaciones -->
+                <!-- <button mat-icon-button matTooltip="Ver todas las Evaluaciones Practicas del Alumno" (click)="openDialog(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular,
+                  row.EvaluacionCocinaPracticaIn, row.EvaluacionCortePrecision)">
+                  <mat-icon>search</mat-icon>
+                </button> -->
+                <!-- Botond de Aprobar Todas las Evaluaciones -->
+                <button
+                  *ngIf="row.EvaluacionCocinaPractica != 0 && row.EvaluacionCortePrecision != 0 && row.EvaluacionPlato != 0 && row.EvaluacionQueso !=  0 "
+                  mat-icon-button matTooltip="Aprobar todas las Evaluaciones" (click)="openDialog(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular,
+                row.EvaluacionCocinaPractica, row.EvaluacionCortePrecision, row.EvaluacionPlato, row.EvaluacionQueso,
+                row.codEvalCocinaPractica, row.idEvaluacionCocinaPractica,
+                row.codEvaluacionCortePrecision, row.idEvaluacionCortePrecision,
+                row.codEvaluacionPlato, row.idEvaluacionPlato,
+                row.codEvaluacionQueso, row.idEvaluacionQueso)">
+                  <i class="material-icons">done_outline</i>
+                </button>
+                <!-- Boton de de Anular Todas las Evaluaciones -->
+                <button
+                  *ngIf="row.EvaluacionCocinaPractica != 0 && row.EvaluacionCortePrecision != 0 && row.EvaluacionPlato != 0 && row.EvaluacionQueso !=  0 "
+                  mat-icon-button matTooltip="Anular todas las Evaluaciones" (click)="openDialog5(row.idAlumno, row.nombres, row.apellidos, row.codAlumno, row.email, row.celular,
+                row.EvaluacionCocinaPractica, row.EvaluacionCortePrecision, row.EvaluacionPlato, row.EvaluacionQueso,
+                row.codEvalCocinaPractica, row.idEvaluacionCocinaPractica, 
+                row.codEvaluacionCortePrecision, row.idEvaluacionCortePrecision,
+                row.codEvaluacionPlato, row.idEvaluacionPlato,
+                row.codEvaluacionQueso, row.idEvaluacionQueso)">
+                  <i class="material-icons">delete_forever</i>
                 </button>
               </mat-cell>
             </ng-container>

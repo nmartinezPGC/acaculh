@@ -173,6 +173,10 @@ class AlumnoController extends Controller {
 
                 $hora_ingreso = new \DateTime('now');
                 $hora_ingreso->format('H:i');
+                
+                // Fotos del Alumno
+                $foto_alumno = ($params->foto_alumno != null) ? $params->foto_alumno : null;
+                $horario_alumno = ($params->idHorario != null) ? $params->idHorario : 0;
 
                 // $fecha_nacimiento = date('Y-m-d H:i:s');
                 $fecha_nacimiento_2 = new \DateTime($fecha_nacimiento);
@@ -288,10 +292,19 @@ class AlumnoController extends Controller {
                                     "idTipoBeca" => $id_tipo_beca
                         ));
                         $ingresoAlumnoNew->setIdTipoBeca($tipoBecaAlumno);
+                        
+                        
+                        // Instanciamos de la Clase TblHorarioClase
+                        $horarioAlumno = $em->getRepository("BackendBundle:TblHorarioClase")->findOneBy(
+                                array(
+                                    "idHorarioClase" => $horario_alumno
+                        ));
+                        $ingresoAlumnoNew->setIdHorario($horarioAlumno);
 
                         // Datos de Bitacora
                         $ingresoAlumnoNew->setFechaIngreso($fecha_ingreso);
                         $ingresoAlumnoNew->setHoraIngreso($hora_ingreso);
+                        $ingresoAlumnoNew->setFotoAlumno($foto_alumno);
 
                         // Realizar la Persistencia de los Datos y enviar a la BD
                         $em->persist($ingresoAlumnoNew);
@@ -456,7 +469,7 @@ class AlumnoController extends Controller {
                         //}
                         //} // FIN Array | Attach
                         // Envia el Correo con todos los Parametros
-                        $resuly = $mailer->send($mail);
+                        // $resuly = $mailer->send($mail);
                         // ***** Fin de Envio de Correo ****************************
                         //Consulta de el Alumno recien Ingresado *******************
                         $alumnoConsulta = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
@@ -505,4 +518,88 @@ class AlumnoController extends Controller {
     }
 
 // FIN | FND00001.2
+
+    /**
+     * @Route("/upload-img-alumno", name="upload-img-alumno")
+     * Creacion del Controlador: Alumno
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00003
+     */
+    public function UploadImageAlumnoAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers
+        $helpers = $this->get("app.helpers");
+        //Recoger el Hash
+        
+        //Recogemos el Hash y la Autrizacion del Mismo
+        $hash = $request->get("authorization", null);
+        //Se Chekea el Token
+        $checkToken = $helpers->authCheck($hash);
+        //Evaluamos la Autoriuzacion del Token
+        if ($checkToken == true) {
+            //Ejecutamos todo el Codigo restante
+            $identity = $helpers->authCheck($hash, true);
+            $em = $this->getDoctrine()->getManager();
+            //Buscamos el registro por el Id de Usaurio
+            /*$alumno = $em->getRepository("BackendBundle:TblAlumno")->findOneBy(
+                    array(
+                        "codAlumno" => $request->get("cod_alumno")
+            ));
+             * 
+             */
+            //Recoger el Fichero que viene por el POST y lo guardamos el HD
+            $file = $request->files->get("foto_alumno");
+            $name_file = $request->get("name_foto_alumno");
+            
+            //Se verifica que el fichero no venga Null
+            if (!empty($file) && $file != null) {
+                //Obtenemos la extencion del Fichero
+                $ext = $file->guessExtension();
+                //Comprobamos que la Extencion sea Aceptada
+                if ($ext == "jpeg" || $ext == "jpg" || $ext == "png" || $ext == "gif") {
+                    // Concatenmos al Nombre del Fichero la Fecha y la Extencion
+                    // $file_name = $name_file . "." . $ext;
+                    $file_name = $name_file;
+                    //Movemos el Fichero
+                    $file->move("uploads/alumnos", $file_name);
+
+                    //Seteamos el valor de la Imagen dentro de la Tabla:Tblusuarios+
+                    // $alumno->setFotoAlumno($file_name);
+                    // $em->persist($alumno);
+                    // $em->flush();
+
+                    // Devolvemos el Mensaje de Array
+                    $data = array(
+                        "status" => "success",
+                        "code" => 200,
+                        "msg" => "Imagen para Alumno, subida exitosamente !!"
+                    );
+                } else {
+                    // Devolvemos el Mensaje de Array, cuando la Imagen no sea valida
+                    $data = array(
+                        "status" => "error",
+                        "code" => 400,
+                        "msg" => "File not valid !!"
+                    );
+                }
+            } else {
+                $data = array(
+                    "status" => "error",
+                    "code" => 400,
+                    "msg" => "Imagen not upload !! "
+                );
+            }
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "Autorización no valida !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+// FIN FND00003
 }

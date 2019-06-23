@@ -29,6 +29,9 @@ BackendBundle\Entity\TblAlumno:
         f7_idx:
             columns:
                 - id_tipo_beca
+        f8_idx:
+            columns:
+                - id_horario
     id:
         idAlumno:
             type: integer
@@ -201,6 +204,14 @@ BackendBundle\Entity\TblAlumno:
             type: datetime
             nullable: true
             column: hora_ingreso
+        fotoAlumno:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+                default: noavatar.png
+            column: foto_alumno
     manyToOne:
         idEstado:
             targetEntity: TblEstado
@@ -271,5 +282,15 @@ BackendBundle\Entity\TblAlumno:
             joinColumns:
                 id_tipo_beca:
                     referencedColumnName: id_tipo_beca
+            orphanRemoval: false
+        idHorario:
+            targetEntity: TblHorarioClase
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_horario:
+                    referencedColumnName: id_horario_clase
             orphanRemoval: false
     lifecycleCallbacks: {  }

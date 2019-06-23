@@ -12,6 +12,12 @@ alumno_newAlumno:
 
 ## Ruta para Editar Alumno
 alumno_editAlumno:
-    path: /login
-    defaults: { _controller: "AppBundle:Default:login" }
+    path: /edit-alumno
+    defaults: { _controller: "AppBundle:Alumno/Alumno:NewAlumno" }
     methods: POST
+    
+## Ruta para Subir Imagen Alumnos
+alumno_upload_Alumno:
+    path: /upload-img-alumno
+    defaults: { _controller: "AppBundle:Alumno/Alumno:UploadImageAlumno" }
+    methods: [POST]

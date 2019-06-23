@@ -9,7 +9,7 @@ import { Numeric } from "d3";
  * @version 1.0.0
  */
 export class AlumnoModel {
-// Contructor de la clase
+  // Contructor de la clase
   constructor(
     // Identificacion
     public idAlumno: number,
@@ -64,5 +64,12 @@ export class AlumnoModel {
     public idFormaPago: number,
     public descFormaPago: string,
 
-    ) { }
+    // Recursos
+    public foto_alumno: string,
+
+    // Horarios
+    public idHorario: number,
+
+
+  ) { }
 }

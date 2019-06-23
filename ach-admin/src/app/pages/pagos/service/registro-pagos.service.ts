@@ -44,6 +44,26 @@ export class RegistroPagosService {
   } // FIN | FND-00002
 
 
+  /**
+   * Subir Imagenes de Alumno
+   */
+  public url_servidor = "http://localhost/acaculh/symfony-copia/web/app.php/pagos/upload-doc-pago";
+
+  // public postFileImagen(token, imagenParaSubir: File, codAlumno: string) {
+  public postFileImagen(token, imagenParaSubir: File) {
+    const formData: FormData = new FormData();
+
+    formData.append('url_documento', imagenParaSubir, imagenParaSubir.name);
+    formData.append('name_url_documento', imagenParaSubir.name);
+    // formData.append('cod_alumno', codAlumno);
+    formData.append('authorization', token);
+    // console.log('before hist the service' + JSON.stringify(formData));
+
+    // return this.http.post(this.url_servidor, formData);
+    return this._http.post(this.url + '/pagos/upload-doc-pago', formData).map(res => res.json());
+  }
+
+
   /****************************************************
   * Funcion: FND-00003
   * Fecha: 28-07-2017

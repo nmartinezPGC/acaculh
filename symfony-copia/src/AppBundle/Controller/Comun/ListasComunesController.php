@@ -214,6 +214,50 @@ class ListasComunesController extends Controller {
 //FIN | FND00005
 
     /**
+     * @Route("/horarios-all-list", name="horarios-all-list")
+     * Creacion del Controlador: Horarios de Pago ACH
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00006
+     */
+    public function HorariosAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos las Horarios ACH de la Tabla: TblHorarioClase
+        $horariosAllList = $em->getRepository("BackendBundle:TblHorarioClase")->findBy(
+                array(
+                    "activo" => true
+        ));
+
+        $countRecords = count($horariosAllList);
+
+        // Condicion de la Busqueda
+        if ($countRecords >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "totalRecords" => $countRecords,
+                "msg" => "Se han encontrado el listado de todas los horarios de ACH registrados.",
+                "data" => $horariosAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Hoprarios de ACH !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00006
+
+    /**
      * @Route("/tipo-pago-all-list", name="tipo-pago-all-list")
      * Creacion del Controlador: Tipo de Pago ACH
      * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
@@ -300,6 +344,46 @@ class ListasComunesController extends Controller {
     }
 
 //FIN | FND00007
+
+    /**
+     * @Route("/instrutor-all-list", name="instrutor-all-list")
+     * Creacion del Controlador: Instructores
+     * @author Nahum Martinez <nmartinez.salgado@yahoo.com>
+     * @since 1.0
+     * Funcion: FND00001
+     */
+    public function InstructorAllListAction(Request $request) {
+        date_default_timezone_set('America/Tegucigalpa');
+        //Instanciamos el Servicio Helpers y Jwt
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Query para Obtener todos los Instructores de la Tabla: TblUsuario
+        $instructorAllList = $em->getRepository("BackendBundle:TblUsuario")->findBy(
+                array(
+                    "idTipoUsuario" => 3
+        ));
+
+        // Condicion de la Busqueda
+        if (count($instructorAllList) >= 1) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "data" => $instructorAllList
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "msg" => "No existe Datos en la Tabla de Instructores !!"
+            );
+        }
+        //Retorno de la Funcion ************************************************
+        return $helpers->parserJson($data);
+    }
+
+//FIN | FND00001
 
     /**
      * @Route("/sub-direcciones-sreci-list", name="sub-direcciones-sreci-list")

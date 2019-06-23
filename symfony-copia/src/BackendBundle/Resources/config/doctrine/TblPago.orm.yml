@@ -71,6 +71,13 @@ BackendBundle\Entity\TblPago:
             options:
                 fixed: false
             column: descripcion_pago
+        urlDocumento:
+            type: string
+            nullable: true
+            length: 300
+            options:
+                fixed: false
+            column: url_documento
     manyToOne:
         idEstadoPago:
             targetEntity: TblEstado

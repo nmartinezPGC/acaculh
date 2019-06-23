@@ -1,5 +1,5 @@
 <div fxLayout="column" fxFlexFill fxLayoutAlign="center center" style="background-image:url('../../../assets/logos/main_background2.png');
-height: 100%;
+height: 80%;
 background-repeat: no-repeat;
 background-position: center;
 background-size: cover; overflow-y:hidden; overflow-x:hidden; ">
@@ -15,16 +15,15 @@ background-size: cover; overflow-y:hidden; overflow-x:hidden; ">
         <mat-card-content>
           <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="userForm" (ngSubmit)="login()">
             <mat-form-field class="full-width">
-              <input  type="email" id="email" name="email" lass="input" ngControl="email" [(ngModel)]="user.email"
+              <input type="email" id="email" name="email" lass="input" ngControl="email" [(ngModel)]="user.email"
                 autofocus placeholder="Ingresa tu email" formControlName="email" required matInput>
             </mat-form-field>
             <div *ngIf="formErrors.email" class="help is-danger">
               {{ formErrors.email }}
             </div>
             <mat-form-field class="full-width">
-              <input  ngControl="password" [(ngModel)]="user.password" 
-              type="password" id="password" name="password" class="input" placeholder="Ingresa tu password"
-                formControlName="password" required matInput>
+              <input ngControl="password" [(ngModel)]="user.password" type="password" id="password" name="password"
+                class="input" placeholder="Ingresa tu password" formControlName="password" required matInput>
             </mat-form-field>
             <div *ngIf="formErrors.password" class="help is-danger">
               {{ formErrors.password }}

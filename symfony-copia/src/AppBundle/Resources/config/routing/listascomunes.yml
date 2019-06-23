@@ -44,4 +44,15 @@ listascomunes_tipoUsuarioList:
     path: /tipo-usuario-all-list
     defaults: { _controller: "AppBundle:Comun/ListasComunes:TipoUsuarioAllList" }
     methods: POST
+    
+ # Lista de Instructores / Usuario
+listascomunes_instructorUsuarioList:
+    path: /instrutor-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:InstructorAllList" }
+    methods: POST
  
+# Lista de Horarios / ACH
+listascomunes_horariosAllListList:
+    path: /horarios-all-list
+    defaults: { _controller: "AppBundle:Comun/ListasComunes:HorariosAllList" }
+    methods: POST

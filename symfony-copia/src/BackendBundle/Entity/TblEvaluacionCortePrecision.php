@@ -526,30 +526,7 @@ class TblEvaluacionCortePrecision
         return $this->idPlato;
     }
 
-    /**
-     * Set idInstructor
-     *
-     * @param \BackendBundle\Entity\TblInstructor $idInstructor
-     *
-     * @return TblEvaluacionCortePrecision
-     */
-    public function setIdInstructor(\BackendBundle\Entity\TblInstructor $idInstructor = null)
-    {
-        $this->idInstructor = $idInstructor;
-
-        return $this;
-    }
-
-    /**
-     * Get idInstructor
-     *
-     * @return \BackendBundle\Entity\TblInstructor
-     */
-    public function getIdInstructor()
-    {
-        return $this->idInstructor;
-    }
-
+    
     /**
      * Set idAlumno
      *
@@ -572,5 +549,174 @@ class TblEvaluacionCortePrecision
     public function getIdAlumno()
     {
         return $this->idAlumno;
+    }
+    /**
+     * @var string
+     */
+    private $pesoCorteObs;
+
+    /**
+     * @var string
+     */
+    private $medidasCortesObs;
+
+    /**
+     * @var float
+     */
+    private $medidasCortesNota;
+
+
+    /**
+     * Set pesoCorteObs
+     *
+     * @param string $pesoCorteObs
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setPesoCorteObs($pesoCorteObs)
+    {
+        $this->pesoCorteObs = $pesoCorteObs;
+
+        return $this;
+    }
+
+    /**
+     * Get pesoCorteObs
+     *
+     * @return string
+     */
+    public function getPesoCorteObs()
+    {
+        return $this->pesoCorteObs;
+    }
+
+    /**
+     * Set medidasCortesObs
+     *
+     * @param string $medidasCortesObs
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setMedidasCortesObs($medidasCortesObs)
+    {
+        $this->medidasCortesObs = $medidasCortesObs;
+
+        return $this;
+    }
+
+    /**
+     * Get medidasCortesObs
+     *
+     * @return string
+     */
+    public function getMedidasCortesObs()
+    {
+        return $this->medidasCortesObs;
+    }
+
+    /**
+     * Set medidasCortesNota
+     *
+     * @param float $medidasCortesNota
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setMedidasCortesNota($medidasCortesNota)
+    {
+        $this->medidasCortesNota = $medidasCortesNota;
+
+        return $this;
+    }
+
+    /**
+     * Get medidasCortesNota
+     *
+     * @return float
+     */
+    public function getMedidasCortesNota()
+    {
+        return $this->medidasCortesNota;
+    }
+    /**
+     * @var \BackendBundle\Entity\TblEstado
+     */
+    private $idEstado;
+
+
+    /**
+     * Set idEstado
+     *
+     * @param \BackendBundle\Entity\TblEstado $idEstado
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setIdEstado(\BackendBundle\Entity\TblEstado $idEstado = null)
+    {
+        $this->idEstado = $idEstado;
+
+        return $this;
+    }
+
+    /**
+     * Get idEstado
+     *
+     * @return \BackendBundle\Entity\TblEstado
+     */
+    public function getIdEstado()
+    {
+        return $this->idEstado;
+    }
+
+    /**
+     * Set idInstructor
+     *
+     * @param \BackendBundle\Entity\TblUsuario $idInstructor
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setIdInstructor(\BackendBundle\Entity\TblUsuario $idInstructor = null)
+    {
+        $this->idInstructor = $idInstructor;
+
+        return $this;
+    }
+
+    /**
+     * Get idInstructor
+     *
+     * @return \BackendBundle\Entity\TblUsuario
+     */
+    public function getIdInstructor()
+    {
+        return $this->idInstructor;
+    }
+    /**
+     * @var string
+     */
+    private $chefNotaFinalObs;
+
+
+    /**
+     * Set chefNotaFinalObs
+     *
+     * @param string $chefNotaFinalObs
+     *
+     * @return TblEvaluacionCortePrecision
+     */
+    public function setChefNotaFinalObs($chefNotaFinalObs)
+    {
+        $this->chefNotaFinalObs = $chefNotaFinalObs;
+
+        return $this;
+    }
+
+    /**
+     * Get chefNotaFinalObs
+     *
+     * @return string
+     */
+    public function getChefNotaFinalObs()
+    {
+        return $this->chefNotaFinalObs;
     }
 }

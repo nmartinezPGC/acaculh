@@ -68,6 +68,33 @@ export const menus = [
             }*/
         ]
     },
+    { // Menu de Reportes
+        'name': 'Reportes',
+        'icon': 'folder',
+        'open': false,
+        'link': false,
+        'perfil': [1, 2, 3],
+        'sub': [
+            {
+                'name': 'Reporte de Alumnos',
+                'icon': 'supervisor_account',
+                'open': false,
+                'link': 'pages/reportes/pagos',
+                'perfil': [1, 2, 3, 4],
+            },{
+                'name': 'Reporte de Pagos',
+                'icon': 'credit_card',
+                'open': false,
+                'link': 'pages/reportes/reporte-pagos',
+                'perfil': [1, 2, 3, 4],
+            },/* {
+                'name': 'Contact',
+                'icon': 'directions',
+                'open': false,
+                'link': 'pages/contact'
+            }*/
+        ]
+    },
     { // Menu de Pagos
         'name': 'Pagos',
         'icon': 'account_balance_wallet',
@@ -130,7 +157,7 @@ export const menus = [
         'perfil': [1, 3],
         'sub': [
             {
-                'name': 'Evaluar Alumno',
+                'name': 'Evaluacion Practica',
                 'icon': 'description',
                 'open': false,
                 'link': 'pages/evaluaciones/evaluacion-alumno',
@@ -141,12 +168,25 @@ export const menus = [
                 'open': false,
                 'link': 'pages/evaluaciones/evaluacion-consulta-practica',
                 'perfil': [1, 3],
-            }, /*{
-                'name': 'Contact',
-                'icon': 'directions',
+            }, {
+                'name': 'Evaluacion Nota Teorica',
+                'icon': 'date_range',
                 'open': false,
-                'link': 'pages/contact'
-            }*/
+                'link': 'pages/evaluaciones/evaluacion-nota-teorica',
+                'perfil': [1, 3],
+            }, {
+                'name': 'Examen Teorico',
+                'icon': 'date_range',
+                'open': false,
+                'link': 'pages/evaluaciones/examen-teorico',
+                'perfil': [1, 3],
+            }, {
+                'name': 'Examen Practico',
+                'icon': 'date_range',
+                'open': false,
+                'link': 'pages/evaluaciones/examen-practico',
+                'perfil': [1, 3],
+            },
         ]
     },
     { // Menu de Seguridad

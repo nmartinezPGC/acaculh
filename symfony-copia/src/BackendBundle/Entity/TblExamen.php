@@ -167,4 +167,120 @@ class TblExamen
     {
         return $this->idClase;
     }
+    /**
+     * @var \DateTime
+     */
+    private $fechaEvaluacion;
+
+    /**
+     * @var \DateTime
+     */
+    private $horaEvaluacion;
+
+    /**
+     * @var string
+     */
+    private $observaciones;
+
+    /**
+     * @var string
+     */
+    private $urlExamenTeorico;
+
+
+    /**
+     * Set fechaEvaluacion
+     *
+     * @param \DateTime $fechaEvaluacion
+     *
+     * @return TblExamen
+     */
+    public function setFechaEvaluacion($fechaEvaluacion)
+    {
+        $this->fechaEvaluacion = $fechaEvaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaEvaluacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaEvaluacion()
+    {
+        return $this->fechaEvaluacion;
+    }
+
+    /**
+     * Set horaEvaluacion
+     *
+     * @param \DateTime $horaEvaluacion
+     *
+     * @return TblExamen
+     */
+    public function setHoraEvaluacion($horaEvaluacion)
+    {
+        $this->horaEvaluacion = $horaEvaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get horaEvaluacion
+     *
+     * @return \DateTime
+     */
+    public function getHoraEvaluacion()
+    {
+        return $this->horaEvaluacion;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return TblExamen
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
+    }
+
+    /**
+     * Set urlExamenTeorico
+     *
+     * @param string $urlExamenTeorico
+     *
+     * @return TblExamen
+     */
+    public function setUrlExamenTeorico($urlExamenTeorico)
+    {
+        $this->urlExamenTeorico = $urlExamenTeorico;
+
+        return $this;
+    }
+
+    /**
+     * Get urlExamenTeorico
+     *
+     * @return string
+     */
+    public function getUrlExamenTeorico()
+    {
+        return $this->urlExamenTeorico;
+    }
 }

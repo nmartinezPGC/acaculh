@@ -18,6 +18,7 @@ import { InvoiceAlumnoComponent } from './invoice.alumno/invoice.alumno.componen
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { switchAll } from 'rxjs/operators';
+import { InputFile } from 'ngx-input-file';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -50,6 +51,15 @@ export class AlumnoComponent implements OnInit {
   selected = 'option2';
 
   options: FormGroup;
+
+  public myModel;
+  public imgAlumno;
+
+  uploadImg(event) {
+    this.imgAlumno = event;
+    this._alumnoModel.foto_alumno = event.file.name;
+    // console.log(this._alumnoModel.foto_alumno);
+  }
 
   /**
    * Seccion de Planificar los validadores
@@ -177,6 +187,10 @@ export class AlumnoComponent implements OnInit {
     // Validators.required,
   ]);
 
+  idHorario = new FormControl('', [
+    // Validators.required,
+  ]);
+
   // Fin de validadores
 
   matcher = new MyErrorStateMatcher();
@@ -196,6 +210,7 @@ export class AlumnoComponent implements OnInit {
   public JsonOutgetlistaGeneroAll: any[];
   public JsonOutgetlistaMediosACHAll: any[];
   public JsonOutgetlistaFormasPago: any[];
+  public JsonOutgetlistaHorarios: any[];
 
   public _alumnoModel: AlumnoModel;
 
@@ -246,6 +261,8 @@ export class AlumnoComponent implements OnInit {
       '', null, '', null, // Encargados
       '', '', '', 0, 7, 0, '', null, null, // Complentarios
       null, 0, '', // Matricula
+      null, // Recursos
+      0, // Horarios
     );
 
     // Iniciamos las Listas Comunes
@@ -258,6 +275,7 @@ export class AlumnoComponent implements OnInit {
     this.getlistaGenerosAll();
     this.getlistaMediosACHAll();
     this.getlistaFormasPagoAll();
+    this.getlistaHorariosAll();
   }
 
   /**
@@ -498,6 +516,38 @@ export class AlumnoComponent implements OnInit {
 
 
   /*****************************************************
+    * Funcion: FND-00002.4
+    * Fecha: 25-12-2018
+    * Descripcion: Carga la Lista de las Horarios de Pago ACH
+    * Objetivo: Obtener la lista de Todas las Horarios de Pago ACH
+    * de la BD, Llamando a la API, por su metodo
+    * ( horarios-all-list ).
+    ******************************************************/
+   getlistaHorariosAll() {
+    // Llamamos al Servicio que provee todas las Formas de Pago ACH
+    this._listasComunes.listasComunes('', 'horarios-all-list').subscribe(
+      response => {
+        // listas/forma-pago-all-list | so redirect to return url
+        if (response.status === 'error') {
+          // Mensaje de alerta del error en cuestion
+          this.JsonOutgetlistaHorarios = response.data;
+          this.openSnackBar(response.msg, 'Error al obtener la informacion de Horarios');
+        } else {
+          this.JsonOutgetlistaHorarios = response.data;
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Client-side error');
+          this.openSnackBar(err.message, 'Client-side error');
+        } else {
+          console.log('Server-side error');
+          this.openSnackBar(err.message, 'Server-side error');
+        }
+      });
+  } // FIN : FND-00002.4
+
+
+  /*****************************************************
     * Funcion: FND-00003
     * Fecha: 12-02-2018
     * Descripcion: Guardar el Nuevo Alumno
@@ -516,7 +566,7 @@ export class AlumnoComponent implements OnInit {
       setTimeout(() => {
         this.showData2 = false;
       }, 3000);
-      
+
       return -1;
     }
 
@@ -547,7 +597,10 @@ export class AlumnoComponent implements OnInit {
           this.showData2 = false;
           this.openSnackBar(response.msg, 'Error al ingresar nuevo Alumno');
         } else {
-          // Inicia el Formulario          
+          // Inicia el Formulario
+          // console.log(this.imgAlumno);
+          // this.fileChangeEvent(this.imgAlumno);
+          // this.cargandoImagen();
           this.openSnackBar(response.msg, 'Ingreso de nuevo Alumno');
           this.ngOnInit();
 
@@ -723,5 +776,55 @@ export class AlumnoComponent implements OnInit {
     document.body.innerHTML = originalContents;
   }
 
+
+  /*****************************************************
+    * Funcion: FND-00006
+    * Fecha: 22-12-2018
+    * Descripcion: Cargar Imagen
+    * Objetivo: Cargar Imagen
+    ******************************************************/
+  public respuestaImagenEnviada;
+  public resultadoCarga;
+
+  public cargandoImagen(files: FileList) {
+  // public cargandoImagen(files: InputFile) {
+    const nombreFile : string = files[0].name;
+    this._alumnoModel.foto_alumno = nombreFile;
+    console.log(this._alumnoModel.foto_alumno);
+    // console.log(nombreFile);
+    // Valida que el Codigo del Alumno se ha Oingresado y Granbado
+    if (this._alumnoModel.codAlumno === null) {
+      this.openSnackBar('Error al cargar el Archivo', 'Debes de Ingresar los Datos del Alumno');
+      return -1;
+    }
+    const token1 = this._alumnoServices.getToken();
+
+    // this._alumnoServices.postFileImagen(token1, files[0], this._alumnoModel.codAlumno).subscribe(
+    this._alumnoServices.postFileImagen(token1, files[0], this._alumnoModel.codAlumno).subscribe(
+
+      response => {
+        this.respuestaImagenEnviada = response;
+        if (this.respuestaImagenEnviada <= 1) {
+          console.log("Error en el servidor");
+        } else {
+
+          if (this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success") {
+            this.resultadoCarga = 1;
+            this.openSnackBar('Arhivo cargado exitosamente', this.respuestaImagenEnviada.msg);
+          } else {
+            this.resultadoCarga = 2;
+            this.openSnackBar('Error al cargar el Archivo', this.respuestaImagenEnviada.msg);
+            return 1;
+          }
+
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+
+    );//FIN DE METODO SUBSCRIBE
+
+  }
 
 }

@@ -1,3 +1,52 @@
-<p>
-  evaluacion-alumno-modal works!
-</p>
+<h2 mat-dialog-title>Aprobacion de Evaluaciones Practicas de : <strong> {{ data.nombres }} {{ data.apellidos }}
+  </strong> </h2>
+<mat-divider></mat-divider>
+
+<div class="loader2" *ngIf="showData2 == true">
+  <!-- Loader de la Tabla -->
+  Cargando... <br><br>
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between stretch" class="contact-list-container">
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between stretch" *ngIf="showData2 == false">
+      <div fxflex="100" class="full">
+        <mat-form-field class="full">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Pago de Alumno">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="example-container mat-elevation-z8">
+
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">Calificaciones de Notas Practicas | <strong>Nota Final: {{ notaFinal }} </strong> </h2>
+          <section class="example-section">
+            <mat-checkbox class="example-margin" [(ngModel)]="checkedEP">Cocina Practica |
+              {{ data.EvaluacionCocinaPractica }} </mat-checkbox>
+            <mat-checkbox class="example-margin" [(ngModel)]="checkedEC">Cortes de Precision |
+              {{ data.EvaluacionCortePrecision }} </mat-checkbox>
+            <mat-checkbox class="example-margin" [(ngModel)]="checkedEPL">Plato | {{ data.EvaluacionPlato }}
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [(ngModel)]="checkedEQ">Quesos | {{ data.EvaluacionQueso }}
+            </mat-checkbox>
+          </section>
+
+          <section>
+            <textarea matInput #message name="" id="" rows="5" [(ngModel)]="chefNotaFinalObs"
+              placeholder="Observaciones del Chef"></textarea>
+          </section>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="aprobarNotas()">Aprobar</button>
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

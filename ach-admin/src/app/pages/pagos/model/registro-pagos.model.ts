@@ -16,6 +16,7 @@ export class RegistroPagosModel {
         public conceptoPago: string,
         public montoPago: number,
         public descripcionPago: string,
+        public url_documento: string,
 
         // Identificacion Alumno
         public idAlumno: number,
@@ -25,7 +26,7 @@ export class RegistroPagosModel {
         public inicialesAlumno: string,
         public email: string,
         public celular: number,
-        
+
         // Relaciones de Tablas
         public idEstado: number,
         public descEstado: string,
@@ -34,6 +35,6 @@ export class RegistroPagosModel {
         public idTipoPago: number,
         public descTipoPago: string,
         public idUsuarioPago: number,
-        
+
     ) { }
 }

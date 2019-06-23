@@ -18,6 +18,10 @@ import { EvaluacionQuesoComponent } from './evaluaciones/evaluacion-alumno/evalu
 import { RegistroPlatosComponent } from './platos/registro-platos/registro-platos.component';
 import { ConsultaPlatosComponent } from './platos/consulta-platos/consulta-platos.component';
 import { EvaluacionConsultaComponent } from './evaluaciones/evaluacion-consulta/evaluacion-consulta.component';
+import { EvaluacionNotaTeoricaComponent } from './evaluaciones/evaluacion-nota-teorica/evaluacion-nota-teorica.component';
+import { ExamenTeoricoComponent } from './evaluaciones/examen-teorico/examen-teorico.component';
+import { ExamenPracticoComponent } from './evaluaciones/examen-practico/examen-practico.component';
+import { ReportePagosComponent } from './reportes/reporte-pagos/reporte-pagos.component';
 
 const pagesRoutes: Routes = [
   { path: 'contact', component: ContactComponent, data: { animation: 'contact' } },
@@ -42,12 +46,21 @@ const pagesRoutes: Routes = [
   { path: 'evaluaciones/evaluacion-alumno/evaluacion-quesos', component: EvaluacionQuesoComponent, data: { animation: 'evaluaciones' } },
   { path: 'evaluaciones/evaluacion-consulta-practica', component: EvaluacionConsultaComponent, data: { animation: 'evaluaciones' } },
 
+  // Modulo de Evaluaciones Teoricas
+  { path: 'evaluaciones/evaluacion-nota-teorica', component: EvaluacionNotaTeoricaComponent, data: { animation: 'evaluaciones' } },
+  { path: 'evaluaciones/examen-teorico', component: ExamenTeoricoComponent, data: { animation: 'evaluaciones' } },
+  { path: 'evaluaciones/examen-practico', component: ExamenPracticoComponent, data: { animation: 'evaluaciones' } },
+
   // Modulo de Security
   { path: 'security/register-user', component: RegisterUserComponent, data: { animation: 'security' } },
-  
+
   // Modulo de Platos
   { path: 'platos/registro-plato', component: RegistroPlatosComponent, data: { animation: 'platos' } },
   { path: 'platos/consulta-platos', component: ConsultaPlatosComponent, data: { animation: 'platos' } },
+
+  // Modulo de Reportes
+  { path: 'reportes/reporte-pagos', component: ReportePagosComponent, data: { animation: 'reportes' } },
+
 ];
 
 @NgModule({

@@ -1,0 +1,41 @@
+BackendBundle\Entity\TblHorarioClase:
+    type: entity
+    table: tbl_horario_clase
+    id:
+        idHorarioClase:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_horario_clase
+            generator:
+                strategy: IDENTITY
+    fields:
+        codHorarioClase:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: cod_horario_clase
+        descHorarioClase:
+            type: string
+            nullable: true
+            length: 150
+            options:
+                fixed: false
+            column: desc_horario_clase
+        diasHorarioClase:
+            type: string
+            nullable: true
+            length: 150
+            options:
+                fixed: false
+            column: dias_horario_clase
+        activo:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
+    lifecycleCallbacks: {  }

@@ -1,0 +1,162 @@
+BackendBundle\Entity\TblEvaluacionQueso:
+    type: entity
+    table: tbl_evaluacion_queso
+    indexes:
+        fkeq_1_idx:
+            columns:
+                - id_alumno
+        fkeq_2_idx:
+            columns:
+                - id_estado
+        fkeq_3_idx:
+            columns:
+                - id_plato
+        fkeq_4_idx:
+            columns:
+                - id_instructor
+    id:
+        idEvaluacionQueso:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_evaluacion_queso
+            generator:
+                strategy: IDENTITY
+    fields:
+        codEvaluacionQueso:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: cod_evaluacion_queso
+        conocimientoTemaObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: conocimiento_tema_obs
+        conocimientoTemaNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: conocimiento_tema_nota
+        presentacionObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: presentacion_obs
+        presentacionNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: presentacion_nota
+        reporteEscritoObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: reporte_escrito_obs
+        reporteEscritoNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: reporte_escrito_nota
+        uniformeObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: uniforme_obs
+        uniformeNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: uniforme_nota
+        degustacionObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: degustacion_obs
+        degustacionNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: degustacion_nota
+        fechaEvaluacion:
+            type: date
+            nullable: true
+            column: fecha_evaluacion
+        horaEvaluacion:
+            type: datetime
+            nullable: true
+            column: hora_evaluacion
+        notaFinal:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: nota_final
+        chefNotaFinalObs:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: chef_nota_final_obs
+    manyToOne:
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+        idEstado:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado:
+                    referencedColumnName: id_estado
+            orphanRemoval: false
+        idPlato:
+            targetEntity: TblPlato
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_plato:
+                    referencedColumnName: id_plato
+            orphanRemoval: false
+        idInstructor:
+            targetEntity: TblUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_instructor:
+                    referencedColumnName: id_usuario
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

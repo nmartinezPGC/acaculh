@@ -129,7 +129,7 @@ export class RevertirPagosComponent implements OnInit {
     // Cuando se cierra la ventana Modal
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      
+
       // Cargamos la ventana con las Consultas Actualizadas
       this.getAllListAlumnos();
     });

@@ -1,0 +1,136 @@
+BackendBundle\Entity\TblEvaluacionPlato:
+    type: entity
+    table: tbl_evaluacion_plato
+    indexes:
+        fk1_idx:
+            columns:
+                - id_alumno
+        fk2_idx:
+            columns:
+                - id_plato
+        fk3_idx:
+            columns:
+                - id_instructor
+        fk2_idx1:
+            columns:
+                - id_estado
+    id:
+        idEvaluacionPlato:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_evaluacion_plato
+            generator:
+                strategy: IDENTITY
+    fields:
+        codEvaluacionPlato:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: cod_evaluacion_plato
+        presentacionObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: presentacion_obs
+        presentacionNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: presentacion_nota
+        saborObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: sabor_obs
+        saborNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: sabor_nota
+        otrosObs:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: otros_obs
+        otrosNota:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: otros_nota
+        fechaEvaluacion:
+            type: date
+            nullable: true
+            column: fecha_evaluacion
+        horaEvaluacion:
+            type: datetime
+            nullable: true
+            column: hora_evaluacion
+        notaFinal:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: nota_final
+        chefNotaFinalObs:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+            column: chef_nota_final_obs
+    manyToOne:
+        idAlumno:
+            targetEntity: TblAlumno
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_alumno:
+                    referencedColumnName: id_alumno
+            orphanRemoval: false
+        idEstado:
+            targetEntity: TblEstado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estado:
+                    referencedColumnName: id_estado
+            orphanRemoval: false
+        idPlato:
+            targetEntity: TblPlato
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_plato:
+                    referencedColumnName: id_plato
+            orphanRemoval: false
+        idInstructor:
+            targetEntity: TblUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_instructor:
+                    referencedColumnName: id_usuario
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
